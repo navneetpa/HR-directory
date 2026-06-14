@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HR Directory Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.4.0/dist/tabler-icons.min.css" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root, [data-theme="light"] {
+    --bg:             #f4f6f9;
+    --surface:        #ffffff;
+    --surface-2:      #f0f2f5;
+    --border:         rgba(0,0,0,0.09);
+    --border-hover:   rgba(0,0,0,0.18);
+    --text-primary:   #111827;
+    --text-secondary: #4b5563;
+    --text-muted:     #9ca3af;
+    --accent:         #1d6fca;
+    --chip-active-text: #fff;
+    --phone-bg:#e8f5e9; --phone-icon:#2e7d32;
+    --email-bg:#e3f2fd; --email-icon:#1565c0;
+    --li-bg:  #e8eaf6; --li-icon:  #283593;
+  }
+
+  [data-theme="dark"] {
+    --bg:             #0f1117;
+    --surface:        #1a1d27;
+    --surface-2:      #22263a;
+    --border:         rgba(255,255,255,0.08);
+    --border-hover:   rgba(255,255,255,0.18);
+    --text-primary:   #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted:     #64748b;
+    --accent:         #4d9de0;
+    --chip-active-text: #0f1117;
+    --phone-bg:#1b2e1c; --phone-icon:#81c784;
+    --email-bg:#162032; --email-icon:#64b5f6;
+    --li-bg:  #181e36; --li-icon:  #7986cb;
+  }
+
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; transition: background 0.25s, color 0.25s; }
+
+  .header { background: var(--surface); border-bottom: 0.5px solid var(--border); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: 0; z-index: 10; transition: background 0.25s, border-color 0.25s; }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-icon { font-size: 26px; color: var(--accent); }
+  .header h1 { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+  .header p  { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+  .theme-toggle { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 24px; padding: 5px 14px 5px 10px; cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; user-select: none; flex-shrink: 0; }
+  .theme-toggle:hover { border-color: var(--border-hover); }
+  .theme-toggle i { font-size: 17px; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .stat-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; transition: background 0.25s, border-color 0.25s; }
+  .stat-card .label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat-card .value { font-size: 26px; font-weight: 700; color: var(--text-primary); }
+  .stat-card .sub   { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .search-wrap { position: relative; margin-bottom: 1rem; }
+  .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; color: var(--text-muted); pointer-events: none; }
+  .search-wrap input { width: 100%; padding: 10px 12px 10px 38px; border: 0.5px solid var(--border); border-radius: 8px; background: var(--surface); font-size: 14px; color: var(--text-primary); outline: none; transition: border-color 0.15s, background 0.25s; }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text-muted); }
+
+  .filter-section { margin-bottom: 1.5rem; }
+  .filter-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .chip { padding: 5px 13px; border-radius: 20px; font-size: 13px; border: 0.5px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; white-space: nowrap; user-select: none; }
+  .chip:hover { border-color: var(--border-hover); }
+  .chip.active { background: var(--accent); border-color: var(--accent); color: var(--chip-active-text); }
+
+  .count-line { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+
+  .card { background: var(--surface); border-radius: 12px; border: 0.5px solid var(--border); padding: 1.1rem 1.25rem; transition: border-color 0.15s, background 0.25s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--border-hover); box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  [data-theme="dark"] .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+
+  .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .card-name  { font-weight: 600; font-size: 15px; color: var(--text-primary); }
+  .card-desig { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+  .badge i { font-size: 12px; }
+
+  .contact-rows { display: flex; flex-direction: column; gap: 7px; }
+  .info-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary); }
+  .icon-pill { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; transition: background 0.25s; }
+  .icon-pill.phone    { background: var(--phone-bg); color: var(--phone-icon); }
+  .icon-pill.email    { background: var(--email-bg); color: var(--email-icon); }
+  .icon-pill.linkedin { background: var(--li-bg);    color: var(--li-icon); }
+  .info-row span { color: var(--text-secondary); }
+  .info-row a { color: var(--accent); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 210px; display: block; }
+  .info-row a:hover { text-decoration: underline; }
+
+  .empty { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
+  .empty i { font-size: 40px; display: block; margin-bottom: 10px; }
+
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .header    { padding: 0.9rem 1rem; }
+    .grid      { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <i class="ti ti-address-book header-icon"></i>
+    <div>
+      <h1>HR Directory</h1>
+      <p>Manage and explore HR contacts across companies</p>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <i class="ti ti-moon" id="themeIcon"></i>
+    <span id="themeLabel">Dark mode</span>
+  </button>
+</header>
+
+<main class="container">
+  <div class="stats-row" id="statsRow"></div>
+
+  <div class="search-wrap">
+    <i class="ti ti-search"></i>
+    <input type="text" id="searchInput" placeholder="Search by name, company, or designation..." oninput="render()" />
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-label">Category</div>
+    <div class="chip-row" id="categoryRow"></div>
+    <div class="filter-label">Company</div>
+    <div class="chip-row" id="companyRow"></div>
+  </div>
+
+  <div class="count-line" id="countLine"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// DATA — add new contacts here
+// category: "FMCG" | "Tech" | "Finance" | "Ecommerce" | "Pharma" | "Consulting" | etc.
+// ─────────────────────────────────────────────────────────────
+const data = [
+  // ── FMCG ──
+  { id:1,  category:"FMCG",     company:"Hindustan Unilever Limited",       name:"Aditi Arora",        phone:"9875275144", email:"aditi.arora@unilever.com",              linkedin:"https://www.linkedin.com/in/aditi-arora-604952213/",               designation:"Senior HR Executive" },
+  { id:2,  category:"FMCG",     company:"Procter & Gamble",                 name:"Rajat Sharma",       phone:"7838840455", email:"sharma.r@pg.com",                       linkedin:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",              designation:"Human Resources Payroll Executive" },
+  { id:3,  category:"FMCG",     company:"Nestlé Nespresso SA",              name:"Anusheel Pandey",    phone:"9754800308", email:"anusheel.pandey@nespresso.com",         linkedin:"https://www.linkedin.com/in/anusheelpandey/",                      designation:"Talent Acquisition Specialist" },
+  { id:4,  category:"FMCG",     company:"Marico Limited",                   name:"Kimberly Fernandes", phone:"8291420082", email:"kimberly.fernandes@marico.com",         linkedin:"https://www.linkedin.com/in/kimberlyfernandes2206/",               designation:"Talent Acquisition Executive" },
+  { id:5,  category:"FMCG",     company:"Marico Limited",                   name:"Ajinkya Utekar",     phone:"9969069712", email:"ajinkya.utekar@marico.com",             linkedin:"https://www.linkedin.com/in/ajinkya-utekar-3546271a4/",            designation:"HR - Talent Acquisition" },
+  { id:6,  category:"FMCG",     company:"Marico Limited",                   name:"Latika Kapoor",      phone:"7144297103", email:"latika.kapoor@marico.com",              linkedin:"https://www.linkedin.com/in/latika-kapoor-062520165/",             designation:"Senior Officer Talent Acquisition" },
+  { id:7,  category:"FMCG",     company:"Godrej Consumer Products Limited", name:"Kavitendra Joshi",   phone:"7773020103", email:"kavitendra.joshi@godrejcp.com",         linkedin:"https://www.linkedin.com/in/kavitendra-joshi-063481231/",          designation:"Senior Associate Talent Acquisition" },
+  { id:8,  category:"FMCG",     company:"ITC Limited",                      name:"Abhirup Dasgupta",   phone:"9748880958", email:"abhirup.dasgupta@itc.in",               linkedin:"https://www.linkedin.com/in/abhirup-dasgupta-2852bb189/",          designation:"Talent Acquisition Specialist" },
+  { id:9,  category:"FMCG",     company:"ITC Limited",                      name:"Astha Gupta",        phone:"9516662700", email:"astha.gupta@itc.in",                    linkedin:"https://www.linkedin.com/in/astha-gupta-7111b1160/",               designation:"Manager - Talent Acquisition and DEI" },
+  { id:10, category:"FMCG",     company:"ITC Limited",                      name:"Beauty Kumari",      phone:"9903002705", email:"beauty.kumari@itc.in",                  linkedin:"https://www.linkedin.com/in/beauty-kumari-20281170/",              designation:"Talent Acquisition Specialist" },
+  { id:11, category:"FMCG",     company:"Dabur India Limited",              name:"Shubham Bhardwaj",   phone:"9582045602", email:"shubham.bhardwaj@dabur.com",            linkedin:"https://www.linkedin.com/in/shubham-bhardwaj-51860970/",           designation:"Corporate HR - Talent Acquisition" },
+  { id:12, category:"FMCG",     company:"Dabur India Limited",              name:"Rahul Grover",       phone:"9899467184", email:"rahul.grover@dabur.com",                linkedin:"https://www.linkedin.com/in/rahul-grover-1b3a4610/",               designation:"Talent Acquisition Manager" },
+
+  // ── Tech ──
+  { id:13, category:"Tech",     company:"Google India",                     name:"Twinkle Sharma",     phone:"8448629398", email:"sharmatwinkle@google.com",              linkedin:"https://www.linkedin.com/in/twinkle-sharma-770608111/",            designation:"Talent Acquisition Specialist" },
+  { id:14, category:"Tech",     company:"Amazon",                           name:"Swati Nanda",        phone:"9348117494", email:"swnanda@amazon.com",                    linkedin:"https://www.linkedin.com/in/swati-priyambada-nanda-12670a18a/",    designation:"Talent Acquisition Specialist" },
+  { id:15, category:"Tech",     company:"Amazon",                           name:"Isha Siddiqui",      phone:"9958070190", email:"siddiquii@amazon.com",                  linkedin:"https://www.linkedin.com/in/isha-siddiqui-79837322b/",             designation:"Talent Acquisition Specialist" },
+  { id:16, category:"Tech",     company:"Meta",                             name:"Sakshi Jaiswal",     phone:"9999110428", email:"sjaiswal@meta.com",                     linkedin:"https://www.linkedin.com/in/sakshi-jaiswal-67b97321b/",            designation:"Talent Acquisition Specialist" },
+  { id:17, category:"Tech",     company:"Microsoft",                        name:"Vishnu Prakash",     phone:"9650040736", email:"vprakash@microsoft.com",                linkedin:"https://www.linkedin.com/in/vishnuprakash/",                       designation:"Talent Acquisition Specialist" },
+  { id:18, category:"Tech",     company:"Microsoft",                        name:"Akriti Jain",        phone:"8805982789", email:"jaina@microsoft.com",                   linkedin:"https://www.linkedin.com/in/akriti-jain-1b9808240/",              designation:"Talent Acquisition Specialist" },
+
+  // ── Ecommerce / Fintech ──
+  { id:19, category:"Ecommerce", company:"PhonePe",                         name:"Komal Sharma",       phone:"8968644475", email:"komal.sharma@phonepe.com",              linkedin:"https://www.linkedin.com/in/komalsharma6/",                        designation:"Talent Acquisition Specialist" },
+  { id:20, category:"Ecommerce", company:"PhonePe",                         name:"Deepali Upadhyay",   phone:"7991155160", email:"deepali.netam.con@phonepe.com",         linkedin:"https://www.linkedin.com/in/deepali-kumari-upadhyay-927814387/",   designation:"Talent Acquisition Recruiter" },
+  { id:21, category:"Ecommerce", company:"CRED",                            name:"Melveena Hilton",    phone:"9930922595", email:"melveena.hilton@cred.club",             linkedin:"https://www.linkedin.com/in/melveena-hilton-b70346212/",           designation:"Talent Acquisition Consultant" },
+  { id:22, category:"Ecommerce", company:"Swiggy",                          name:"Shashank Jain",      phone:"8124363686", email:"shashank.jain@instamart.in",            linkedin:"https://www.linkedin.com/in/shashank-jain-02b780197/",             designation:"Talent Acquisition Specialist" },
+
+  // ── Finance ──
+  { id:23, category:"Finance",  company:"HDFC Bank",                        name:"Aarti Bansode",      phone:"8554811777", email:"aarti.bansode@hdfcbank.com",            linkedin:"https://www.linkedin.com/in/aarti-bansode-2146a6148/",             designation:"Talent Acquisition Specialist" },
+  { id:24, category:"Finance",  company:"ICICI Bank",                       name:"Anjan Acharya",      phone:"7749080378", email:"anjan.acharya@icicibank.com",           linkedin:"https://www.linkedin.com/in/anjan-kumar-acharya-66888861/",        designation:"Chief Manager HR - Talent Acquisition & HR Business Partner" },
+  { id:25, category:"Finance",  company:"Axis Bank",                        name:"Preeti Bakliwal",    phone:"8767656264", email:"preeti.bakliwal@axisbank.com",          linkedin:"https://www.linkedin.com/in/preeti-bakliwal-85933a19a/",           designation:"Talent Acquisition Specialist" },
+  { id:26, category:"Finance",  company:"Razorpay",                         name:"Ravi Kumar",         phone:"7349498064", email:"ravi.kumar@razorpay.com",               linkedin:"https://www.linkedin.com/in/singhkravi/",                          designation:"Talent Acquisition Specialist" },
+  { id:27, category:"Finance",  company:"Razorpay",                         name:"Sumit Premi",        phone:"8826363651", email:"sumitpremi01@gmail.com",                linkedin:"https://www.linkedin.com/in/sumitpremi/",                          designation:"Head Talent Acquisition Specialist" },
+  { id:28, category:"Finance",  company:"Groww",                            name:"Himanshu Rawat",     phone:"7409041942", email:"himanshuta@groww.in",                   linkedin:"https://www.linkedin.com/in/himanshu-rawat-496887190/",            designation:"Talent Acquisition Specialist" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// CATEGORY COLORS — add new category colors here
+// ─────────────────────────────────────────────────────────────
+const categoryColors = {
+  "FMCG":          { light:{ bg:"#e1f5ee", color:"#085041" }, dark:{ bg:"#0d2b1f", color:"#6ee7b7" } },
+  "Tech":          { light:{ bg:"#e6f1fb", color:"#0c447c" }, dark:{ bg:"#0d1f38", color:"#7dc4f5" } },
+  "Finance":       { light:{ bg:"#faeeda", color:"#633806" }, dark:{ bg:"#2b1c06", color:"#fbbf5a" } },
+  "Ecommerce":     { light:{ bg:"#fbeaf0", color:"#72243e" }, dark:{ bg:"#2b0f1b", color:"#f48fb1" } },
+  "Pharma":        { light:{ bg:"#eaf3de", color:"#27500a" }, dark:{ bg:"#172a05", color:"#a3d96a" } },
+  "Consulting":    { light:{ bg:"#eeedfe", color:"#3c3489" }, dark:{ bg:"#1a1740", color:"#a5a0f5" } },
+  "Manufacturing": { light:{ bg:"#faece7", color:"#712b13" }, dark:{ bg:"#2b1208", color:"#f5a080" } },
+  "Healthcare":    { light:{ bg:"#fcebeb", color:"#791f1f" }, dark:{ bg:"#2b0d0d", color:"#f08080" } },
+};
+const defaultCatColor = { light:{ bg:"#f1efe8", color:"#444441" }, dark:{ bg:"#22201a", color:"#c9c5bc" } };
+
+// ─────────────────────────────────────────────────────────────
+// AVATAR PALETTE
+// ─────────────────────────────────────────────────────────────
+const avatarPalettes = [
+  { light:{ bg:"#dbeafe", color:"#1e40af" }, dark:{ bg:"#1e3a5f", color:"#93c5fd" } },
+  { light:{ bg:"#d1fae5", color:"#065f46" }, dark:{ bg:"#134e31", color:"#6ee7b7" } },
+  { light:{ bg:"#fef3c7", color:"#92400e" }, dark:{ bg:"#3d2200", color:"#fbbf24" } },
+  { light:{ bg:"#ede9fe", color:"#4c1d95" }, dark:{ bg:"#2e1065", color:"#c4b5fd" } },
+  { light:{ bg:"#fce7f3", color:"#9d174d" }, dark:{ bg:"#4a0d2e", color:"#f9a8d4" } },
+  { light:{ bg:"#e0f2fe", color:"#0c4a6e" }, dark:{ bg:"#0c2a45", color:"#7dd3fc" } },
+  { light:{ bg:"#dcfce7", color:"#14532d" }, dark:{ bg:"#0f3320", color:"#86efac" } },
+  { light:{ bg:"#fee2e2", color:"#991b1b" }, dark:{ bg:"#450a0a", color:"#fca5a5" } },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let activeCategory = "All";
+let activeCompany  = "All";
+let isDark = false;
+
+const companies  = [...new Set(data.map(d => d.company))];
+const categories = [...new Set(data.map(d => d.category))];
+const companyColorMap = {};
+companies.forEach((c, i) => { companyColorMap[c] = i % avatarPalettes.length; });
+
+// ─────────────────────────────────────────────────────────────
+// THEME
+// ─────────────────────────────────────────────────────────────
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  document.getElementById("themeIcon").className  = isDark ? "ti ti-sun"  : "ti ti-moon";
+  document.getElementById("themeLabel").textContent = isDark ? "Light mode" : "Dark mode";
+  render();
+}
+function mode() { return isDark ? "dark" : "light"; }
+
+// ─────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────
+function initials(name) { return name.split(" ").slice(0,2).map(n=>n[0]).join("").toUpperCase(); }
+function getCatColor(cat) { return (categoryColors[cat] || defaultCatColor)[mode()]; }
+function getAvatarColor(company) { return avatarPalettes[companyColorMap[company]][mode()]; }
+
+// ─────────────────────────────────────────────────────────────
+// STATS
+// ─────────────────────────────────────────────────────────────
+function initStats() {
+  const taCount = data.filter(d => d.designation.toLowerCase().includes("talent")).length;
+  document.getElementById("statsRow").innerHTML = `
+    <div class="stat-card"><div class="label">Total contacts</div><div class="value">${data.length}</div><div class="sub">HR professionals</div></div>
+    <div class="stat-card"><div class="label">Companies</div><div class="value">${companies.length}</div><div class="sub">Organizations</div></div>
+    <div class="stat-card"><div class="label">Categories</div><div class="value">${categories.length}</div><div class="sub">Sectors</div></div>
+    <div class="stat-card"><div class="label">Talent Acquisition</div><div class="value">${taCount}</div><div class="sub">Specialists</div></div>
+  `;
+}
+
+// ─────────────────────────────────────────────────────────────
+// FILTERS
+// ─────────────────────────────────────────────────────────────
+function initFilters() {
+  document.getElementById("categoryRow").innerHTML =
+    `<button class="chip active" onclick="setCategory('All',this)">All (${data.length})</button>` +
+    categories.map(c => `<button class="chip" onclick="setCategory('${c}',this)">${c} (${data.filter(d=>d.category===c).length})</button>`).join("");
+  renderCompanyChips();
+}
+
+function renderCompanyChips() {
+  const visible = activeCategory === "All"
+    ? companies
+    : [...new Set(data.filter(d => d.category === activeCategory).map(d => d.company))];
+  document.getElementById("companyRow").innerHTML =
+    `<button class="chip active" onclick="setCompany('All',this)">All</button>` +
+    visible.map(c => `<button class="chip" onclick="setCompany(\`${c}\`,this)">${c} (${data.filter(d=>d.company===c).length})</button>`).join("");
+}
+
+function setCategory(cat, el) {
+  activeCategory = cat; activeCompany = "All";
+  document.querySelectorAll("#categoryRow .chip").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  renderCompanyChips(); render();
+}
+function setCompany(co, el) {
+  activeCompany = co;
+  document.querySelectorAll("#companyRow .chip").forEach(c => c.classList.remove("active"));
+  el.classList.add("active"); render();
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER CARDS
+// ─────────────────────────────────────────────────────────────
+function render() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = data.filter(d => {
+    const matchCat     = activeCategory === "All" || d.category === activeCategory;
+    const matchCompany = activeCompany  === "All" || d.company  === activeCompany;
+    const matchSearch  = !q || d.name.toLowerCase().includes(q) || d.company.toLowerCase().includes(q) || d.designation.toLowerCase().includes(q);
+    return matchCat && matchCompany && matchSearch;
+  });
+
+  document.getElementById("countLine").textContent = `${filtered.length} contact${filtered.length !== 1 ? "s" : ""} found`;
+
+  const grid = document.getElementById("grid");
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty"><i class="ti ti-user-x"></i><p>No contacts found</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(d => {
+    const av        = getAvatarColor(d.company);
+    const cc        = getCatColor(d.category);
+    const compBadge = avatarPalettes[(companyColorMap[d.company] + 3) % avatarPalettes.length][mode()];
+    return `
+    <div class="card">
+      <div class="card-head">
+        <div class="avatar" style="background:${av.bg};color:${av.color}">${initials(d.name)}</div>
+        <div>
+          <div class="card-name">${d.name}</div>
+          <div class="card-desig">${d.designation}</div>
+        </div>
+      </div>
+      <div class="badge-row">
+        <span class="badge" style="background:${cc.bg};color:${cc.color}"><i class="ti ti-tag"></i>${d.category}</span>
+        <span class="badge" style="background:${compBadge.bg};color:${compBadge.color}"><i class="ti ti-building"></i>${d.company}</span>
+      </div>
+      <div class="contact-rows">
+        <div class="info-row">
+          <div class="icon-pill phone"><i class="ti ti-phone"></i></div>
+          <span>${d.phone}</span>
+        </div>
+        <div class="info-row">
+          <div class="icon-pill email"><i class="ti ti-mail"></i></div>
+          <a href="mailto:${d.email}" title="${d.email}">${d.email}</a>
+        </div>
+        <div class="info-row">
+          <div class="icon-pill linkedin"><i class="ti ti-brand-linkedin"></i></div>
+          <a href="${d.linkedin}" target="_blank" rel="noopener">View LinkedIn profile</a>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+initStats();
+initFilters();
+render();
+</script>
+</body>
+</html>
