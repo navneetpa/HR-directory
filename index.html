@@ -48,9 +48,36 @@
   .header h1 { font-size: 18px; font-weight: 600; color: var(--text-primary); }
   .header p  { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
 
-  .theme-toggle { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 24px; padding: 5px 14px 5px 10px; cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; user-select: none; flex-shrink: 0; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+
+  .theme-toggle { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 24px; padding: 5px 14px 5px 10px; cursor: pointer; font-size: 13px; color: var(--text-secondary); transition: all 0.2s; user-select: none; flex-shrink: 0; text-decoration: none; }
   .theme-toggle:hover { border-color: var(--border-hover); }
   .theme-toggle i { font-size: 17px; }
+
+  .profile-btn { display: flex; align-items: center; gap: 8px; background: var(--accent); border: none; border-radius: 24px; padding: 6px 16px 6px 10px; cursor: pointer; font-size: 13px; font-weight: 500; color: #fff; text-decoration: none; transition: opacity 0.2s; flex-shrink: 0; }
+  .profile-btn:hover { opacity: 0.88; }
+  .profile-btn i { font-size: 17px; }
+  [data-theme="dark"] .profile-btn { color: #0f1117; }
+
+  /* ── Watermark ── */
+  .watermark {
+    position: fixed; bottom: 18px; right: 22px;
+    display: flex; align-items: center; gap: 7px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 24px;
+    padding: 6px 14px 6px 10px;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    z-index: 100;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .watermark:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  .watermark i { font-size: 15px; color: var(--accent); }
+  [data-theme="dark"] .watermark { box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
 
   .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem; }
 
@@ -120,11 +147,23 @@
       <p>Manage and explore HR contacts across companies</p>
     </div>
   </div>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-    <i class="ti ti-moon" id="themeIcon"></i>
-    <span id="themeLabel">Dark mode</span>
-  </button>
+  <div class="header-right">
+    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="profile-btn">
+      <i class="ti ti-user-circle"></i>
+      My Profile
+    </a>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+      <i class="ti ti-moon" id="themeIcon"></i>
+      <span id="themeLabel">Dark mode</span>
+    </button>
+  </div>
 </header>
+
+<!-- Watermark -->
+<a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="watermark">
+  <i class="ti ti-user-circle"></i>
+  Made by Navneet Pathak
+</a>
 
 <main class="container">
   <div class="stats-row" id="statsRow"></div>
