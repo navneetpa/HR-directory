@@ -130,10 +130,63 @@
   .empty { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
   .empty i { font-size: 40px; display: block; margin-bottom: 10px; }
 
+  /* ── Tablet ── */
+  @media (max-width: 768px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-row a { max-width: 160px; }
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 600px) {
-    .container { padding: 1rem; }
-    .header    { padding: 0.9rem 1rem; }
-    .grid      { grid-template-columns: 1fr; }
+    .container { padding: 0.9rem 1rem; }
+
+    /* Header */
+    .header { padding: 0.8rem 1rem; gap: 8px; }
+    .header h1 { font-size: 15px; }
+    .header p  { display: none; }
+    .header-right { gap: 7px; }
+
+    /* Hide text labels on small screens — show only icons */
+    .profile-btn .btn-label { display: none; }
+    .profile-btn { padding: 7px 10px; border-radius: 50%; }
+    .theme-toggle .btn-label { display: none; }
+    .theme-toggle { padding: 7px 10px; border-radius: 50%; }
+
+    /* Stats */
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 1rem; }
+    .stat-card { padding: 0.8rem 1rem; }
+    .stat-card .value { font-size: 22px; }
+
+    /* Search */
+    .search-wrap input { font-size: 14px; padding: 9px 12px 9px 36px; }
+
+    /* Filter chips */
+    .chip-row { gap: 5px; }
+    .chip { font-size: 12px; padding: 4px 11px; }
+    .filter-label { font-size: 10px; }
+
+    /* Grid — single column */
+    .grid { grid-template-columns: 1fr; gap: 10px; }
+
+    /* Cards */
+    .card { padding: 1rem; }
+    .card-name { font-size: 14px; }
+    .card-desig { font-size: 11px; }
+    .info-row a { max-width: 200px; }
+
+    /* Watermark — icon only on mobile */
+    .watermark { bottom: 12px; right: 12px; padding: 8px; border-radius: 50%; }
+    .watermark .wm-label { display: none; }
+    .watermark i { font-size: 18px; margin: 0; }
+  }
+
+  /* ── Very small screens ── */
+  @media (max-width: 360px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stat-card .value { font-size: 20px; }
+    .header-icon { font-size: 20px; }
+    .header h1 { font-size: 14px; }
   }
 </style>
 </head>
@@ -150,11 +203,11 @@
   <div class="header-right">
     <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="profile-btn">
       <i class="ti ti-user-circle"></i>
-      My Profile
+      <span class="btn-label">My Profile</span>
     </a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
       <i class="ti ti-moon" id="themeIcon"></i>
-      <span id="themeLabel">Dark mode</span>
+      <span id="themeLabel" class="btn-label">Dark mode</span>
     </button>
   </div>
 </header>
@@ -162,7 +215,7 @@
 <!-- Watermark -->
 <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="watermark">
   <i class="ti ti-user-circle"></i>
-  Made by Navneet Pathak
+  <span class="wm-label">Made by Navneet Pathak</span>
 </a>
 
 <main class="container">
