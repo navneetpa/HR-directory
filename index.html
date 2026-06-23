@@ -1,540 +1,397 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>HR Directory — Navneet Pathak</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.4.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.4.0/dist/tabler-icons.min.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-/* ══════════════════════════════════════
-   TOKENS
-══════════════════════════════════════ */
 :root,[data-theme="light"]{
-  --bg:#f0f2f7;
-  --surface:#ffffff;
-  --surface-2:#e8eaf0;
-  --surface-3:#dde0ea;
-  --border:rgba(0,0,0,0.08);
-  --border-hover:rgba(0,0,0,0.18);
-  --text-1:#0f172a;
-  --text-2:#475569;
-  --text-3:#94a3b8;
-  --accent:#2563eb;
-  --accent-soft:#eff6ff;
-  --accent-text:#1d4ed8;
-  --shadow-sm:0 1px 4px rgba(0,0,0,0.07);
-  --shadow-md:0 4px 20px rgba(0,0,0,0.09);
-  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
-  --radius:14px;
-  --radius-sm:8px;
-  --radius-pill:100px;
-  --phone-bg:#dcfce7;--phone-c:#15803d;
-  --mail-bg:#dbeafe; --mail-c:#1d4ed8;
-  --li-bg:#e0e7ff;   --li-c:#4338ca;
+  --maroon:#590016;--maroon-2:#3d0010;--maroon-3:#260009;
+  --maroon-light:rgba(89,0,22,0.09);--maroon-light2:rgba(89,0,22,0.16);
+  --ton-m:#fff;--ton-m2:rgba(255,255,255,0.6);--ton-m3:rgba(255,255,255,0.3);
+  --bg:#FFFCEF;--surface:#fff;--surface2:#F5F1DE;--surface3:#EDE8D0;
+  --bdr:rgba(89,0,22,0.1);--bdr-h:rgba(89,0,22,0.25);
+  --t1:#1a1a2e;--t2:#4a4a6a;--t3:#9090a8;
+  --shadow-sm:0 1px 4px rgba(89,0,22,0.07);--shadow-md:0 4px 20px rgba(89,0,22,0.12);--shadow-lg:0 8px 32px rgba(89,0,22,0.18);
+  --r:14px;--rsm:9px;--rpill:100px;
+  --phone-bg:#fce7f3;--phone-c:#9d174d;--mail-bg:#dbeafe;--mail-c:#1d4ed8;--li-bg:#e0e7ff;--li-c:#4338ca;
+  --sw:220px;
 }
 [data-theme="dark"]{
-  --bg:#080c14;
-  --surface:#111827;
-  --surface-2:#1e2535;
-  --surface-3:#263044;
-  --border:rgba(255,255,255,0.07);
-  --border-hover:rgba(255,255,255,0.16);
-  --text-1:#f1f5f9;
-  --text-2:#94a3b8;
-  --text-3:#475569;
-  --accent:#3b82f6;
-  --accent-soft:#1e3a5f;
-  --accent-text:#93c5fd;
-  --shadow-sm:0 1px 4px rgba(0,0,0,0.4);
-  --shadow-md:0 4px 20px rgba(0,0,0,0.5);
-  --shadow-lg:0 8px 32px rgba(0,0,0,0.6);
-  --phone-bg:#14532d;--phone-c:#86efac;
-  --mail-bg:#1e3a5f; --mail-c:#93c5fd;
-  --li-bg:#1e1b4b;   --li-c:#a5b4fc;
+  --maroon:#c0395a;--maroon-2:#a02d4a;--maroon-3:#7a2038;
+  --maroon-light:rgba(192,57,90,0.15);--maroon-light2:rgba(192,57,90,0.28);
+  --ton-m:#fff;--ton-m2:rgba(255,255,255,0.65);--ton-m3:rgba(255,255,255,0.3);
+  --bg:#12080b;--surface:#1c0f13;--surface2:#26151a;--surface3:#321520;
+  --bdr:rgba(192,57,90,0.18);--bdr-h:rgba(192,57,90,0.4);
+  --t1:#fdf0f3;--t2:#c9a0ab;--t3:#7a5060;
+  --shadow-sm:0 1px 4px rgba(0,0,0,0.4);--shadow-md:0 4px 20px rgba(0,0,0,0.55);--shadow-lg:0 8px 32px rgba(0,0,0,0.65);
+  --phone-bg:#3b0a1a;--phone-c:#f9a8d4;--mail-bg:#0f2240;--mail-c:#93c5fd;--li-bg:#16124a;--li-c:#a5b4fc;
 }
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;display:flex;overflow-x:hidden;}
 
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background:var(--bg);
-  color:var(--text-1);
-  min-height:100vh;
-  transition:background .3s,color .3s;
-}
+/* SIDEBAR */
+.sidebar{width:var(--sw);min-height:100vh;background:var(--maroon);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(89,0,22,0.2);transition:transform .3s cubic-bezier(.4,0,.2,1);}
+.sb-brand{padding:1.3rem 1rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
+.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;}
+.sb-logo-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;flex-shrink:0;}
+.sb-logo-text{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.sb-logo-sub{font-size:10px;color:var(--ton-m2);margin-top:1px;}
+.sb-profile{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.12);border-radius:10px;padding:9px 11px;text-decoration:none;cursor:pointer;transition:background .2s;}
+.sb-profile:hover{background:rgba(255,255,255,0.2);}
+.sb-profile-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
+.sb-profile-name{font-size:12px;font-weight:600;color:#fff;}
+.sb-profile-role{font-size:10px;color:var(--ton-m2);}
 
-/* ══════════════════════════════════════
-   HEADER
-══════════════════════════════════════ */
-.header{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  padding:0 2rem;
-  height:64px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  position:sticky;top:0;z-index:50;
-  box-shadow:var(--shadow-sm);
-  transition:background .3s,border-color .3s;
-}
-.header-left{display:flex;align-items:center;gap:10px;}
-.logo-wrap{
-  width:38px;height:38px;border-radius:10px;
-  background:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:20px;flex-shrink:0;
-}
-.header h1{font-size:17px;font-weight:700;letter-spacing:-.3px;}
-.header p{font-size:12px;color:var(--text-3);margin-top:1px;}
-.header-right{display:flex;align-items:center;gap:8px;}
+/* SIDEBAR SEARCH */
+.sb-search{padding:.75rem .75rem .6rem;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
+.sb-search-wrap{position:relative;}
+.sb-search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:15px;color:rgba(255,255,255,0.45);pointer-events:none;}
+.sb-search-wrap input{width:100%;padding:8px 32px 8px 32px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:12.5px;outline:none;transition:all .2s;}
+.sb-search-wrap input::placeholder{color:rgba(255,255,255,0.4);}
+.sb-search-wrap input:focus{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);}
+.sb-search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:14px;color:rgba(255,255,255,0.45);cursor:pointer;display:none;padding:2px;}
+.sb-search-clear:hover{color:#fff;}
 
-.btn-outline{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:7px 14px;border-radius:var(--radius-pill);
-  border:1px solid var(--border);
-  background:var(--surface-2);
-  color:var(--text-2);font-size:13px;font-weight:500;
-  cursor:pointer;text-decoration:none;
-  transition:all .2s;white-space:nowrap;flex-shrink:0;
-}
-.btn-outline:hover{border-color:var(--border-hover);color:var(--text-1);}
-.btn-outline i{font-size:16px;}
+/* NAV */
+.sb-nav{flex:1;padding:.8rem .7rem;display:flex;flex-direction:column;gap:2px;overflow-y:auto;overflow-x:hidden;}
+.sb-nav-label{font-size:9px;font-weight:700;color:var(--ton-m3);text-transform:uppercase;letter-spacing:.1em;padding:0 .4rem;margin-bottom:5px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:0 11px;border-radius:9px;cursor:pointer;transition:all .15s;color:var(--ton-m2);font-size:12.5px;font-weight:500;user-select:none;flex:1;min-height:40px;max-height:52px;}
+.sb-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.sb-item.active{background:rgba(255,255,255,0.18);color:#fff;font-weight:600;}
+.sb-item.hidden{display:none;}
+.sb-item i{font-size:17px;flex-shrink:0;}
+.sb-item .sb-label{flex:1;}
+.sb-item .sb-count{font-size:10.5px;font-weight:700;background:rgba(255,255,255,0.15);color:#fff;border-radius:var(--rpill);padding:2px 7px;}
+.sb-item.active .sb-count{background:rgba(255,255,255,0.28);}
+.sb-no-results{font-size:11.5px;color:rgba(255,255,255,0.35);text-align:center;padding:1rem 0;display:none;}
 
-.btn-accent{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:7px 16px;border-radius:var(--radius-pill);
-  border:none;background:var(--accent);
-  color:#fff;font-size:13px;font-weight:600;
-  cursor:pointer;text-decoration:none;
-  transition:opacity .2s;white-space:nowrap;flex-shrink:0;
-}
-.btn-accent:hover{opacity:.88;}
-.btn-accent i{font-size:16px;}
-[data-theme="dark"] .btn-accent{color:#fff;}
+/* STATS */
+.sb-stats{flex-shrink:0;margin:.6rem .7rem;background:rgba(255,255,255,0.08);border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.sb-stat-item{text-align:center;}
+.sb-stat-val{font-size:17px;font-weight:800;color:#fff;line-height:1;}
+.sb-stat-lbl{font-size:9px;color:var(--ton-m2);margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
 
-/* ══════════════════════════════════════
-   HERO STRIP
-══════════════════════════════════════ */
-.hero{
-  background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 40%,#0ea5e9 100%);
-  padding:2rem 2rem 2.5rem;
-  position:relative;overflow:hidden;
-}
-.hero::after{
-  content:'';position:absolute;right:-60px;top:-60px;
-  width:280px;height:280px;border-radius:50%;
-  background:rgba(255,255,255,.06);
-}
-.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
-.hero h2{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:6px;}
-.hero p{font-size:14px;color:rgba(255,255,255,.75);max-width:480px;}
+/* BOTTOM ACTIONS */
+.sb-bottom{padding:.7rem .7rem .9rem;border-top:1px solid rgba(255,255,255,0.1);flex-shrink:0;display:flex;gap:6px;}
+.sb-action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,0.1);color:var(--ton-m2);font-size:11.5px;font-weight:600;cursor:pointer;border:none;transition:all .15s;text-decoration:none;}
+.sb-action-btn:hover{background:rgba(255,255,255,0.2);color:#fff;}
+.sb-action-btn i{font-size:15px;}
 
-/* ══════════════════════════════════════
-   STATS
-══════════════════════════════════════ */
-.stats-outer{background:var(--surface);border-bottom:1px solid var(--border);padding:.1rem 2rem .1rem;}
-.stats-inner{max-width:1200px;margin:0 auto;}
-.stats-row{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
-.stats-row::-webkit-scrollbar{display:none;}
-.stat{
-  flex:1;min-width:120px;padding:1rem 1.25rem;
-  border-right:1px solid var(--border);
-  transition:background .3s;
-}
-.stat:last-child{border-right:none;}
-.stat .lbl{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-.stat .val{font-size:24px;font-weight:800;color:var(--text-1);}
-.stat .sub{font-size:11px;color:var(--text-3);margin-top:2px;}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;opacity:0;transition:opacity .3s;}
+.sb-overlay.show{opacity:1;}
 
-/* ══════════════════════════════════════
-   CONTAINER
-══════════════════════════════════════ */
-.container{max-width:1200px;margin:0 auto;padding:1.5rem 2rem 5rem;}
+/* MAIN */
+.main{margin-left:var(--sw);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
 
-/* ══════════════════════════════════════
-   SEARCH + FILTERS
-══════════════════════════════════════ */
-.controls{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:1.1rem 1.25rem;
-  margin-bottom:1.25rem;
-  box-shadow:var(--shadow-sm);
-}
-.search-wrap{position:relative;margin-bottom:1rem;}
-.search-wrap i{
-  position:absolute;left:13px;top:50%;transform:translateY(-50%);
-  font-size:18px;color:var(--text-3);pointer-events:none;
-}
-.search-wrap input{
-  width:100%;padding:11px 14px 11px 42px;
-  border:1.5px solid var(--border);border-radius:var(--radius-sm);
-  background:var(--surface-2);
-  font-size:14px;color:var(--text-1);outline:none;
-  transition:border-color .15s,background .3s;
-}
-.search-wrap input:focus{border-color:var(--accent);background:var(--surface);}
-.search-wrap input::placeholder{color:var(--text-3);}
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--bdr);padding:0 1.6rem;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);}
+.hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--t2);font-size:22px;padding:4px;border-radius:6px;flex-shrink:0;}
+.topbar-title{font-size:15px;font-weight:700;color:var(--t1);}
+.topbar-sub{font-size:12px;color:var(--t3);margin-left:4px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.topbar-count{font-size:12px;font-weight:600;background:var(--maroon-light);color:var(--maroon);padding:4px 12px;border-radius:var(--rpill);}
+[data-theme="dark"] .topbar-count{background:var(--maroon-light2);color:#f9a8d4;}
+.theme-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--rpill);border:1.5px solid var(--bdr);background:var(--surface2);color:var(--t2);font-size:12.5px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.theme-btn:hover{border-color:var(--bdr-h);color:var(--t1);}
+.theme-btn i{font-size:15px;}
 
-.filter-label{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;}
-/* ── Dropdown filters ── */
-.filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px;}
-.dropdown-wrap{position:relative;flex:1;min-width:180px;}
-.dropdown-btn{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:9px 14px;border-radius:var(--radius-sm);
-  border:1.5px solid var(--border);background:var(--surface-2);
-  color:var(--text-1);font-size:13.5px;font-weight:500;
-  cursor:pointer;transition:all .15s;text-align:left;
-}
-.dropdown-btn:hover{border-color:var(--border-hover);}
-.dropdown-btn.open{border-color:var(--accent);background:var(--surface);}
-.dropdown-btn i.arrow{font-size:16px;color:var(--text-3);transition:transform .2s;flex-shrink:0;}
+/* CONTENT */
+.content{padding:1.4rem 1.6rem 5rem;flex:1;}
+
+/* CONTROLS */
+.controls{display:flex;gap:10px;margin-bottom:1.2rem;align-items:center;flex-wrap:wrap;}
+.search-wrap{position:relative;flex:1;min-width:200px;}
+.search-wrap i.si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--t3);pointer-events:none;}
+.search-wrap input{width:100%;padding:9px 13px 9px 38px;border:1.5px solid var(--bdr);border-radius:var(--rsm);background:var(--surface);font-size:13.5px;color:var(--t1);outline:none;transition:border-color .15s;box-shadow:var(--shadow-sm);}
+.search-wrap input:focus{border-color:var(--maroon);}
+.search-wrap input::placeholder{color:var(--t3);}
+
+/* DROPDOWNS */
+.dropdown-wrap{position:relative;min-width:165px;}
+.dropdown-btn{width:100%;display:flex;align-items:center;gap:7px;padding:9px 13px;border-radius:var(--rsm);border:1.5px solid var(--bdr);background:var(--surface);color:var(--t1);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-align:left;box-shadow:var(--shadow-sm);white-space:nowrap;}
+.dropdown-btn:hover{border-color:var(--bdr-h);}
+.dropdown-btn.open{border-color:var(--maroon);}
+.dropdown-btn i.arrow{font-size:15px;color:var(--t3);transition:transform .2s;margin-left:auto;flex-shrink:0;}
 .dropdown-btn.open i.arrow{transform:rotate(180deg);}
-.dropdown-btn .selected-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.dropdown-btn .badge-count{
-  font-size:11px;font-weight:700;
-  background:var(--accent);color:#fff;
-  border-radius:var(--radius-pill);padding:1px 7px;flex-shrink:0;
-}
-
-.dropdown-menu{
-  position:absolute;top:calc(100% + 6px);left:0;right:0;
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--radius-sm);
-  box-shadow:var(--shadow-lg);
-  z-index:200;
-  max-height:280px;overflow-y:auto;
-  display:none;
-  scrollbar-width:thin;
-  scrollbar-color:var(--border) transparent;
-}
+.dropdown-btn i.di{font-size:15px;color:var(--t3);flex-shrink:0;}
+.sel-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:110px;}
+.dropdown-menu{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface);border:1.5px solid var(--bdr);border-radius:var(--rsm);box-shadow:var(--shadow-lg);z-index:200;max-height:270px;overflow-y:auto;display:none;}
 .dropdown-menu.open{display:block;animation:dropIn .15s ease;}
-@keyframes dropIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
+.dd-search-wrap{padding:7px 9px;border-bottom:1px solid var(--bdr);position:sticky;top:0;background:var(--surface);z-index:1;position:relative;}
+.dd-search-wrap i{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3);}
+.dd-search-wrap input{width:100%;padding:5px 9px 5px 26px;border:1px solid var(--bdr);border-radius:6px;background:var(--surface2);color:var(--t1);font-size:12px;outline:none;}
+.dd-search-wrap input:focus{border-color:var(--maroon);}
+.dd-search-wrap input::placeholder{color:var(--t3);}
+.dd-opt{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;font-size:12.5px;color:var(--t2);cursor:pointer;transition:background .1s;gap:7px;}
+.dd-opt:hover{background:var(--surface2);}
+.dd-opt.active{background:var(--maroon-light);color:var(--maroon);font-weight:600;}
+[data-theme="dark"] .dd-opt.active{background:var(--maroon-light2);color:#f9a8d4;}
+.dd-opt .opt-lbl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dd-opt .opt-cnt{font-size:10.5px;color:var(--t3);flex-shrink:0;}
+.dd-divider{height:1px;background:var(--bdr);margin:2px 0;}
 
-.dd-search{
-  padding:8px 10px;border-bottom:1px solid var(--border);
-  position:sticky;top:0;background:var(--surface);z-index:1;
-}
-.dd-search input{
-  width:100%;padding:6px 10px 6px 30px;
-  border:1px solid var(--border);border-radius:6px;
-  background:var(--surface-2);color:var(--text-1);
-  font-size:12.5px;outline:none;
-}
-.dd-search input:focus{border-color:var(--accent);}
-.dd-search input::placeholder{color:var(--text-3);}
-.dd-search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text-3);}
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;}
+.count-txt{font-size:12.5px;color:var(--t3);}
+.count-txt b{color:var(--t1);}
 
-.dd-option{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:9px 14px;font-size:13px;color:var(--text-2);
-  cursor:pointer;transition:background .1s;gap:8px;
-}
-.dd-option:hover{background:var(--surface-2);}
-.dd-option.active{background:var(--accent-soft);color:var(--accent-text);font-weight:600;}
-.dd-option .opt-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.dd-option .opt-count{font-size:11px;color:var(--text-3);flex-shrink:0;}
-.dd-option.active .opt-count{color:var(--accent-text);opacity:.7;}
-.dd-divider{height:1px;background:var(--border);margin:2px 0;}
+/* SECTION HEADER */
+.section-block{margin-bottom:1.8rem;}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;}
+.section-line{flex:1;height:1px;background:var(--bdr);}
+.section-label{display:flex;align-items:center;justify-content:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--maroon);text-transform:uppercase;letter-spacing:.1em;background:var(--bg);padding:0 10px;white-space:nowrap;}
+.section-label i{font-size:12px;}
 
-/* ══════════════════════════════════════
-   COUNT + SORT
-══════════════════════════════════════ */
-.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.count-line{font-size:13px;color:var(--text-3);}
-.count-line b{color:var(--text-1);}
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px;}
 
-/* ══════════════════════════════════════
-   GRID + CARDS
-══════════════════════════════════════ */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;}
-
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:1.2rem 1.25rem 1.1rem;
-  box-shadow:var(--shadow-sm);
-  transition:border-color .2s,box-shadow .2s,transform .2s;
-  position:relative;overflow:hidden;
-}
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--card-a),var(--card-b));
-}
-.card:hover{
-  border-color:var(--border-hover);
-  box-shadow:var(--shadow-md);
-  transform:translateY(-2px);
-}
-
-.card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
-.avatar{
-  width:46px;height:46px;border-radius:12px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:15px;letter-spacing:-.3px;
-}
-.card-name{font-weight:700;font-size:15px;color:var(--text-1);line-height:1.3;margin-bottom:3px;}
-.card-desig{font-size:11.5px;color:var(--text-2);line-height:1.4;}
-
-.badge-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
-.badge{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:11px;font-weight:600;
-  padding:3px 9px;border-radius:var(--radius-pill);
-}
-.badge i{font-size:11px;}
-
-/* Contact rows */
-.contact-rows{display:flex;flex-direction:column;gap:6px;}
-.info-row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2);}
-.icon-pill{
-  width:32px;height:32px;border-radius:9px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:15px;
-  transition:background .3s;
-}
-.icon-pill.phone  {background:var(--phone-bg);color:var(--phone-c);}
-.icon-pill.mail   {background:var(--mail-bg); color:var(--mail-c);}
-.icon-pill.li     {background:var(--li-bg);   color:var(--li-c);}
-.info-row span{color:var(--text-2);}
-.info-row a{
-  color:var(--accent);text-decoration:none;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:215px;display:block;
-}
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s,border-color .2s;}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--bdr-h);}
+.card-banner{height:76px;display:flex;align-items:flex-end;padding:0 1rem 0;position:relative;}
+.card-avatar{width:50px;height:50px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;position:absolute;bottom:-21px;left:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0;}
+.card-cat-badge{margin-left:auto;margin-bottom:9px;font-size:9.5px;font-weight:700;background:rgba(255,255,255,0.18);color:#fff;padding:2px 9px;border-radius:var(--rpill);}
+.card-body{padding:28px 1rem 9px;}
+.card-name{font-weight:700;font-size:14.5px;color:var(--t1);margin-bottom:2px;}
+.card-desig{font-size:11.5px;color:var(--t2);line-height:1.4;margin-bottom:7px;}
+.card-co{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--maroon);font-weight:600;margin-bottom:11px;}
+.card-co i{font-size:13px;}
+.contact-rows{display:flex;flex-direction:column;gap:5px;margin-bottom:11px;}
+.info-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--t2);}
+.icon-pill{width:28px;height:28px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.icon-pill.phone{background:var(--phone-bg);color:var(--phone-c);}
+.icon-pill.mail{background:var(--mail-bg);color:var(--mail-c);}
+.icon-pill.li{background:var(--li-bg);color:var(--li-c);}
+.info-row a{color:var(--maroon);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px;display:block;}
 .info-row a:hover{text-decoration:underline;}
+.card-footer{border-top:1px solid var(--bdr);padding:.6rem 1rem;display:flex;gap:7px;}
+.card-action{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 7px;border-radius:7px;font-size:11.5px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s;border:1.5px solid var(--bdr);background:var(--surface2);color:var(--t2);}
+.card-action:hover{border-color:var(--bdr-h);color:var(--t1);}
+.card-action.call:hover{background:var(--phone-bg);border-color:var(--phone-c);color:var(--phone-c);}
+.card-action.email-btn:hover{background:var(--mail-bg);border-color:#93c5fd;color:var(--mail-c);}
+.card-action.linkedin-btn:hover{background:var(--li-bg);border-color:#a5b4fc;color:var(--li-c);}
+.card-action i{font-size:13px;}
 
-/* ══════════════════════════════════════
-   EMPTY
-══════════════════════════════════════ */
-.empty{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--text-3);}
-.empty i{font-size:48px;display:block;margin-bottom:12px;opacity:.4;}
-.empty p{font-size:14px;}
+/* EMPTY */
+.empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--t3);}
+.empty i{font-size:44px;display:block;margin-bottom:11px;opacity:.35;}
+.empty p{font-size:13.5px;}
 
-/* ══════════════════════════════════════
-   WATERMARK
-══════════════════════════════════════ */
-.watermark{
-  position:fixed;bottom:18px;right:18px;
-  display:flex;align-items:center;gap:7px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius-pill);
-  padding:7px 15px 7px 10px;
-  font-size:12px;font-weight:600;
-  color:var(--text-2);
-  text-decoration:none;
-  box-shadow:var(--shadow-md);
-  z-index:100;
-  transition:all .2s;
-}
-.watermark:hover{border-color:var(--accent);color:var(--accent);}
-.watermark i{font-size:16px;color:var(--accent);}
+/* BOTTOM CHIP */
+.bottom-chip{position:fixed;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;background:var(--maroon);border-radius:var(--rpill);padding:7px 14px 7px 11px;font-size:12.5px;font-weight:700;color:#fff;box-shadow:var(--shadow-md);z-index:100;pointer-events:none;}
+.bottom-chip i{font-size:15px;color:rgba(255,255,255,0.8);}
 
-/* ══════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════ */
-@media(max-width:768px){
-  .grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .stats-row{gap:0;}
-  .stat{min-width:100px;padding:.8rem 1rem;}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:700px){
+  :root{--sw:0px;}
+  .sidebar{transform:translateX(-240px);width:240px;}
+  .sidebar.open{transform:translateX(0);}
+  .sb-overlay{display:block;}
+  .main{margin-left:0;}
+  .hamburger{display:flex;}
+  .topbar{padding:0 1rem;}
+  .content{padding:1.2rem 1rem 5rem;}
+  .grid{grid-template-columns:1fr;gap:9px;}
+  .controls{flex-direction:column;gap:7px;}
+  .search-wrap,.dropdown-wrap{width:100%;min-width:unset;}
+  .sel-txt{max-width:unset;}
+  .bottom-chip .bc-label{display:none;}
+  .bottom-chip{padding:9px 11px;border-radius:50%;}
 }
-@media(max-width:600px){
-  .header{padding:0 1rem;height:56px;}
-  .header h1{font-size:15px;}
-  .header p{display:none;}
-  .hero{padding:1.4rem 1rem 1.8rem;}
-  .hero h2{font-size:20px;}
-  .hero p{font-size:13px;}
-  .stats-outer{padding:0 1rem;}
-  .container{padding:1rem 1rem 5rem;}
-  .controls{padding:.9rem 1rem;}
-  .grid{grid-template-columns:1fr;gap:10px;}
-  .btn-outline .btn-label,.btn-accent .btn-label{display:none;}
-  .btn-outline,.btn-accent{padding:7px 10px;border-radius:50%;}
-  .watermark .wm-label{display:none;}
-  .watermark{padding:9px;border-radius:50%;}
-  .watermark i{font-size:19px;margin:0;}
-  .info-row a{max-width:180px;}
-}
-@media(max-width:400px){
-  .grid{grid-template-columns:1fr;}
-  .stat .val{font-size:20px;}
-}
+@media(max-width:480px){.grid{grid-template-columns:1fr;}.topbar-sub{display:none;}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-left">
-    <div class="logo-wrap"><i class="ti ti-address-book"></i></div>
-    <div>
-      <h1>HR Directory</h1>
-      <p>50 HR professionals across India</p>
+<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo">
+      <div class="sb-logo-icon"><i class="ti ti-address-book"></i></div>
+      <div>
+        <div class="sb-logo-text">HR Directory</div>
+        <div class="sb-logo-sub">Talent Network</div>
+      </div>
+    </div>
+    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-profile">
+      <div class="sb-profile-av">NP</div>
+      <div>
+        <div class="sb-profile-name">Navneet Pathak</div>
+        <div class="sb-profile-role">View my profile →</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- SIDEBAR SEARCH -->
+  <div class="sb-search">
+    <div class="sb-search-wrap">
+      <i class="ti ti-search"></i>
+      <input type="text" id="sbSearchInput" placeholder="Quick search…" oninput="filterSidebarItems()"/>
+      <i class="ti ti-x sb-search-clear" id="sbSearchClear" onclick="clearSbSearch()"></i>
     </div>
   </div>
-  <div class="header-right">
-    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="btn-accent">
+
+  <nav class="sb-nav" id="sidebarNav">
+    <!-- filled by JS -->
+    <div class="sb-no-results" id="sbNoResults">No match found</div>
+  </nav>
+
+  <div class="sb-stats" id="sbStats"></div>
+
+  <div class="sb-bottom">
+    <button class="sb-action-btn" onclick="toggleTheme()">
+      <i class="ti ti-moon" id="themeIconSb"></i>
+      <span id="themeLabelSb">Dark</span>
+    </button>
+    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-action-btn">
       <i class="ti ti-user-circle"></i>
-      <span class="btn-label">My Profile</span>
+      <span>Profile</span>
     </a>
-    <button class="btn-outline" id="themeToggle" onclick="toggleTheme()">
-      <i class="ti ti-moon" id="themeIcon"></i>
-      <span class="btn-label" id="themeLabel">Dark</span>
+    <button class="sb-action-btn" onclick="alert('Share feature coming soon!')">
+      <i class="ti ti-share"></i>
+      <span>Share</span>
     </button>
   </div>
-</header>
+</aside>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <h2>Find the right HR contact</h2>
-    <p>A curated directory of talent acquisition & HR professionals across FMCG, Tech, Finance, Consulting and more.</p>
-  </div>
-</div>
-
-<!-- STATS BAR -->
-<div class="stats-outer">
-  <div class="stats-inner">
-    <div class="stats-row" id="statsRow"></div>
-  </div>
-</div>
-
-<!-- MAIN -->
-<main class="container">
-
-  <div class="controls">
-    <div class="search-wrap">
-      <i class="ti ti-search"></i>
-      <input type="text" id="searchInput" placeholder="Search by name, company or designation…" oninput="render()"/>
+<div class="main">
+  <header class="topbar">
+    <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
+    <span class="topbar-title" id="topbarTitle">All Contacts</span>
+    <span class="topbar-sub" id="topbarSub">HR Directory</span>
+    <div class="topbar-right">
+      <span class="topbar-count" id="topbarCount">50 contacts</span>
+      <button class="theme-btn" onclick="toggleTheme()">
+        <i class="ti ti-moon" id="themeIcon2"></i>
+        <span id="themeLabel2">Dark</span>
+      </button>
     </div>
-    <div class="filter-row">
-      <!-- Category dropdown -->
+  </header>
+
+  <div class="content">
+    <div class="controls">
+      <div class="search-wrap">
+        <i class="ti ti-search si"></i>
+        <input type="text" id="searchInput" placeholder="Search name, company or role…" oninput="render()"/>
+      </div>
       <div class="dropdown-wrap" id="catWrap">
-        <button class="dropdown-btn" id="catBtn" onclick="toggleDD('cat')">
-          <i class="ti ti-tag" style="font-size:15px;color:var(--text-3);flex-shrink:0;"></i>
-          <span class="selected-text" id="catBtnText">All Categories</span>
+        <button class="dropdown-btn" id="catBtn" onclick="toggleCatDD()">
+          <i class="ti ti-layout-grid di"></i>
+          <span class="sel-txt" id="catBtnText">All Categories</span>
           <i class="ti ti-chevron-down arrow"></i>
         </button>
         <div class="dropdown-menu" id="catMenu">
-          <div class="dd-option active" data-val="All" onclick="setCatDD('All',this)">
-            <span class="opt-label">All Categories</span>
-            <span class="opt-count" id="catAllCount"></span>
+          <div class="dd-opt active" data-val="All" onclick="setCatDD('All',this)">
+            <span class="opt-lbl">All Categories</span>
+            <span class="opt-cnt" id="catAllCnt">50</span>
           </div>
           <div class="dd-divider"></div>
-          <div id="catOptions"></div>
+          <div id="catOpts"></div>
         </div>
       </div>
-
-      <!-- Company dropdown -->
       <div class="dropdown-wrap" id="coWrap">
-        <button class="dropdown-btn" id="coBtn" onclick="toggleDD('co')">
-          <i class="ti ti-building" style="font-size:15px;color:var(--text-3);flex-shrink:0;"></i>
-          <span class="selected-text" id="coBtnText">All Companies</span>
+        <button class="dropdown-btn" id="coBtn" onclick="toggleCoDD()">
+          <i class="ti ti-building di"></i>
+          <span class="sel-txt" id="coBtnText">All Companies</span>
           <i class="ti ti-chevron-down arrow"></i>
         </button>
         <div class="dropdown-menu" id="coMenu">
-          <div class="dd-search">
-            <i class="ti ti-search dd-search-icon"></i>
-            <input type="text" id="coSearch" placeholder="Search company…" oninput="filterCoOptions()"/>
+          <div class="dd-search-wrap">
+            <i class="ti ti-search"></i>
+            <input type="text" id="coSearch" placeholder="Search company…" oninput="filterCoOpts()"/>
           </div>
-          <div class="dd-option active" data-val="All" onclick="setCoDD('All',this)">
-            <span class="opt-label">All Companies</span>
-            <span class="opt-count" id="coAllCount"></span>
+          <div class="dd-opt active" data-val="All" onclick="setCoDD('All',this)">
+            <span class="opt-lbl">All Companies</span>
+            <span class="opt-cnt" id="coAllCnt"></span>
           </div>
           <div class="dd-divider"></div>
-          <div id="coOptions"></div>
+          <div id="coOpts"></div>
         </div>
       </div>
     </div>
+
+    <div class="toolbar">
+      <div class="count-txt" id="countTxt"></div>
+    </div>
+
+    <div id="sectionsContainer"></div>
   </div>
+</div>
 
-  <div class="toolbar">
-    <div class="count-line" id="countLine"></div>
-  </div>
-
-  <div class="grid" id="grid"></div>
-</main>
-
-<!-- WATERMARK -->
-<a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="watermark">
-  <i class="ti ti-user-circle"></i>
-  <span class="wm-label">Made by Navneet Pathak</span>
-</a>
+<div class="bottom-chip" id="bottomChip">
+  <i class="ti ti-users"></i>
+  <span class="bc-label" id="bottomChipCount">50 contacts</span>
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════
-// DATA  — category: FMCG | Tech | Finance | Ecommerce | Consulting | Manufacturing
-// ═══════════════════════════════════════════════════
 const data=[
-  {id:1, cat:"FMCG",         co:"Hindustan Unilever Limited",       name:"Aditi Arora",        ph:"9875275144", email:"aditi.arora@unilever.com",              li:"https://www.linkedin.com/in/aditi-arora-604952213/",               desig:"Senior HR Executive"},
-  {id:2, cat:"FMCG",         co:"Procter & Gamble",                 name:"Rajat Sharma",       ph:"7838840455", email:"sharma.r@pg.com",                       li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",              desig:"Human Resources Payroll Executive"},
-  {id:3, cat:"FMCG",         co:"Nestlé Nespresso SA",              name:"Anusheel Pandey",    ph:"9754800308", email:"anusheel.pandey@nespresso.com",         li:"https://www.linkedin.com/in/anusheelpandey/",                      desig:"Talent Acquisition Specialist"},
-  {id:4, cat:"FMCG",         co:"Marico Limited",                   name:"Kimberly Fernandes", ph:"8291420082", email:"kimberly.fernandes@marico.com",         li:"https://www.linkedin.com/in/kimberlyfernandes2206/",               desig:"Talent Acquisition Executive"},
-  {id:5, cat:"FMCG",         co:"Marico Limited",                   name:"Ajinkya Utekar",     ph:"9969069712", email:"ajinkya.utekar@marico.com",             li:"https://www.linkedin.com/in/ajinkya-utekar-3546271a4/",            desig:"HR - Talent Acquisition"},
-  {id:6, cat:"FMCG",         co:"Marico Limited",                   name:"Latika Kapoor",      ph:"7144297103", email:"latika.kapoor@marico.com",              li:"https://www.linkedin.com/in/latika-kapoor-062520165/",             desig:"Senior Officer Talent Acquisition"},
-  {id:7, cat:"FMCG",         co:"Godrej Consumer Products Limited", name:"Kavitendra Joshi",   ph:"7773020103", email:"kavitendra.joshi@godrejcp.com",         li:"https://www.linkedin.com/in/kavitendra-joshi-063481231/",          desig:"Senior Associate Talent Acquisition"},
-  {id:8, cat:"FMCG",         co:"ITC Limited",                      name:"Abhirup Dasgupta",   ph:"9748880958", email:"abhirup.dasgupta@itc.in",               li:"https://www.linkedin.com/in/abhirup-dasgupta-2852bb189/",          desig:"Talent Acquisition Specialist"},
-  {id:9, cat:"FMCG",         co:"ITC Limited",                      name:"Astha Gupta",        ph:"9516662700", email:"astha.gupta@itc.in",                    li:"https://www.linkedin.com/in/astha-gupta-7111b1160/",               desig:"Manager - Talent Acquisition and DEI"},
-  {id:10,cat:"FMCG",         co:"ITC Limited",                      name:"Beauty Kumari",      ph:"9903002705", email:"beauty.kumari@itc.in",                  li:"https://www.linkedin.com/in/beauty-kumari-20281170/",              desig:"Talent Acquisition Specialist"},
-  {id:11,cat:"FMCG",         co:"Dabur India Limited",              name:"Shubham Bhardwaj",   ph:"9582045602", email:"shubham.bhardwaj@dabur.com",            li:"https://www.linkedin.com/in/shubham-bhardwaj-51860970/",           desig:"Corporate HR - Talent Acquisition"},
-  {id:12,cat:"FMCG",         co:"Dabur India Limited",              name:"Rahul Grover",       ph:"9899467184", email:"rahul.grover@dabur.com",                li:"https://www.linkedin.com/in/rahul-grover-1b3a4610/",               desig:"Talent Acquisition Manager"},
-  {id:13,cat:"FMCG",         co:"Britannia Industries Limited",     name:"Disha Makani",       ph:"8088359178", email:"disham@britindia.com",                  li:"https://www.linkedin.com/in/disha-makani-43b403215/",              desig:"Human Resources Management"},
-  {id:14,cat:"FMCG",         co:"Britannia Industries Limited",     name:"Shruti Pawar",       ph:"8000114533", email:"shrutipawar@britindia.com",             li:"https://www.linkedin.com/in/shruti-pawar-8ba42b162/",              desig:"Human Resources Officer"},
-  {id:15,cat:"FMCG",         co:"Titan Company Limited",            name:"Pragya Chaudhary",   ph:"9883379294", email:"pragya@titan.co.in",                    li:"https://www.linkedin.com/in/pragya-chaudhary-946048aa/",           desig:"Talent Management Lead"},
-  {id:16,cat:"FMCG",         co:"Colgate-Palmolive (India) Ltd",   name:"Ankita Ghag",        ph:"9167394473", email:"ankita_ghag@colpal.com",                li:"https://www.linkedin.com/in/ankig13/",                             desig:"Talent Acquisition"},
-  {id:17,cat:"Tech",          co:"Google India",                     name:"Twinkle Sharma",     ph:"8448629398", email:"sharmatwinkle@google.com",              li:"https://www.linkedin.com/in/twinkle-sharma-770608111/",            desig:"Talent Acquisition Specialist"},
-  {id:18,cat:"Tech",          co:"Amazon",                           name:"Swati Nanda",        ph:"9348117494", email:"swnanda@amazon.com",                    li:"https://www.linkedin.com/in/swati-priyambada-nanda-12670a18a/",    desig:"Talent Acquisition Specialist"},
-  {id:19,cat:"Tech",          co:"Amazon",                           name:"Isha Siddiqui",      ph:"9958070190", email:"siddiquii@amazon.com",                  li:"https://www.linkedin.com/in/isha-siddiqui-79837322b/",             desig:"Talent Acquisition Specialist"},
-  {id:20,cat:"Tech",          co:"Meta",                             name:"Sakshi Jaiswal",     ph:"9999110428", email:"sjaiswal@meta.com",                     li:"https://www.linkedin.com/in/sakshi-jaiswal-67b97321b/",            desig:"Talent Acquisition Specialist"},
-  {id:21,cat:"Tech",          co:"Microsoft",                        name:"Vishnu Prakash",     ph:"9650040736", email:"vprakash@microsoft.com",                li:"https://www.linkedin.com/in/vishnuprakash/",                       desig:"Talent Acquisition Specialist"},
-  {id:22,cat:"Tech",          co:"Microsoft",                        name:"Akriti Jain",        ph:"8805982789", email:"jaina@microsoft.com",                   li:"https://www.linkedin.com/in/akriti-jain-1b9808240/",               desig:"Talent Acquisition Specialist"},
-  {id:23,cat:"Tech",          co:"Infosys",                          name:"Sushrita Digal",     ph:"9535008561", email:"sushrita.digal@infosys.com",            li:"https://www.linkedin.com/in/sushrita-digal-1966282a/",             desig:"Talent Acquisition Specialist"},
-  {id:24,cat:"Tech",          co:"Wipro",                            name:"Supriya Dubey",      ph:"6812065314", email:"supriya.dubey@wipro.com",               li:"https://www.linkedin.com/in/supriya-dubey-22288b121/",             desig:"Talent Acquisition Specialist"},
-  {id:25,cat:"Tech",          co:"Wipro",                            name:"Anish Singh",        ph:"9910966150", email:"anish.singh11@wipro.com",               li:"https://www.linkedin.com/in/anish-kumar-singh-310306114/",         desig:"Talent Acquisition Specialist"},
-  {id:26,cat:"Tech",          co:"Wipro",                            name:"Priyanka B",         ph:"9816668340", email:"priyanka.b81@wipro.com",                li:"https://www.linkedin.com/in/priyanka-b-a70858218/",                desig:"Talent Acquisition Specialist"},
-  {id:27,cat:"Tech",          co:"Tata Consultancy Services",        name:"Shalu Mishra",       ph:"9319563276", email:"m.shalu@tcs.com",                       li:"https://www.linkedin.com/in/shalu-mishra-a77a7b174/",              desig:"Talent Acquisition Specialist"},
-  {id:28,cat:"Tech",          co:"Tata Consultancy Services",        name:"Priya Jha",          ph:"7489358526", email:"jha.priya5@tcs.com",                    li:"https://www.linkedin.com/in/priya-jha-31b262251/",                 desig:"Talent Acquisition Specialist"},
-  {id:29,cat:"Tech",          co:"Larsen & Toubro",                  name:"Sripriya Prakash",   ph:"9840505276", email:"sripriya.prakash@larsentoubro.com",     li:"https://www.linkedin.com/in/sripriya-prakash-739b203a/",           desig:"Talent Acquisition Specialist"},
-  {id:30,cat:"Ecommerce",     co:"PhonePe",                          name:"Komal Sharma",       ph:"8968644475", email:"komal.sharma@phonepe.com",              li:"https://www.linkedin.com/in/komalsharma6/",                        desig:"Talent Acquisition Specialist"},
-  {id:31,cat:"Ecommerce",     co:"PhonePe",                          name:"Deepali Upadhyay",   ph:"7991155160", email:"deepali.netam.con@phonepe.com",         li:"https://www.linkedin.com/in/deepali-kumari-upadhyay-927814387/",   desig:"Talent Acquisition Recruiter"},
-  {id:32,cat:"Ecommerce",     co:"CRED",                             name:"Melveena Hilton",    ph:"9930922595", email:"melveena.hilton@cred.club",             li:"https://www.linkedin.com/in/melveena-hilton-b70346212/",           desig:"Talent Acquisition Consultant"},
-  {id:33,cat:"Ecommerce",     co:"Swiggy",                           name:"Shashank Jain",      ph:"8124363686", email:"shashank.jain@instamart.in",            li:"https://www.linkedin.com/in/shashank-jain-02b780197/",             desig:"Talent Acquisition Specialist"},
-  {id:34,cat:"Ecommerce",     co:"Myntra",                           name:"Divya Mohanty",      ph:"7606003551", email:"divya.mohanty1@myntra.com",             li:"https://www.linkedin.com/in/divya-mohanty-696025108/",             desig:"Talent Acquisition Specialist"},
-  {id:35,cat:"Finance",       co:"HDFC Bank",                        name:"Aarti Bansode",      ph:"8554811777", email:"aarti.bansode@hdfcbank.com",            li:"https://www.linkedin.com/in/aarti-bansode-2146a6148/",             desig:"Talent Acquisition Specialist"},
-  {id:36,cat:"Finance",       co:"ICICI Bank",                       name:"Anjan Acharya",      ph:"7749080378", email:"anjan.acharya@icicibank.com",           li:"https://www.linkedin.com/in/anjan-kumar-acharya-66888861/",        desig:"Chief Manager HR - Talent Acquisition & HR BP"},
-  {id:37,cat:"Finance",       co:"Axis Bank",                        name:"Preeti Bakliwal",    ph:"8767656264", email:"preeti.bakliwal@axisbank.com",          li:"https://www.linkedin.com/in/preeti-bakliwal-85933a19a/",           desig:"Talent Acquisition Specialist"},
-  {id:38,cat:"Finance",       co:"Razorpay",                         name:"Ravi Kumar",         ph:"7349498064", email:"ravi.kumar@razorpay.com",               li:"https://www.linkedin.com/in/singhkravi/",                          desig:"Talent Acquisition Specialist"},
-  {id:39,cat:"Finance",       co:"Razorpay",                         name:"Sumit Premi",        ph:"8826363651", email:"sumitpremi01@gmail.com",                li:"https://www.linkedin.com/in/sumitpremi/",                          desig:"Head Talent Acquisition Specialist"},
-  {id:40,cat:"Finance",       co:"Groww",                            name:"Himanshu Rawat",     ph:"7409041942", email:"himanshuta@groww.in",                   li:"https://www.linkedin.com/in/himanshu-rawat-496887190/",            desig:"Talent Acquisition Specialist"},
-  {id:41,cat:"Finance",       co:"Bajaj Finserv",                    name:"Muskan Gupta",       ph:"9399469810", email:"muskan.gupta2@bajajfinserv.in",         li:"https://www.linkedin.com/in/muskan-gupta-259b89200/",              desig:"Talent Acquisition"},
-  {id:42,cat:"Finance",       co:"IDFC FIRST Bank",                  name:"Sunisha Bachhav",    ph:"9075759475", email:"sunisha.bachhav@idfcfirstbank.com",     li:"https://www.linkedin.com/in/sunishab/",                            desig:"Talent Acquisition"},
-  {id:43,cat:"Finance",       co:"IDFC FIRST Bank",                  name:"Ashish Ojha",        ph:"9325830001", email:"ashish.ojha@idfcfirstbank.com",         li:"https://www.linkedin.com/in/ashishidfc/",                          desig:"Talent Acquisition"},
-  {id:44,cat:"Finance",       co:"Angel One",                        name:"Vaishnavi Kedlaya",  ph:"8867172337", email:"vaishnavi.kedlaya@angelbroking.com",    li:"https://www.linkedin.com/in/vaishnavi-kedlaya/",                   desig:"Talent Acquisition Manager"},
-  {id:45,cat:"Finance",       co:"Angel One",                        name:"Ashi Khare",         ph:"7898754296", email:"ashi.2khare@angelbroking.com",           li:"https://www.linkedin.com/in/ashikhare/",                           desig:"Talent Acquisition"},
-  {id:46,cat:"Consulting",    co:"Deloitte",                         name:"Aishwarya Ramesh",   ph:"7004034677", email:"raishwarya@deloitte.com",               li:"https://www.linkedin.com/in/aishwarya-ramesh-bba92aa0/",           desig:"Talent Acquisition"},
-  {id:47,cat:"Consulting",    co:"Deloitte",                         name:"Swarali Donde",      ph:"7066033385", email:"swdonde@deloitte.com",                  li:"https://www.linkedin.com/in/swarali-donde-56a48377/",              desig:"Talent Acquisition Specialist"},
-  {id:48,cat:"Consulting",    co:"Capgemini",                        name:"Neha Mittal",        ph:"9718309865", email:"nmittal@capgemini.com",                 li:"https://www.linkedin.com/in/neha-mittal-4b15132a/",                desig:"Talent Acquisition Specialist"},
-  {id:49,cat:"Consulting",    co:"Capgemini",                        name:"Ashish Tiwari",      ph:"9986312757", email:"ashish.e.tiwari@capgemini.com",         li:"https://www.linkedin.com/in/ashishtiwari-talentacquistion/",       desig:"Talent Acquisition Manager"},
-  {id:50,cat:"Consulting",    co:"KPMG India",                       name:"Akansha Bamne",      ph:"7300714753", email:"akanshabamne@kpmg.com",                 li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",             desig:"Talent Acquisition Specialist"},
+  {id:1,cat:"FMCG",co:"Hindustan Unilever Limited",name:"Aditi Arora",ph:"9875275144",email:"aditi.arora@unilever.com",li:"https://www.linkedin.com/in/aditi-arora-604952213/",desig:"Senior HR Executive"},
+  {id:2,cat:"FMCG",co:"Procter & Gamble",name:"Rajat Sharma",ph:"7838840455",email:"sharma.r@pg.com",li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",desig:"Human Resources Payroll Executive"},
+  {id:3,cat:"FMCG",co:"Nestlé Nespresso SA",name:"Anusheel Pandey",ph:"9754800308",email:"anusheel.pandey@nespresso.com",li:"https://www.linkedin.com/in/anusheelpandey/",desig:"Talent Acquisition Specialist"},
+  {id:4,cat:"FMCG",co:"Marico Limited",name:"Kimberly Fernandes",ph:"8291420082",email:"kimberly.fernandes@marico.com",li:"https://www.linkedin.com/in/kimberlyfernandes2206/",desig:"Talent Acquisition Executive"},
+  {id:5,cat:"FMCG",co:"Marico Limited",name:"Ajinkya Utekar",ph:"9969069712",email:"ajinkya.utekar@marico.com",li:"https://www.linkedin.com/in/ajinkya-utekar-3546271a4/",desig:"HR - Talent Acquisition"},
+  {id:6,cat:"FMCG",co:"Marico Limited",name:"Latika Kapoor",ph:"7144297103",email:"latika.kapoor@marico.com",li:"https://www.linkedin.com/in/latika-kapoor-062520165/",desig:"Senior Officer Talent Acquisition"},
+  {id:7,cat:"FMCG",co:"Godrej Consumer Products Limited",name:"Kavitendra Joshi",ph:"7773020103",email:"kavitendra.joshi@godrejcp.com",li:"https://www.linkedin.com/in/kavitendra-joshi-063481231/",desig:"Senior Associate Talent Acquisition"},
+  {id:8,cat:"FMCG",co:"ITC Limited",name:"Abhirup Dasgupta",ph:"9748880958",email:"abhirup.dasgupta@itc.in",li:"https://www.linkedin.com/in/abhirup-dasgupta-2852bb189/",desig:"Talent Acquisition Specialist"},
+  {id:9,cat:"FMCG",co:"ITC Limited",name:"Astha Gupta",ph:"9516662700",email:"astha.gupta@itc.in",li:"https://www.linkedin.com/in/astha-gupta-7111b1160/",desig:"Manager - Talent Acquisition and DEI"},
+  {id:10,cat:"FMCG",co:"ITC Limited",name:"Beauty Kumari",ph:"9903002705",email:"beauty.kumari@itc.in",li:"https://www.linkedin.com/in/beauty-kumari-20281170/",desig:"Talent Acquisition Specialist"},
+  {id:11,cat:"FMCG",co:"Dabur India Limited",name:"Shubham Bhardwaj",ph:"9582045602",email:"shubham.bhardwaj@dabur.com",li:"https://www.linkedin.com/in/shubham-bhardwaj-51860970/",desig:"Corporate HR - Talent Acquisition"},
+  {id:12,cat:"FMCG",co:"Dabur India Limited",name:"Rahul Grover",ph:"9899467184",email:"rahul.grover@dabur.com",li:"https://www.linkedin.com/in/rahul-grover-1b3a4610/",desig:"Talent Acquisition Manager"},
+  {id:13,cat:"FMCG",co:"Britannia Industries Limited",name:"Disha Makani",ph:"8088359178",email:"disham@britindia.com",li:"https://www.linkedin.com/in/disha-makani-43b403215/",desig:"Human Resources Management"},
+  {id:14,cat:"FMCG",co:"Britannia Industries Limited",name:"Shruti Pawar",ph:"8000114533",email:"shrutipawar@britindia.com",li:"https://www.linkedin.com/in/shruti-pawar-8ba42b162/",desig:"Human Resources Officer"},
+  {id:15,cat:"FMCG",co:"Titan Company Limited",name:"Pragya Chaudhary",ph:"9883379294",email:"pragya@titan.co.in",li:"https://www.linkedin.com/in/pragya-chaudhary-946048aa/",desig:"Talent Management Lead"},
+  {id:16,cat:"FMCG",co:"Colgate-Palmolive (India) Ltd",name:"Ankita Ghag",ph:"9167394473",email:"ankita_ghag@colpal.com",li:"https://www.linkedin.com/in/ankig13/",desig:"Talent Acquisition"},
+  {id:17,cat:"Tech",co:"Google India",name:"Twinkle Sharma",ph:"8448629398",email:"sharmatwinkle@google.com",li:"https://www.linkedin.com/in/twinkle-sharma-770608111/",desig:"Talent Acquisition Specialist"},
+  {id:18,cat:"Tech",co:"Amazon",name:"Swati Nanda",ph:"9348117494",email:"swnanda@amazon.com",li:"https://www.linkedin.com/in/swati-priyambada-nanda-12670a18a/",desig:"Talent Acquisition Specialist"},
+  {id:19,cat:"Tech",co:"Amazon",name:"Isha Siddiqui",ph:"9958070190",email:"siddiquii@amazon.com",li:"https://www.linkedin.com/in/isha-siddiqui-79837322b/",desig:"Talent Acquisition Specialist"},
+  {id:20,cat:"Tech",co:"Meta",name:"Sakshi Jaiswal",ph:"9999110428",email:"sjaiswal@meta.com",li:"https://www.linkedin.com/in/sakshi-jaiswal-67b97321b/",desig:"Talent Acquisition Specialist"},
+  {id:21,cat:"Tech",co:"Microsoft",name:"Vishnu Prakash",ph:"9650040736",email:"vprakash@microsoft.com",li:"https://www.linkedin.com/in/vishnuprakash/",desig:"Talent Acquisition Specialist"},
+  {id:22,cat:"Tech",co:"Microsoft",name:"Akriti Jain",ph:"8805982789",email:"jaina@microsoft.com",li:"https://www.linkedin.com/in/akriti-jain-1b9808240/",desig:"Talent Acquisition Specialist"},
+  {id:23,cat:"Tech",co:"Infosys",name:"Sushrita Digal",ph:"9535008561",email:"sushrita.digal@infosys.com",li:"https://www.linkedin.com/in/sushrita-digal-1966282a/",desig:"Talent Acquisition Specialist"},
+  {id:24,cat:"Tech",co:"Wipro",name:"Supriya Dubey",ph:"6812065314",email:"supriya.dubey@wipro.com",li:"https://www.linkedin.com/in/supriya-dubey-22288b121/",desig:"Talent Acquisition Specialist"},
+  {id:25,cat:"Tech",co:"Wipro",name:"Anish Singh",ph:"9910966150",email:"anish.singh11@wipro.com",li:"https://www.linkedin.com/in/anish-kumar-singh-310306114/",desig:"Talent Acquisition Specialist"},
+  {id:26,cat:"Tech",co:"Wipro",name:"Priyanka B",ph:"9816668340",email:"priyanka.b81@wipro.com",li:"https://www.linkedin.com/in/priyanka-b-a70858218/",desig:"Talent Acquisition Specialist"},
+  {id:27,cat:"Tech",co:"Tata Consultancy Services",name:"Shalu Mishra",ph:"9319563276",email:"m.shalu@tcs.com",li:"https://www.linkedin.com/in/shalu-mishra-a77a7b174/",desig:"Talent Acquisition Specialist"},
+  {id:28,cat:"Tech",co:"Tata Consultancy Services",name:"Priya Jha",ph:"7489358526",email:"jha.priya5@tcs.com",li:"https://www.linkedin.com/in/priya-jha-31b262251/",desig:"Talent Acquisition Specialist"},
+  {id:29,cat:"Tech",co:"Larsen & Toubro",name:"Sripriya Prakash",ph:"9840505276",email:"sripriya.prakash@larsentoubro.com",li:"https://www.linkedin.com/in/sripriya-prakash-739b203a/",desig:"Talent Acquisition Specialist"},
+  {id:30,cat:"Ecommerce",co:"PhonePe",name:"Komal Sharma",ph:"8968644475",email:"komal.sharma@phonepe.com",li:"https://www.linkedin.com/in/komalsharma6/",desig:"Talent Acquisition Specialist"},
+  {id:31,cat:"Ecommerce",co:"PhonePe",name:"Deepali Upadhyay",ph:"7991155160",email:"deepali.netam.con@phonepe.com",li:"https://www.linkedin.com/in/deepali-kumari-upadhyay-927814387/",desig:"Talent Acquisition Recruiter"},
+  {id:32,cat:"Ecommerce",co:"CRED",name:"Melveena Hilton",ph:"9930922595",email:"melveena.hilton@cred.club",li:"https://www.linkedin.com/in/melveena-hilton-b70346212/",desig:"Talent Acquisition Consultant"},
+  {id:33,cat:"Ecommerce",co:"Swiggy",name:"Shashank Jain",ph:"8124363686",email:"shashank.jain@instamart.in",li:"https://www.linkedin.com/in/shashank-jain-02b780197/",desig:"Talent Acquisition Specialist"},
+  {id:34,cat:"Ecommerce",co:"Myntra",name:"Divya Mohanty",ph:"7606003551",email:"divya.mohanty1@myntra.com",li:"https://www.linkedin.com/in/divya-mohanty-696025108/",desig:"Talent Acquisition Specialist"},
+  {id:35,cat:"Finance",co:"HDFC Bank",name:"Aarti Bansode",ph:"8554811777",email:"aarti.bansode@hdfcbank.com",li:"https://www.linkedin.com/in/aarti-bansode-2146a6148/",desig:"Talent Acquisition Specialist"},
+  {id:36,cat:"Finance",co:"ICICI Bank",name:"Anjan Acharya",ph:"7749080378",email:"anjan.acharya@icicibank.com",li:"https://www.linkedin.com/in/anjan-kumar-acharya-66888861/",desig:"Chief Manager HR - Talent Acquisition & BP"},
+  {id:37,cat:"Finance",co:"Axis Bank",name:"Preeti Bakliwal",ph:"8767656264",email:"preeti.bakliwal@axisbank.com",li:"https://www.linkedin.com/in/preeti-bakliwal-85933a19a/",desig:"Talent Acquisition Specialist"},
+  {id:38,cat:"Finance",co:"Razorpay",name:"Ravi Kumar",ph:"7349498064",email:"ravi.kumar@razorpay.com",li:"https://www.linkedin.com/in/singhkravi/",desig:"Talent Acquisition Specialist"},
+  {id:39,cat:"Finance",co:"Razorpay",name:"Sumit Premi",ph:"8826363651",email:"sumitpremi01@gmail.com",li:"https://www.linkedin.com/in/sumitpremi/",desig:"Head Talent Acquisition Specialist"},
+  {id:40,cat:"Finance",co:"Groww",name:"Himanshu Rawat",ph:"7409041942",email:"himanshuta@groww.in",li:"https://www.linkedin.com/in/himanshu-rawat-496887190/",desig:"Talent Acquisition Specialist"},
+  {id:41,cat:"Finance",co:"Bajaj Finserv",name:"Muskan Gupta",ph:"9399469810",email:"muskan.gupta2@bajajfinserv.in",li:"https://www.linkedin.com/in/muskan-gupta-259b89200/",desig:"Talent Acquisition"},
+  {id:42,cat:"Finance",co:"IDFC FIRST Bank",name:"Sunisha Bachhav",ph:"9075759475",email:"sunisha.bachhav@idfcfirstbank.com",li:"https://www.linkedin.com/in/sunishab/",desig:"Talent Acquisition"},
+  {id:43,cat:"Finance",co:"IDFC FIRST Bank",name:"Ashish Ojha",ph:"9325830001",email:"ashish.ojha@idfcfirstbank.com",li:"https://www.linkedin.com/in/ashishidfc/",desig:"Talent Acquisition"},
+  {id:44,cat:"Finance",co:"Angel One",name:"Vaishnavi Kedlaya",ph:"8867172337",email:"vaishnavi.kedlaya@angelbroking.com",li:"https://www.linkedin.com/in/vaishnavi-kedlaya/",desig:"Talent Acquisition Manager"},
+  {id:45,cat:"Finance",co:"Angel One",name:"Ashi Khare",ph:"7898754296",email:"ashi.2khare@angelbrobing.com",li:"https://www.linkedin.com/in/ashikhare/",desig:"Talent Acquisition"},
+  {id:46,cat:"Consulting",co:"Deloitte",name:"Aishwarya Ramesh",ph:"7004034677",email:"raishwarya@deloitte.com",li:"https://www.linkedin.com/in/aishwarya-ramesh-bba92aa0/",desig:"Talent Acquisition"},
+  {id:47,cat:"Consulting",co:"Deloitte",name:"Swarali Donde",ph:"7066033385",email:"swdonde@deloitte.com",li:"https://www.linkedin.com/in/swarali-donde-56a48377/",desig:"Talent Acquisition Specialist"},
+  {id:48,cat:"Consulting",co:"Capgemini",name:"Neha Mittal",ph:"9718309865",email:"nmittal@capgemini.com",li:"https://www.linkedin.com/in/neha-mittal-4b15132a/",desig:"Talent Acquisition Specialist"},
+  {id:49,cat:"Consulting",co:"Capgemini",name:"Ashish Tiwari",ph:"9986312757",email:"ashish.e.tiwari@capgemini.com",li:"https://www.linkedin.com/in/ashishtiwari-talentacquistion/",desig:"Talent Acquisition Manager"},
+  {id:50,cat:"Consulting",co:"KPMG India",name:"Akansha Bamne",ph:"7300714753",email:"akanshabamne@kpmg.com",li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",desig:"Talent Acquisition Specialist"},
 ];
 
-// ═══════════════════════════════════════════════════
-// CATEGORY CONFIG
-// ═══════════════════════════════════════════════════
 const catCfg={
-  "FMCG":        {grad:["#10b981","#059669"], light:{bg:"#d1fae5",c:"#065f46"}, dark:{bg:"#064e3b",c:"#6ee7b7"}},
-  "Tech":        {grad:["#3b82f6","#2563eb"], light:{bg:"#dbeafe",c:"#1e40af"}, dark:{bg:"#1e3a5f",c:"#93c5fd"}},
-  "Finance":     {grad:["#f59e0b","#d97706"], light:{bg:"#fef3c7",c:"#92400e"}, dark:{bg:"#451a03",c:"#fbbf24"}},
-  "Ecommerce":   {grad:["#ec4899","#db2777"], light:{bg:"#fce7f3",c:"#9d174d"}, dark:{bg:"#500724",c:"#f9a8d4"}},
-  "Consulting":  {grad:["#8b5cf6","#7c3aed"], light:{bg:"#ede9fe",c:"#4c1d95"}, dark:{bg:"#2e1065",c:"#c4b5fd"}},
-  "Manufacturing":{grad:["#f97316","#ea580c"],light:{bg:"#ffedd5",c:"#9a3412"}, dark:{bg:"#431407",c:"#fdba74"}},
-  "Healthcare":  {grad:["#14b8a6","#0d9488"], light:{bg:"#ccfbf1",c:"#134e4a"}, dark:{bg:"#042f2e",c:"#5eead4"}},
+  "All":{icon:"ti-layout-grid",banners:["#590016","#3d0010","#260009"]},
+  "FMCG":{icon:"ti-shopping-cart",banners:["#590016","#3d0010","#260009"]},
+  "Tech":{icon:"ti-cpu",banners:["#590016","#3d0010","#260009"]},
+  "Finance":{icon:"ti-coin",banners:["#590016","#3d0010","#260009"]},
+  "Ecommerce":{icon:"ti-device-mobile",banners:["#590016","#3d0010","#260009"]},
+  "Consulting":{icon:"ti-briefcase",banners:["#590016","#3d0010","#260009"]},
 };
-const defaultCat={grad:["#64748b","#475569"],light:{bg:"#f1f5f9",c:"#334155"},dark:{bg:"#1e293b",c:"#94a3b8"}};
+const defCfg={icon:"ti-tag",banners:["#590016","#3d0010","#260009"]};
 
-const avatars=[
+const avatarPal=[
   {l:{bg:"#dbeafe",c:"#1e40af"},d:{bg:"#1e3a5f",c:"#93c5fd"}},
   {l:{bg:"#d1fae5",c:"#065f46"},d:{bg:"#064e3b",c:"#6ee7b7"}},
   {l:{bg:"#fef3c7",c:"#92400e"},d:{bg:"#451a03",c:"#fcd34d"}},
@@ -545,126 +402,177 @@ const avatars=[
   {l:{bg:"#fef9c3",c:"#854d0e"},d:{bg:"#422006",c:"#fde047"}},
 ];
 
-// ═══════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════
-let isDark=false, activeCat="All", activeCo="All";
+let isDark=false,activeCat="All",activeCo="All";
 const cos=[...new Set(data.map(d=>d.co))];
 const cats=[...new Set(data.map(d=>d.cat))];
-const coMap={};cos.forEach((c,i)=>{coMap[c]=i%avatars.length;});
+const coMap={};cos.forEach((c,i)=>coMap[c]=i%avatarPal.length);
+const m=()=>isDark?"d":"l";
+const inits=n=>n.split(" ").slice(0,2).map(x=>x[0]).join("").toUpperCase();
+const avCol=co=>avatarPal[coMap[co]][m()];
+const bannerColor=(cat,idx)=>(catCfg[cat]||defCfg).banners[idx%3];
 
-// ═══════════════════════════════════════════════════
-// THEME
-// ═══════════════════════════════════════════════════
 function toggleTheme(){
   isDark=!isDark;
   document.documentElement.setAttribute("data-theme",isDark?"dark":"light");
-  document.getElementById("themeIcon").className=isDark?"ti ti-sun":"ti ti-moon";
-  document.getElementById("themeLabel").textContent=isDark?"Light":"Dark";
+  const icon=isDark?"ti ti-sun":"ti ti-moon";
+  const lbl=isDark?"Light":"Dark";
+  document.getElementById("themeIconSb").className=icon;
+  document.getElementById("themeIcon2").className=icon;
+  document.getElementById("themeLabel2").textContent=lbl;
+  document.getElementById("themeLabelSb").textContent=lbl;
   render();
 }
-const m=()=>isDark?"d":"l";
-const md=()=>isDark?"dark":"light";
 
-// ═══════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════
-const inits=n=>n.split(" ").slice(0,2).map(x=>x[0]).join("").toUpperCase();
-const catColor=cat=>(catCfg[cat]||defaultCat)[md()];
-const catGrad=cat=>(catCfg[cat]||defaultCat).grad;
-const avColor=co=>avatars[coMap[co]][m()];
-
-// ═══════════════════════════════════════════════════
-// STATS
-// ═══════════════════════════════════════════════════
-function initStats(){
-  const ta=data.filter(d=>d.desig.toLowerCase().includes("talent")).length;
-  document.getElementById("statsRow").innerHTML=`
-    <div class="stat"><div class="lbl">Total</div><div class="val">${data.length}</div><div class="sub">Contacts</div></div>
-    <div class="stat"><div class="lbl">Companies</div><div class="val">${cos.length}</div><div class="sub">Organizations</div></div>
-    <div class="stat"><div class="lbl">Categories</div><div class="val">${cats.length}</div><div class="sub">Sectors</div></div>
-    <div class="stat"><div class="lbl">Talent Acq.</div><div class="val">${ta}</div><div class="sub">Specialists</div></div>
-    <div class="stat"><div class="lbl">Tech</div><div class="val">${data.filter(d=>d.cat==="Tech").length}</div><div class="sub">Profiles</div></div>
-    <div class="stat"><div class="lbl">Finance</div><div class="val">${data.filter(d=>d.cat==="Finance").length}</div><div class="sub">Profiles</div></div>
-  `;
+function openSidebar(){
+  document.getElementById("sidebar").classList.add("open");
+  const ov=document.getElementById("sbOverlay");
+  ov.classList.add("show");ov.style.display="block";
+}
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
+  const ov=document.getElementById("sbOverlay");
+  ov.classList.remove("show");
+  setTimeout(()=>ov.style.display="none",300);
 }
 
-// ═══════════════════════════════════════════════════
-// FILTERS
-// ═══════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════
-// DROPDOWN LOGIC
-// ═══════════════════════════════════════════════════
-function toggleDD(which){
-  const btn=document.getElementById(which==="cat"?"catBtn":"coBtn");
-  const menu=document.getElementById(which==="cat"?"catMenu":"coMenu");
+/* SIDEBAR SEARCH */
+function filterSidebarItems(){
+  const q=document.getElementById("sbSearchInput").value.toLowerCase().trim();
+  const clear=document.getElementById("sbSearchClear");
+  clear.style.display=q?"block":"none";
+  const items=document.querySelectorAll(".sb-item[data-cat]");
+  let anyVisible=false;
+  items.forEach(el=>{
+    const label=el.querySelector(".sb-label").textContent.toLowerCase();
+    const visible=!q||label.includes(q)||"all contacts".includes(q);
+    el.classList.toggle("hidden",!visible);
+    if(visible)anyVisible=true;
+  });
+  document.getElementById("sbNoResults").style.display=anyVisible?"none":"block";
+}
+function clearSbSearch(){
+  document.getElementById("sbSearchInput").value="";
+  document.getElementById("sbSearchClear").style.display="none";
+  filterSidebarItems();
+  document.getElementById("sbSearchInput").focus();
+}
+
+function initSidebar(){
+  const nav=document.getElementById("sidebarNav");
+  const noRes=document.getElementById("sbNoResults");
+  const allCfg=catCfg["All"];
+  let html=`
+    <div class="sb-nav-label">Categories</div>
+    <div class="sb-item active" data-cat="All" onclick="setSidebarCat('All',this)">
+      <i class="ti ${allCfg.icon}"></i>
+      <span class="sb-label">All Contacts</span>
+      <span class="sb-count">${data.length}</span>
+    </div>`;
+  cats.forEach(c=>{
+    const cfg=catCfg[c]||defCfg;
+    html+=`
+    <div class="sb-item" data-cat="${c}" onclick="setSidebarCat('${c}',this)">
+      <i class="ti ${cfg.icon}"></i>
+      <span class="sb-label">${c}</span>
+      <span class="sb-count">${data.filter(d=>d.cat===c).length}</span>
+    </div>`;
+  });
+  nav.insertAdjacentHTML("afterbegin",html);
+
+  document.getElementById("sbStats").innerHTML=`
+    <div class="sb-stat-item"><div class="sb-stat-val">${data.length}</div><div class="sb-stat-lbl">Contacts</div></div>
+    <div class="sb-stat-item"><div class="sb-stat-val">${cats.length}</div><div class="sb-stat-lbl">Categories</div></div>
+    <div class="sb-stat-item"><div class="sb-stat-val">${cos.length}</div><div class="sb-stat-lbl">Companies</div></div>
+    <div class="sb-stat-item"><div class="sb-stat-val">IN</div><div class="sb-stat-lbl">Region</div></div>`;
+}
+
+function setSidebarCat(cat,el){
+  activeCat=cat;activeCo="All";
+  document.querySelectorAll(".sb-item").forEach(i=>i.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("coBtnText").textContent="All Companies";
+  document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
+  document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));
+  const allCatOpt=document.querySelector("#catMenu .dd-opt[data-val='All']");
+  if(allCatOpt&&cat==="All")allCatOpt.classList.add("active");
+  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
+  const allCoOpt=document.querySelector("#coMenu .dd-opt[data-val='All']");
+  if(allCoOpt)allCoOpt.classList.add("active");
+  document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
+  renderCoOpts();render();
+  if(window.innerWidth<=700)closeSidebar();
+}
+
+/* CATEGORY DROPDOWN */
+function toggleCatDD(){
+  const btn=document.getElementById("catBtn");
+  const menu=document.getElementById("catMenu");
   const isOpen=menu.classList.contains("open");
-  // close all first
-  document.querySelectorAll(".dropdown-menu").forEach(m=>m.classList.remove("open"));
-  document.querySelectorAll(".dropdown-btn").forEach(b=>b.classList.remove("open"));
-  if(!isOpen){menu.classList.add("open");btn.classList.add("open");}
-  if(which==="co"&&!isOpen){
-    setTimeout(()=>{const s=document.getElementById("coSearch");if(s)s.focus();},50);
-  }
+  document.getElementById("coMenu").classList.remove("open");
+  document.getElementById("coBtn").classList.remove("open");
+  menu.classList.toggle("open",!isOpen);
+  btn.classList.toggle("open",!isOpen);
 }
-// Close dropdowns on outside click
-document.addEventListener("click",e=>{
-  if(!e.target.closest(".dropdown-wrap")){
-    document.querySelectorAll(".dropdown-menu").forEach(m=>m.classList.remove("open"));
-    document.querySelectorAll(".dropdown-btn").forEach(b=>b.classList.remove("open"));
-  }
-});
-
-function initFilters(){
-  // Category dropdown
-  document.getElementById("catAllCount").textContent=data.length;
-  document.getElementById("catOptions").innerHTML=
-    cats.map(c=>`
-      <div class="dd-option" data-val="${c}" onclick="setCatDD('${c}',this)">
-        <span class="opt-label">${c}</span>
-        <span class="opt-count">${data.filter(d=>d.cat===c).length}</span>
-      </div>`).join("");
-  renderCoOptions();
+function setCatDD(cat,el){
+  activeCat=cat;activeCo="All";
+  document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
+  document.getElementById("catMenu").classList.remove("open");
+  document.getElementById("catBtn").classList.remove("open");
+  document.getElementById("coBtnText").textContent="All Companies";
+  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
+  const allOptCo=document.querySelector("#coMenu .dd-opt[data-val='All']");
+  if(allOptCo)allOptCo.classList.add("active");
+  document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
+  document.querySelectorAll(".sb-item[data-cat]").forEach(i=>{
+    i.classList.toggle("active",i.dataset.cat===cat);
+  });
+  renderCoOpts();render();
+}
+function initCatOpts(){
+  document.getElementById("catAllCnt").textContent=data.length;
+  document.getElementById("catOpts").innerHTML=cats.map(c=>{
+    const cfg=catCfg[c]||defCfg;
+    return `<div class="dd-opt" data-val="${c}" onclick="setCatDD('${c}',this)">
+      <span class="opt-lbl"><i class="ti ${cfg.icon}" style="font-size:13px;margin-right:5px;vertical-align:-1px;"></i>${c}</span>
+      <span class="opt-cnt">${data.filter(d=>d.cat===c).length}</span>
+    </div>`;
+  }).join("");
 }
 
-function renderCoOptions(){
+/* COMPANY DROPDOWN */
+function toggleCoDD(){
+  const btn=document.getElementById("coBtn");
+  const menu=document.getElementById("coMenu");
+  const isOpen=menu.classList.contains("open");
+  document.getElementById("catMenu").classList.remove("open");
+  document.getElementById("catBtn").classList.remove("open");
+  menu.classList.toggle("open",!isOpen);
+  btn.classList.toggle("open",!isOpen);
+  if(!isOpen)setTimeout(()=>{const s=document.getElementById("coSearch");if(s)s.focus();},50);
+}
+function renderCoOpts(){
   const vis=activeCat==="All"?cos:[...new Set(data.filter(d=>d.cat===activeCat).map(d=>d.co))];
-  document.getElementById("coAllCount").textContent=vis.reduce((a,c)=>a+data.filter(d=>d.co===c).length,0);
-  document.getElementById("coOptions").innerHTML=
-    vis.map(c=>`
-      <div class="dd-option" data-val="${c.replace(/`/g,"\`")}" onclick="setCoDD(\`${c.replace(/`/g,"\`")}\`,this)">
-        <span class="opt-label">${c}</span>
-        <span class="opt-count">${data.filter(d=>d.co===c).length}</span>
-      </div>`).join("");
-  // re-mark active
-  document.querySelectorAll("#coOptions .dd-option").forEach(el=>{
+  document.getElementById("coAllCnt").textContent=data.filter(d=>activeCat==="All"||d.cat===activeCat).length;
+  document.getElementById("coOpts").innerHTML=vis.map(c=>`
+    <div class="dd-opt" data-val="${c}" onclick="setCoDD('${c.replace(/'/g,"\\'")}',this)">
+      <span class="opt-lbl">${c}</span>
+      <span class="opt-cnt">${data.filter(d=>d.co===c).length}</span>
+    </div>`).join("");
+  document.querySelectorAll("#coOpts .dd-opt").forEach(el=>{
     if(el.dataset.val===activeCo)el.classList.add("active");
   });
 }
-
-function filterCoOptions(){
+function filterCoOpts(){
   const q=document.getElementById("coSearch").value.toLowerCase();
-  document.querySelectorAll("#coOptions .dd-option").forEach(el=>{
-    el.style.display=el.querySelector(".opt-label").textContent.toLowerCase().includes(q)?"":"none";
+  document.querySelectorAll("#coOpts .dd-opt").forEach(el=>{
+    el.style.display=el.querySelector(".opt-lbl").textContent.toLowerCase().includes(q)?"":"none";
   });
 }
-
-function setCatDD(cat,el){
-  activeCat=cat;activeCo="All";
-  // update UI
-  document.querySelectorAll("#catMenu .dd-option").forEach(o=>o.classList.remove("active"));
-  el.classList.add("active");
-  document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
-  document.getElementById("coBtnText").textContent="All Companies";
-  // close dropdown
-  document.getElementById("catMenu").classList.remove("open");
-  document.getElementById("catBtn").classList.remove("open");
-  renderCoOptions();render();
-}
-
 function setCoDD(co,el){
   activeCo=co;
-  document.querySelectorAll("#coOptions .dd-option, #coMenu>[data-val='All']").forEach(o=>o.classList.remove("active"));
+  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
   el.classList.add("active");
   document.getElementById("coBtnText").textContent=co==="All"?"All Companies":co;
   document.getElementById("coMenu").classList.remove("open");
@@ -672,9 +580,39 @@ function setCoDD(co,el){
   render();
 }
 
-// ═══════════════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════════════
+document.addEventListener("click",e=>{
+  if(!e.target.closest("#catWrap")){document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");}
+  if(!e.target.closest("#coWrap")){document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");}
+});
+
+function cardHTML(d,idx){
+  const av=avCol(d.co);
+  const banner=bannerColor(d.cat,idx);
+  const cfg=catCfg[d.cat]||defCfg;
+  return `
+  <div class="card">
+    <div class="card-banner" style="background:${banner};">
+      <div class="card-avatar" style="background:${av.bg};color:${av.c};">${inits(d.name)}</div>
+      <span class="card-cat-badge"><i class="ti ${cfg.icon}" style="font-size:9px;vertical-align:-1px;margin-right:3px;"></i>${d.cat}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${d.name}</div>
+      <div class="card-desig">${d.desig}</div>
+      <div class="card-co"><i class="ti ti-building"></i>${d.co}</div>
+      <div class="contact-rows">
+        <div class="info-row"><div class="icon-pill phone"><i class="ti ti-phone"></i></div><span>${d.ph}</span></div>
+        <div class="info-row"><div class="icon-pill mail"><i class="ti ti-mail"></i></div><a href="mailto:${d.email}" title="${d.email}">${d.email}</a></div>
+        <div class="info-row"><div class="icon-pill li"><i class="ti ti-brand-linkedin"></i></div><a href="${d.li}" target="_blank" rel="noopener">View LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <a href="tel:${d.ph}" class="card-action call"><i class="ti ti-phone"></i>Call</a>
+      <a href="mailto:${d.email}" class="card-action email-btn"><i class="ti ti-mail"></i>Email</a>
+      <a href="${d.li}" target="_blank" rel="noopener" class="card-action linkedin-btn"><i class="ti ti-brand-linkedin"></i>LinkedIn</a>
+    </div>
+  </div>`;
+}
+
 function render(){
   const q=document.getElementById("searchInput").value.toLowerCase();
   const filtered=data.filter(d=>{
@@ -683,51 +621,42 @@ function render(){
     const ms=!q||d.name.toLowerCase().includes(q)||d.co.toLowerCase().includes(q)||d.desig.toLowerCase().includes(q);
     return mc&&mco&&ms;
   });
-  const cl=document.getElementById("countLine");
-  cl.innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
-
-  const grid=document.getElementById("grid");
+  document.getElementById("countTxt").innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
+  document.getElementById("topbarCount").textContent=`${filtered.length} contacts`;
+  const bc=document.getElementById("bottomChipCount");
+  if(bc)bc.textContent=`${filtered.length} contacts`;
+  const container=document.getElementById("sectionsContainer");
   if(!filtered.length){
-    grid.innerHTML=`<div class="empty"><i class="ti ti-user-search"></i><p>No contacts found. Try a different search.</p></div>`;
+    container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found.</p></div></div>`;
     return;
   }
-  grid.innerHTML=filtered.map(d=>{
-    const av=avColor(d.co);
-    const cc=catColor(d.cat);
-    const cg=catGrad(d.cat);
-    const cb=avatars[(coMap[d.co]+3)%avatars.length][m()];
-    return `
-    <div class="card" style="--card-a:${cg[0]};--card-b:${cg[1]}">
-      <div class="card-head">
-        <div class="avatar" style="background:${av.bg};color:${av.c}">${inits(d.name)}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="card-name">${d.name}</div>
-          <div class="card-desig">${d.desig}</div>
-        </div>
+  const isSearching=q||activeCo!=="All";
+  if(isSearching||activeCat!=="All"){
+    container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;
+    return;
+  }
+  const groupedCats=[...new Set(filtered.map(d=>d.cat))];
+  let html="";
+  groupedCats.forEach(cat=>{
+    const group=filtered.filter(d=>d.cat===cat);
+    const cfg=catCfg[cat]||defCfg;
+    html+=`
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <div class="section-label"><i class="ti ${cfg.icon}"></i>${cat} · ${group.length} contacts</div>
+        <div class="section-line"></div>
       </div>
-      <div class="badge-row">
-        <span class="badge" style="background:${cc.bg};color:${cc.c}"><i class="ti ti-tag"></i>${d.cat}</span>
-        <span class="badge" style="background:${cb.bg};color:${cb.c}"><i class="ti ti-building"></i>${d.co}</span>
-      </div>
-      <div class="contact-rows">
-        <div class="info-row">
-          <div class="icon-pill phone"><i class="ti ti-phone"></i></div>
-          <span>${d.ph}</span>
-        </div>
-        <div class="info-row">
-          <div class="icon-pill mail"><i class="ti ti-mail"></i></div>
-          <a href="mailto:${d.email}" title="${d.email}">${d.email}</a>
-        </div>
-        <div class="info-row">
-          <div class="icon-pill li"><i class="ti ti-brand-linkedin"></i></div>
-          <a href="${d.li}" target="_blank" rel="noopener">View LinkedIn profile</a>
-        </div>
-      </div>
+      <div class="grid">${group.map((d,i)=>cardHTML(d,i)).join("")}</div>
     </div>`;
-  }).join("");
+  });
+  container.innerHTML=html;
 }
 
-initStats();initFilters();render();
+initSidebar();
+initCatOpts();
+renderCoOpts();
+render();
 </script>
 </body>
 </html>
