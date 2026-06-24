@@ -19,6 +19,12 @@
   --phone-bg:#fce7f3;--phone-c:#9d174d;--mail-bg:#dbeafe;--mail-c:#1d4ed8;--li-bg:#e0e7ff;--li-c:#4338ca;
   --sw:230px;
   --green:#16a34a;--green-bg:#dcfce7;
+  --status-nc-bg:#f1f5f9;--status-nc-c:#475569;
+  --status-ct-bg:#dbeafe;--status-ct-c:#1d4ed8;
+  --status-in-bg:#dcfce7;--status-in-c:#15803d;
+  --status-ni-bg:#fee2e2;--status-ni-c:#dc2626;
+  --status-pl-bg:#fef9c3;--status-pl-c:#a16207;
+  --status-fu-bg:#ede9fe;--status-fu-c:#7c3aed;
 }
 [data-theme="dark"]{
   --maroon:#c0395a;--maroon-2:#a02d4a;--maroon-3:#7a2038;
@@ -30,10 +36,16 @@
   --shadow-sm:0 1px 4px rgba(0,0,0,0.4);--shadow-md:0 4px 20px rgba(0,0,0,0.55);--shadow-lg:0 8px 32px rgba(0,0,0,0.65);
   --phone-bg:#3b0a1a;--phone-c:#f9a8d4;--mail-bg:#0f2240;--mail-c:#93c5fd;--li-bg:#16124a;--li-c:#a5b4fc;
   --green:#4ade80;--green-bg:#052e16;
+  --status-nc-bg:#1e293b;--status-nc-c:#94a3b8;
+  --status-ct-bg:#0f2240;--status-ct-c:#93c5fd;
+  --status-in-bg:#052e16;--status-in-c:#4ade80;
+  --status-ni-bg:#450a0a;--status-ni-c:#fca5a5;
+  --status-pl-bg:#422006;--status-pl-c:#fde047;
+  --status-fu-bg:#2e1065;--status-fu-c:#c4b5fd;
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;display:flex;overflow-x:hidden;}
 
-/* ══ SIDEBAR ══ */
+/* SIDEBAR */
 .sidebar{width:var(--sw);min-height:100vh;background:var(--maroon);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(89,0,22,0.2);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;scrollbar-width:none;}
 .sidebar::-webkit-scrollbar{display:none;}
 .sb-brand{padding:1.2rem 1rem 1rem;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
@@ -46,55 +58,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sb-profile-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
 .sb-profile-name{font-size:12px;font-weight:600;color:#fff;}
 .sb-profile-role{font-size:10px;color:var(--ton-m2);}
-
-/* SIDEBAR SEARCH */
 .sb-search{padding:.7rem .75rem .6rem;border-bottom:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
 .sb-search-wrap{position:relative;}
 .sb-search-wrap i.ssi{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:15px;color:rgba(255,255,255,0.45);pointer-events:none;}
 .sb-search-wrap input{width:100%;padding:8px 30px 8px 32px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:12.5px;outline:none;transition:all .2s;}
 .sb-search-wrap input::placeholder{color:rgba(255,255,255,0.4);}
 .sb-search-wrap input:focus{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.35);}
-.sb-search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:14px;color:rgba(255,255,255,0.45);cursor:pointer;display:none;padding:2px;}
-.sb-search-clear:hover{color:#fff;}
-
-/* NAV */
 .sb-nav{padding:.8rem .7rem;display:flex;flex-direction:column;gap:2px;}
 .sb-nav-label{font-size:9px;font-weight:700;color:var(--ton-m3);text-transform:uppercase;letter-spacing:.1em;padding:0 .4rem;margin-bottom:5px;margin-top:8px;}
 .sb-nav-label:first-child{margin-top:0;}
 .sb-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;transition:all .15s;color:var(--ton-m2);font-size:12.5px;font-weight:500;user-select:none;}
 .sb-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
 .sb-item.active{background:rgba(255,255,255,0.18);color:#fff;font-weight:600;}
-.sb-item.hidden{display:none;}
 .sb-item i{font-size:17px;flex-shrink:0;}
 .sb-item .sb-label{flex:1;}
 .sb-item .sb-count{font-size:10.5px;font-weight:700;background:rgba(255,255,255,0.15);color:#fff;border-radius:var(--rpill);padding:2px 7px;flex-shrink:0;}
 .sb-item.active .sb-count{background:rgba(255,255,255,0.28);}
 .sb-no-results{font-size:11.5px;color:rgba(255,255,255,0.35);text-align:center;padding:1rem 0;display:none;}
-
-/* ADD CONTACT BTN in sidebar */
 .sb-add-btn{margin:.7rem .7rem 0;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:9px;background:rgba(255,255,255,0.15);border:1.5px dashed rgba(255,255,255,0.35);color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;width:calc(100% - 1.4rem);}
 .sb-add-btn:hover{background:rgba(255,255,255,0.25);border-color:rgba(255,255,255,0.6);}
 .sb-add-btn i{font-size:17px;}
-
-/* STATS */
 .sb-stats{flex-shrink:0;margin:.7rem .7rem 0;background:rgba(255,255,255,0.08);border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr 1fr;gap:7px;}
 .sb-stat-item{text-align:center;}
 .sb-stat-val{font-size:17px;font-weight:800;color:#fff;line-height:1;}
 .sb-stat-lbl{font-size:9px;color:var(--ton-m2);margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
-
-/* BOTTOM ACTIONS */
 .sb-bottom{padding:.7rem .7rem .9rem;border-top:1px solid rgba(255,255,255,0.1);flex-shrink:0;display:flex;gap:6px;margin-top:.7rem;}
 .sb-action-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 6px;border-radius:8px;background:rgba(255,255,255,0.1);color:var(--ton-m2);font-size:11.5px;font-weight:600;cursor:pointer;border:none;transition:all .15s;text-decoration:none;}
 .sb-action-btn:hover{background:rgba(255,255,255,0.2);color:#fff;}
 .sb-action-btn i{font-size:15px;}
-
 .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;opacity:0;transition:opacity .3s;}
 .sb-overlay.show{opacity:1;}
 
-/* ══ MAIN ══ */
-.main{margin-left:var(--sw);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
+/* PIPELINE SIDEBAR STATS */
+.sb-pipeline-mini{margin:.5rem .7rem 0;display:flex;flex-direction:column;gap:4px;}
+.sb-pl-row{display:flex;align-items:center;justify-content:space-between;padding:5px 9px;border-radius:7px;background:rgba(255,255,255,0.08);font-size:11px;color:rgba(255,255,255,0.7);}
+.sb-pl-row .pl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:6px;}
+.sb-pl-row .pl-label{flex:1;}
+.sb-pl-row .pl-num{font-weight:700;color:#fff;}
 
-/* TOPBAR */
+/* MAIN */
+.main{margin-left:var(--sw);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
 .topbar{background:var(--surface);border-bottom:1px solid var(--bdr);padding:0 1.6rem;height:58px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);}
 .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--t2);font-size:22px;padding:4px;border-radius:6px;flex-shrink:0;}
 .topbar-title{font-size:15px;font-weight:700;color:var(--t1);}
@@ -108,9 +111,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .topbar-add-btn{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--rpill);background:var(--maroon);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;border:none;transition:all .2s;white-space:nowrap;}
 .topbar-add-btn:hover{background:var(--maroon-2);}
 .topbar-add-btn i{font-size:15px;}
-
-/* CONTENT */
 .content{padding:1.4rem 1.6rem 5rem;flex:1;}
+
+/* VIEW TABS */
+.view-tabs{display:flex;gap:4px;margin-bottom:1.2rem;background:var(--surface2);border-radius:10px;padding:4px;}
+.view-tab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--t3);border:none;background:none;transition:all .2s;}
+.view-tab.active{background:var(--surface);color:var(--maroon);box-shadow:var(--shadow-sm);}
+.view-tab i{font-size:15px;}
 
 /* CONTROLS */
 .controls{display:flex;gap:10px;margin-bottom:1.2rem;align-items:center;flex-wrap:wrap;}
@@ -128,13 +135,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .dropdown-btn i.di{font-size:15px;color:var(--t3);flex-shrink:0;}
 .sel-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:110px;}
 .dropdown-menu{position:absolute;top:calc(100% + 5px);left:0;right:0;background:var(--surface);border:1.5px solid var(--bdr);border-radius:var(--rsm);box-shadow:var(--shadow-lg);z-index:200;max-height:270px;overflow-y:auto;display:none;}
-.dropdown-menu.open{display:block;animation:dropIn .15s ease;}
-@keyframes dropIn{from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
-.dd-search-wrap{padding:7px 9px;border-bottom:1px solid var(--bdr);position:sticky;top:0;background:var(--surface);z-index:1;position:relative;}
-.dd-search-wrap i.dsi{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--t3);}
-.dd-search-wrap input{width:100%;padding:5px 9px 5px 26px;border:1px solid var(--bdr);border-radius:6px;background:var(--surface2);color:var(--t1);font-size:12px;outline:none;}
-.dd-search-wrap input:focus{border-color:var(--maroon);}
-.dd-search-wrap input::placeholder{color:var(--t3);}
+.dropdown-menu.open{display:block;}
 .dd-opt{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;font-size:12.5px;color:var(--t2);cursor:pointer;transition:background .1s;gap:7px;}
 .dd-opt:hover{background:var(--surface2);}
 .dd-opt.active{background:var(--maroon-light);color:var(--maroon);font-weight:600;}
@@ -147,28 +148,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:8px;}
 .count-txt{font-size:12.5px;color:var(--t3);}
 .count-txt b{color:var(--t1);}
-.last-updated{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:4px;}
-.last-updated i{font-size:13px;color:var(--green);}
-.last-updated b{color:var(--t2);}
-
-/* ACTIVITY LOG BANNER */
-.log-banner{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);padding:1rem 1.2rem;margin-bottom:1.2rem;display:none;}
-.log-banner.show{display:block;}
-.log-banner-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
-.log-banner-title{font-size:13px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:6px;}
-.log-banner-title i{font-size:16px;color:var(--maroon);}
-.log-close{background:none;border:none;cursor:pointer;color:var(--t3);font-size:18px;padding:2px;}
-.log-close:hover{color:var(--t1);}
-.log-list{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;}
-.log-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;background:var(--surface2);font-size:12px;}
-.log-item-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-.log-item-dot.add{background:#16a34a;}
-.log-item-dot.edit{background:#d97706;}
-.log-item-dot.del{background:#dc2626;}
-.log-item-info{flex:1;}
-.log-item-action{font-weight:600;color:var(--t1);}
-.log-item-time{color:var(--t3);font-size:11px;margin-top:1px;}
-.log-empty{text-align:center;color:var(--t3);font-size:12.5px;padding:1rem 0;}
 
 /* SECTION HEADER */
 .section-block{margin-bottom:1.8rem;}
@@ -178,50 +157,143 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .section-label i{font-size:12px;}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:13px;}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);white-space:nowrap;}
+.status-badge.nc{background:var(--status-nc-bg);color:var(--status-nc-c);}
+.status-badge.ct{background:var(--status-ct-bg);color:var(--status-ct-c);}
+.status-badge.in{background:var(--status-in-bg);color:var(--status-in-c);}
+.status-badge.ni{background:var(--status-ni-bg);color:var(--status-ni-c);}
+.status-badge.pl{background:var(--status-pl-bg);color:var(--status-pl-c);}
+.status-badge.fu{background:var(--status-fu-bg);color:var(--status-fu-c);}
+
+/* INTERACTION COUNT PILL on card */
+.int-count-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);background:var(--maroon-light);color:var(--maroon);cursor:pointer;border:none;transition:background .15s;}
+.int-count-pill:hover{background:var(--maroon-light2);}
+[data-theme="dark"] .int-count-pill{background:var(--maroon-light2);color:#f9a8d4;}
 
 /* CARD */
 .card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s,border-color .2s;position:relative;}
 .card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--bdr-h);}
 .card.new-highlight{border-color:var(--green);box-shadow:0 0 0 2px rgba(22,163,74,0.15);}
-.card-banner{height:76px;display:flex;align-items:flex-end;padding:0 1rem 0;position:relative;}
-.card-avatar{width:50px;height:50px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;position:absolute;bottom:-21px;left:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0;}
-.card-cat-badge{margin-left:auto;margin-bottom:9px;font-size:9.5px;font-weight:700;background:rgba(255,255,255,0.18);color:#fff;padding:2px 9px;border-radius:var(--rpill);}
+.card-banner{height:72px;display:flex;align-items:flex-end;padding:0 1rem 0;position:relative;}
+.card-avatar{width:48px;height:48px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;position:absolute;bottom:-20px;left:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0;}
+.card-cat-badge{margin-left:auto;margin-bottom:8px;font-size:9.5px;font-weight:700;background:rgba(255,255,255,0.18);color:#fff;padding:2px 9px;border-radius:var(--rpill);}
 .card-new-badge{position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;background:var(--green);color:#fff;padding:2px 8px;border-radius:var(--rpill);}
-.card-body{padding:28px 1rem 9px;}
-.card-name{font-weight:700;font-size:14.5px;color:var(--t1);margin-bottom:2px;}
-.card-desig{font-size:11.5px;color:var(--t2);line-height:1.4;margin-bottom:7px;}
-.card-co{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--maroon);font-weight:600;margin-bottom:11px;}
+.card-body{padding:26px 1rem 8px;}
+.card-name{font-weight:700;font-size:14px;color:var(--t1);margin-bottom:1px;}
+.card-desig{font-size:11px;color:var(--t2);line-height:1.4;margin-bottom:6px;}
+.card-co{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--maroon);font-weight:600;margin-bottom:8px;}
 .card-co i{font-size:13px;}
-.card-added-date{font-size:10.5px;color:var(--t3);margin-bottom:8px;display:flex;align-items:center;gap:4px;}
-.card-added-date i{font-size:12px;color:var(--green);}
-.contact-rows{display:flex;flex-direction:column;gap:5px;margin-bottom:11px;}
-.info-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--t2);}
-.icon-pill{width:28px;height:28px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.contact-rows{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+.info-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);}
+.icon-pill{width:26px;height:26px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;}
 .icon-pill.phone{background:var(--phone-bg);color:var(--phone-c);}
 .icon-pill.mail{background:var(--mail-bg);color:var(--mail-c);}
 .icon-pill.li{background:var(--li-bg);color:var(--li-c);}
-.info-row a{color:var(--maroon);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px;display:block;}
+.info-row a{color:var(--maroon);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:185px;display:block;}
 .info-row a:hover{text-decoration:underline;}
-.card-footer{border-top:1px solid var(--bdr);padding:.6rem 1rem;display:flex;gap:7px;}
-.card-action{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 7px;border-radius:7px;font-size:11.5px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s;border:1.5px solid var(--bdr);background:var(--surface2);color:var(--t2);}
+
+/* INTERACTION BAR on card */
+.card-int-bar{border-top:1px solid var(--bdr);padding:7px 1rem;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.card-int-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.card-int-add{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--maroon);background:var(--maroon-light);border:none;border-radius:6px;padding:4px 9px;cursor:pointer;transition:background .15s;}
+.card-int-add:hover{background:var(--maroon-light2);}
+[data-theme="dark"] .card-int-add{background:var(--maroon-light2);color:#f9a8d4;}
+.card-int-add i{font-size:13px;}
+
+.card-footer{border-top:1px solid var(--bdr);padding:.55rem 1rem;display:flex;gap:6px;}
+.card-action{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:5px 6px;border-radius:7px;font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s;border:1.5px solid var(--bdr);background:var(--surface2);color:var(--t2);}
 .card-action:hover{border-color:var(--bdr-h);color:var(--t1);}
 .card-action.call:hover{background:var(--phone-bg);border-color:var(--phone-c);color:var(--phone-c);}
 .card-action.email-btn:hover{background:var(--mail-bg);border-color:#93c5fd;color:var(--mail-c);}
-.card-action.linkedin-btn:hover{background:var(--li-bg);border-color:#a5b4fc;color:var(--li-c);}
 .card-action.del-btn:hover{background:#fee2e2;border-color:#fca5a5;color:#dc2626;}
-.card-action i{font-size:13px;}
+.card-action i{font-size:12px;}
 
 /* EMPTY */
 .empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--t3);}
 .empty i{font-size:44px;display:block;margin-bottom:11px;opacity:.35;}
 .empty p{font-size:13.5px;}
 
+/* ══ PIPELINE VIEW ══ */
+.pipeline-view{display:none;}
+.pipeline-view.active{display:block;}
+.contacts-view{display:none;}
+.contacts-view.active{display:block;}
+.interactions-view{display:none;}
+.interactions-view.active{display:block;}
+
+/* Pipeline summary cards */
+.pipeline-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:1.4rem;}
+.pl-sum-card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.pl-sum-card:hover{border-color:var(--bdr-h);transform:translateY(-2px);}
+.pl-sum-card.active-filter{border-width:2px;}
+.pl-sum-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:3px;}
+.pl-sum-lbl{font-size:10.5px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.pl-sum-card.nc .pl-sum-val{color:var(--status-nc-c);}
+.pl-sum-card.ct .pl-sum-val{color:var(--status-ct-c);}
+.pl-sum-card.in .pl-sum-val{color:var(--status-in-c);}
+.pl-sum-card.ni .pl-sum-val{color:var(--status-ni-c);}
+.pl-sum-card.pl .pl-sum-val{color:var(--status-pl-c);}
+.pl-sum-card.fu .pl-sum-val{color:var(--status-fu-c);}
+.pl-sum-card.nc.active-filter{border-color:var(--status-nc-c);}
+.pl-sum-card.ct.active-filter{border-color:var(--status-ct-c);}
+.pl-sum-card.in.active-filter{border-color:var(--status-in-c);}
+.pl-sum-card.ni.active-filter{border-color:var(--status-ni-c);}
+.pl-sum-card.pl.active-filter{border-color:var(--status-pl-c);}
+.pl-sum-card.fu.active-filter{border-color:var(--status-fu-c);}
+
+/* Interactions table */
+.int-table-wrap{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);}
+.int-table-header{padding:.9rem 1.1rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.int-table-title{font-size:13.5px;font-weight:700;color:var(--t1);flex:1;}
+.int-table-search{position:relative;min-width:200px;}
+.int-table-search i{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--t3);}
+.int-table-search input{width:100%;padding:7px 12px 7px 32px;border:1.5px solid var(--bdr);border-radius:7px;background:var(--surface2);font-size:12.5px;color:var(--t1);outline:none;}
+.int-table-search input:focus{border-color:var(--maroon);}
+.int-table-search input::placeholder{color:var(--t3);}
+.status-filter-bar{display:flex;gap:6px;flex-wrap:wrap;padding:.7rem 1.1rem;border-bottom:1px solid var(--bdr);}
+.sf-btn{padding:4px 11px;border-radius:var(--rpill);font-size:11.5px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;}
+.sf-btn.all{background:var(--maroon-light);color:var(--maroon);border-color:var(--maroon);}
+.sf-btn.all.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.nc{background:var(--status-nc-bg);color:var(--status-nc-c);}
+.sf-btn.nc.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.ct{background:var(--status-ct-bg);color:var(--status-ct-c);}
+.sf-btn.ct.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.in{background:var(--status-in-bg);color:var(--status-in-c);}
+.sf-btn.in.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.ni{background:var(--status-ni-bg);color:var(--status-ni-c);}
+.sf-btn.ni.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.pl{background:var(--status-pl-bg);color:var(--status-pl-c);}
+.sf-btn.pl.off{background:none;color:var(--t3);border-color:var(--bdr);}
+.sf-btn.fu{background:var(--status-fu-bg);color:var(--status-fu-c);}
+.sf-btn.fu.off{background:none;color:var(--t3);border-color:var(--bdr);}
+
+table.int-table{width:100%;border-collapse:collapse;}
+table.int-table th{padding:9px 1.1rem;font-size:11px;font-weight:700;color:var(--t3);text-align:left;text-transform:uppercase;letter-spacing:.06em;background:var(--surface2);border-bottom:1px solid var(--bdr);}
+table.int-table td{padding:10px 1.1rem;font-size:12.5px;color:var(--t2);border-bottom:1px solid var(--bdr);vertical-align:middle;}
+table.int-table tr:last-child td{border-bottom:none;}
+table.int-table tr:hover td{background:var(--surface2);}
+.td-name{font-weight:600;color:var(--t1);}
+.td-co{color:var(--maroon);font-size:11.5px;}
+.td-note{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--t3);}
+.td-date{font-size:11px;color:var(--t3);white-space:nowrap;}
+.td-actions{display:flex;gap:5px;}
+.tbl-action-btn{background:none;border:1px solid var(--bdr);border-radius:6px;padding:4px 7px;cursor:pointer;color:var(--t3);font-size:12px;transition:all .15s;}
+.tbl-action-btn:hover{border-color:var(--bdr-h);color:var(--t1);}
+.tbl-action-btn.del:hover{border-color:#fca5a5;color:#dc2626;background:#fee2e2;}
+.tbl-empty{text-align:center;padding:3rem;color:var(--t3);font-size:13px;}
+.tbl-empty i{font-size:36px;display:block;margin-bottom:8px;opacity:.3;}
+.export-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;background:var(--surface2);border:1.5px solid var(--bdr);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;}
+.export-btn:hover{border-color:var(--bdr-h);color:var(--t1);}
+.export-btn i{font-size:14px;}
+
 /* BOTTOM CHIP */
 .bottom-chip{position:fixed;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;background:var(--maroon);border-radius:var(--rpill);padding:7px 14px 7px 11px;font-size:12.5px;font-weight:700;color:#fff;box-shadow:var(--shadow-md);z-index:100;pointer-events:none;}
 .bottom-chip i{font-size:15px;color:rgba(255,255,255,0.8);}
 
-/* ══ MODAL ══ */
+/* ══ MODAL — CONTACT ══ */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal{background:var(--surface);border-radius:var(--r);width:100%;max-width:520px;box-shadow:var(--shadow-lg);overflow:hidden;transform:translateY(20px) scale(0.97);transition:transform .25s;}
@@ -230,7 +302,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .modal-header-icon{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0;}
 .modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
 .modal-close{background:none;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:2px;border-radius:5px;}
-.modal-close:hover{color:#fff;background:rgba(255,255,255,0.15);}
+.modal-close:hover{color:#fff;}
 .modal-body{padding:1.4rem;display:flex;flex-direction:column;gap:14px;max-height:70vh;overflow-y:auto;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .form-group{display:flex;flex-direction:column;gap:5px;}
@@ -251,9 +323,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-cancel:hover{border-color:var(--bdr-h);color:var(--t1);}
 .btn-save{background:var(--maroon);color:#fff;}
 .btn-save:hover{background:var(--maroon-2);}
-.btn-save:disabled{opacity:.5;cursor:not-allowed;}
 
-/* CONFIRM DIALOG */
+/* ══ INTERACTION MODAL ══ */
+.int-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:350;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;}
+.int-modal-overlay.open{opacity:1;pointer-events:all;}
+.int-modal{background:var(--surface);border-radius:var(--r);width:100%;max-width:480px;box-shadow:var(--shadow-lg);overflow:hidden;transform:translateY(20px) scale(0.97);transition:transform .25s;}
+.int-modal-overlay.open .int-modal{transform:none;}
+.int-modal-header{background:var(--maroon);padding:1rem 1.3rem;display:flex;align-items:center;gap:10px;}
+.int-modal-body{padding:1.3rem;display:flex;flex-direction:column;gap:12px;}
+.int-hr-info{background:var(--surface2);border-radius:9px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:2px;}
+.int-hr-name{font-size:13.5px;font-weight:700;color:var(--t1);}
+.int-hr-co{font-size:11.5px;color:var(--maroon);font-weight:600;}
+
+/* Existing interactions list in modal */
+.existing-ints{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;}
+.existing-int-item{background:var(--surface2);border-radius:8px;padding:8px 10px;display:flex;align-items:flex-start;gap:8px;}
+.ei-left{flex:1;}
+.ei-student{font-size:12px;font-weight:700;color:var(--t1);}
+.ei-note{font-size:11px;color:var(--t3);margin-top:1px;}
+.ei-date{font-size:10.5px;color:var(--t3);margin-top:2px;}
+.ei-actions{display:flex;gap:4px;flex-shrink:0;}
+.ei-del{background:none;border:1px solid var(--bdr);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--t3);font-size:11px;transition:all .15s;}
+.ei-del:hover{border-color:#fca5a5;color:#dc2626;background:#fee2e2;}
+.ei-edit{background:none;border:1px solid var(--bdr);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--t3);font-size:11px;transition:all .15s;}
+.ei-edit:hover{border-color:var(--bdr-h);color:var(--t1);}
+.add-int-form{background:var(--surface2);border-radius:9px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:10px;}
+.add-int-title{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;}
+
+/* CONFIRM */
 .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s;}
 .confirm-overlay.open{opacity:1;pointer-events:all;}
 .confirm-box{background:var(--surface);border-radius:var(--r);width:100%;max-width:340px;box-shadow:var(--shadow-lg);overflow:hidden;transform:scale(0.95);transition:transform .2s;}
@@ -287,20 +384,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   .grid{grid-template-columns:1fr;gap:9px;}
   .controls{flex-direction:column;gap:7px;}
   .search-wrap,.dropdown-wrap{width:100%;min-width:unset;}
-  .sel-txt{max-width:unset;}
-  .bottom-chip .bc-label{display:none;}
-  .bottom-chip{padding:9px 11px;border-radius:50%;}
   .form-row{grid-template-columns:1fr;}
   .topbar-add-btn span{display:none;}
+  table.int-table th:nth-child(4),table.int-table td:nth-child(4){display:none;}
 }
-@media(max-width:480px){.topbar-sub{display:none;}}
+@media(max-width:480px){.topbar-sub{display:none;}.pipeline-summary{grid-template-columns:repeat(3,1fr);}}
 </style>
 </head>
 <body>
 
 <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
 
-<!-- ══ SIDEBAR ══ -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-brand">
     <div class="sb-logo">
@@ -318,24 +413,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       </div>
     </a>
   </div>
-
   <div class="sb-search">
     <div class="sb-search-wrap">
       <i class="ti ti-search ssi"></i>
       <input type="text" id="sbSearchInput" placeholder="Quick filter…" oninput="filterSidebarItems()"/>
-      <i class="ti ti-x sb-search-clear" id="sbSearchClear" onclick="clearSbSearch()"></i>
     </div>
   </div>
-
   <nav class="sb-nav" id="sidebarNav">
     <div class="sb-no-results" id="sbNoResults">No match found</div>
   </nav>
-
   <button class="sb-add-btn" onclick="openAddModal()">
     <i class="ti ti-user-plus"></i> Add New Contact
   </button>
-
   <div class="sb-stats" id="sbStats"></div>
+
+  <!-- Pipeline mini stats -->
+  <div style="padding:.5rem .7rem 0;font-size:9px;font-weight:700;color:var(--ton-m3);text-transform:uppercase;letter-spacing:.1em;margin-top:.5rem;">Pipeline</div>
+  <div class="sb-pipeline-mini" id="sbPipelineMini"></div>
 
   <div class="sb-bottom">
     <button class="sb-action-btn" onclick="toggleTheme()">
@@ -345,13 +439,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-action-btn">
       <i class="ti ti-user-circle"></i><span>Profile</span>
     </a>
-    <button class="sb-action-btn" onclick="toggleLog()">
-      <i class="ti ti-history"></i><span>Log</span>
+    <button class="sb-action-btn" onclick="switchView('pipeline')">
+      <i class="ti ti-chart-bar"></i><span>Pipeline</span>
     </button>
   </div>
 </aside>
 
-<!-- ══ MAIN ══ -->
+<!-- MAIN -->
 <div class="main">
   <header class="topbar">
     <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
@@ -370,76 +464,129 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </header>
 
   <div class="content">
-    <!-- CONTROLS -->
-    <div class="controls">
-      <div class="search-wrap">
-        <i class="ti ti-search si"></i>
-        <input type="text" id="searchInput" placeholder="Search name, company or role…" oninput="render()"/>
-      </div>
-      <div class="dropdown-wrap" id="catWrap">
-        <button class="dropdown-btn" id="catBtn" onclick="toggleCatDD()">
-          <i class="ti ti-layout-grid di"></i>
-          <span class="sel-txt" id="catBtnText">All Categories</span>
-          <i class="ti ti-chevron-down arrow"></i>
-        </button>
-        <div class="dropdown-menu" id="catMenu">
-          <div class="dd-opt active" data-val="All" onclick="setCatDD('All',this)">
-            <span class="opt-lbl">All Categories</span>
-            <span class="opt-cnt" id="catAllCnt">—</span>
+    <!-- VIEW TABS -->
+    <div class="view-tabs">
+      <button class="view-tab active" id="tab-contacts" onclick="switchView('contacts')">
+        <i class="ti ti-users"></i> Contacts
+      </button>
+      <button class="view-tab" id="tab-pipeline" onclick="switchView('pipeline')">
+        <i class="ti ti-chart-bar"></i> Pipeline
+      </button>
+      <button class="view-tab" id="tab-interactions" onclick="switchView('interactions')">
+        <i class="ti ti-messages"></i> All Interactions
+      </button>
+    </div>
+
+    <!-- ══ CONTACTS VIEW ══ -->
+    <div class="contacts-view active" id="view-contacts">
+      <div class="controls">
+        <div class="search-wrap">
+          <i class="ti ti-search si"></i>
+          <input type="text" id="searchInput" placeholder="Search name, company or role…" oninput="render()"/>
+        </div>
+        <div class="dropdown-wrap" id="catWrap">
+          <button class="dropdown-btn" id="catBtn" onclick="toggleCatDD()">
+            <i class="ti ti-layout-grid di"></i>
+            <span class="sel-txt" id="catBtnText">All Categories</span>
+            <i class="ti ti-chevron-down arrow"></i>
+          </button>
+          <div class="dropdown-menu" id="catMenu">
+            <div class="dd-opt active" data-val="All" onclick="setCatDD('All',this)">
+              <span class="opt-lbl">All Categories</span>
+              <span class="opt-cnt" id="catAllCnt">—</span>
+            </div>
+            <div class="dd-divider"></div>
+            <div id="catOpts"></div>
           </div>
-          <div class="dd-divider"></div>
-          <div id="catOpts"></div>
+        </div>
+        <div class="dropdown-wrap" id="coWrap">
+          <button class="dropdown-btn" id="coBtn" onclick="toggleCoDD()">
+            <i class="ti ti-building di"></i>
+            <span class="sel-txt" id="coBtnText">All Companies</span>
+            <i class="ti ti-chevron-down arrow"></i>
+          </button>
+          <div class="dropdown-menu" id="coMenu">
+            <div class="dd-opt active" data-val="All" onclick="setCoDD('All',this)">
+              <span class="opt-lbl">All Companies</span>
+            </div>
+            <div class="dd-divider"></div>
+            <div id="coOpts"></div>
+          </div>
         </div>
       </div>
-      <div class="dropdown-wrap" id="coWrap">
-        <button class="dropdown-btn" id="coBtn" onclick="toggleCoDD()">
-          <i class="ti ti-building di"></i>
-          <span class="sel-txt" id="coBtnText">All Companies</span>
-          <i class="ti ti-chevron-down arrow"></i>
-        </button>
-        <div class="dropdown-menu" id="coMenu">
-          <div class="dd-search-wrap">
-            <i class="ti ti-search dsi"></i>
-            <input type="text" id="coSearch" placeholder="Search company…" oninput="filterCoOpts()"/>
-          </div>
-          <div class="dd-opt active" data-val="All" onclick="setCoDD('All',this)">
-            <span class="opt-lbl">All Companies</span>
-            <span class="opt-cnt" id="coAllCnt"></span>
-          </div>
-          <div class="dd-divider"></div>
-          <div id="coOpts"></div>
+      <div class="toolbar">
+        <div class="count-txt" id="countTxt"></div>
+      </div>
+      <div id="sectionsContainer"></div>
+    </div>
+
+    <!-- ══ PIPELINE VIEW ══ -->
+    <div class="pipeline-view" id="view-pipeline">
+      <div class="pipeline-summary" id="pipelineSummary"></div>
+      <div class="int-table-wrap">
+        <div class="int-table-header">
+          <span class="int-table-title" id="plTableTitle">All Interactions</span>
+          <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+        </div>
+        <div class="status-filter-bar" id="plFilterBar"></div>
+        <div style="overflow-x:auto;">
+          <table class="int-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>HR / Company</th>
+                <th>Status</th>
+                <th>Note</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="plTableBody"></tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <div class="toolbar">
-      <div class="count-txt" id="countTxt"></div>
-      <div class="last-updated" id="lastUpdatedTxt" style="display:none;">
-        <i class="ti ti-circle-check-filled"></i> Last updated: <b id="lastUpdatedVal"></b>
+    <!-- ══ ALL INTERACTIONS VIEW ══ -->
+    <div class="interactions-view" id="view-interactions">
+      <div class="int-table-wrap">
+        <div class="int-table-header">
+          <span class="int-table-title">All Interactions</span>
+          <div class="int-table-search">
+            <i class="ti ti-search"></i>
+            <input type="text" id="intSearchInput" placeholder="Search student, HR, company…" oninput="renderIntTable()"/>
+          </div>
+          <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+        </div>
+        <div class="status-filter-bar" id="intFilterBar"></div>
+        <div style="overflow-x:auto;">
+          <table class="int-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>HR / Company</th>
+                <th>Status</th>
+                <th>Note</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="intTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-
-    <!-- ACTIVITY LOG BANNER -->
-    <div class="log-banner" id="logBanner">
-      <div class="log-banner-header">
-        <div class="log-banner-title"><i class="ti ti-history"></i>Activity Log — Date-wise Updates</div>
-        <button class="log-close" onclick="toggleLog()"><i class="ti ti-x"></i></button>
-      </div>
-      <div class="log-list" id="logList"></div>
-    </div>
-
-    <div id="sectionsContainer"></div>
   </div>
 </div>
 
 <div class="bottom-chip">
   <i class="ti ti-users"></i>
-  <span class="bc-label" id="bottomChipCount">—</span>
+  <span id="bottomChipCount">—</span>
 </div>
 
-<!-- ══ ADD / EDIT MODAL ══ -->
+<!-- CONTACT MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleModalOutsideClick(event)">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-header">
       <div class="modal-header-icon"><i class="ti ti-user-plus" id="modalIcon"></i></div>
       <span class="modal-title" id="modalTitle">Add New Contact</span>
@@ -492,25 +639,80 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <div class="form-group full">
         <label class="form-label">LinkedIn Profile URL</label>
         <input class="form-input" id="f_li" placeholder="https://www.linkedin.com/in/username"/>
-        <span class="form-hint">Leave blank to skip</span>
       </div>
       <input type="hidden" id="f_editId" value=""/>
     </div>
     <div class="modal-footer">
       <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-save" id="saveBtn" onclick="saveContact()">
-        <i class="ti ti-check" style="font-size:14px;margin-right:4px;"></i>Save Contact
-      </button>
+      <button class="btn btn-save" onclick="saveContact()"><i class="ti ti-check" style="font-size:14px;margin-right:4px;"></i>Save Contact</button>
     </div>
   </div>
 </div>
 
-<!-- ══ CONFIRM DELETE ══ -->
+<!-- INTERACTION MODAL -->
+<div class="int-modal-overlay" id="intModalOverlay" onclick="handleIntModalOutside(event)">
+  <div class="int-modal">
+    <div class="int-modal-header">
+      <div class="modal-header-icon"><i class="ti ti-messages"></i></div>
+      <span class="modal-title" id="intModalTitle">Interactions</span>
+      <button class="modal-close" onclick="closeIntModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="int-modal-body">
+      <div class="int-hr-info">
+        <div class="int-hr-name" id="intHrName">—</div>
+        <div class="int-hr-co" id="intHrCo">—</div>
+      </div>
+
+      <!-- existing interactions -->
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Existing Interactions</div>
+        <div class="existing-ints" id="existingIntsList">
+          <div class="tbl-empty" style="padding:1rem;"><i class="ti ti-messages" style="font-size:24px;opacity:.3;display:block;margin-bottom:5px;"></i>No interactions yet</div>
+        </div>
+      </div>
+
+      <!-- add new -->
+      <div class="add-int-form">
+        <div class="add-int-title"><i class="ti ti-plus" style="font-size:12px;margin-right:4px;"></i>Add Interaction</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Student Name <span>*</span></label>
+            <input class="form-input" id="int_student" placeholder="e.g. Rahul Verma" list="studentList"/>
+            <datalist id="studentList"></datalist>
+            <span class="form-error" id="int_e_student">Required</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status <span>*</span></label>
+            <select class="form-select" id="int_status">
+              <option value="Not Contacted">Not Contacted</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Interested">Interested</option>
+              <option value="Not Interested">Not Interested</option>
+              <option value="Follow Up">Follow Up</option>
+              <option value="Placed">Placed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company Response / Note</label>
+          <input class="form-input" id="int_note" placeholder="e.g. Said will revert in 2 weeks, opening for MBA batch"/>
+        </div>
+        <input type="hidden" id="int_edit_id" value=""/>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
+          <button class="btn btn-cancel" style="padding:7px 14px;font-size:12px;" onclick="resetIntForm()">Clear</button>
+          <button class="btn btn-save" style="padding:7px 14px;font-size:12px;" onclick="saveInteraction()"><i class="ti ti-check" style="font-size:13px;margin-right:3px;"></i>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
     <div class="confirm-body">
       <div class="confirm-icon"><i class="ti ti-trash"></i></div>
-      <div class="confirm-title">Delete Contact?</div>
+      <div class="confirm-title">Confirm Delete</div>
       <div class="confirm-msg" id="confirmMsg">This action cannot be undone.</div>
     </div>
     <div class="confirm-footer">
@@ -520,13 +722,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// ═══════════════════════════════════
-//  BASE DATA
-// ═══════════════════════════════════
+// ═══════════════════ BASE DATA ═══════════════════
 const BASE_DATA=[
   {id:1,cat:"FMCG",co:"Hindustan Unilever Limited",name:"Aditi Arora",ph:"9875275144",email:"aditi.arora@unilever.com",li:"https://www.linkedin.com/in/aditi-arora-604952213/",desig:"Senior HR Executive"},
   {id:2,cat:"FMCG",co:"Procter & Gamble",name:"Rajat Sharma",ph:"7838840455",email:"sharma.r@pg.com",li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",desig:"Human Resources Payroll Executive"},
@@ -580,24 +779,30 @@ const BASE_DATA=[
   {id:50,cat:"Consulting",co:"KPMG India",name:"Akansha Bamne",ph:"7300714753",email:"akanshabamne@kpmg.com",li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",desig:"Talent Acquisition Specialist"},
 ];
 
-// ═══════════════════════════════════
-//  STATE — persisted in localStorage
-// ═══════════════════════════════════
-let data=[], activityLog=[];
-let nextId=1000, isDark=false, activeCat="All", activeCo="All";
-let deleteTargetId=null;
+// ═══════════════════ STATE ═══════════════════
+let data=[], interactions=[];
+let nextId=1000, nextIntId=2000;
+let isDark=false, activeCat="All", activeCo="All";
+let deleteTargetId=null, deleteTargetType="contact";
+let currentIntHrId=null, editingIntId=null;
+let plStatusFilter="All", intStatusFilter="All";
+let currentView="contacts";
 
-const STORE_KEY="hrdir_data_v1";
-const LOG_KEY="hrdir_log_v1";
+const STORE_KEY="hrdir_data_v3";
+const INT_KEY="hrdir_interactions_v1";
+
+const STATUS_MAP={
+  "Not Contacted":{cls:"nc",dot:"#64748b"},
+  "Contacted":{cls:"ct",dot:"#1d4ed8"},
+  "Interested":{cls:"in",dot:"#15803d"},
+  "Not Interested":{cls:"ni",dot:"#dc2626"},
+  "Follow Up":{cls:"fu",dot:"#7c3aed"},
+  "Placed":{cls:"pl",dot:"#a16207"}
+};
 
 const catCfg={
-  "All":{icon:"ti-layout-grid",banners:["#590016","#3d0010","#260009"]},
-  "FMCG":{icon:"ti-shopping-cart",banners:["#590016","#3d0010","#260009"]},
-  "Tech":{icon:"ti-cpu",banners:["#590016","#3d0010","#260009"]},
-  "Finance":{icon:"ti-coin",banners:["#590016","#3d0010","#260009"]},
-  "Ecommerce":{icon:"ti-device-mobile",banners:["#590016","#3d0010","#260009"]},
-  "Consulting":{icon:"ti-briefcase",banners:["#590016","#3d0010","#260009"]},
-  "Other":{icon:"ti-tag",banners:["#590016","#3d0010","#260009"]},
+  "All":{icon:"ti-layout-grid"},"FMCG":{icon:"ti-shopping-cart"},"Tech":{icon:"ti-cpu"},
+  "Finance":{icon:"ti-coin"},"Ecommerce":{icon:"ti-device-mobile"},"Consulting":{icon:"ti-briefcase"},"Other":{icon:"ti-tag"}
 };
 const avatarPal=[
   {l:{bg:"#dbeafe",c:"#1e40af"},d:{bg:"#1e3a5f",c:"#93c5fd"}},
@@ -609,91 +814,55 @@ const avatarPal=[
   {l:{bg:"#fee2e2",c:"#991b1b"},d:{bg:"#450a0a",c:"#fca5a5"}},
   {l:{bg:"#fef9c3",c:"#854d0e"},d:{bg:"#422006",c:"#fde047"}},
 ];
-
 const m=()=>isDark?"d":"l";
 const inits=n=>n.split(" ").slice(0,2).map(x=>x[0]).join("").toUpperCase();
 const coMap={};
 function rebuildCoMap(){Object.keys(coMap).forEach(k=>delete coMap[k]);[...new Set(data.map(d=>d.co))].forEach((c,i)=>coMap[c]=i%avatarPal.length);}
 const avCol=co=>{const idx=coMap[co]!==undefined?coMap[co]:0;return avatarPal[idx][m()];};
-const bannerColor=(cat,idx)=>(catCfg[cat]||catCfg["Other"]).banners[idx%3];
 
 function fmtDate(iso){
+  if(!iso)return"—";
   const d=new Date(iso);
-  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});
+  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
 }
-function todayStr(){return new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}
+function fmtDateTime(iso){
+  if(!iso)return"—";
+  const d=new Date(iso);
+  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});
+}
 
-// ═══════════════════════════════════
-//  PERSISTENCE
-// ═══════════════════════════════════
+// ═══════════════════ PERSISTENCE ═══════════════════
 function saveData(){
-  try{localStorage.setItem(STORE_KEY,JSON.stringify(data));
-      localStorage.setItem(LOG_KEY,JSON.stringify(activityLog));}
-  catch(e){}
+  try{
+    localStorage.setItem(STORE_KEY,JSON.stringify(data));
+    localStorage.setItem(INT_KEY,JSON.stringify(interactions));
+  }catch(e){}
 }
 function loadData(){
   try{
     const d=localStorage.getItem(STORE_KEY);
-    const l=localStorage.getItem(LOG_KEY);
-    if(d)data=JSON.parse(d); else data=[...BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}))];
-    if(l)activityLog=JSON.parse(l); else activityLog=[];
+    const i=localStorage.getItem(INT_KEY);
+    if(d)data=JSON.parse(d);
+    else data=BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}));
+    if(i)interactions=JSON.parse(i);
+    else interactions=[];
     nextId=data.reduce((mx,d)=>Math.max(mx,d.id),999)+1;
-  }catch(e){data=[...BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}))];activityLog=[];}
+    nextIntId=interactions.reduce((mx,i)=>Math.max(mx,i.id),1999)+1;
+  }catch(e){
+    data=BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}));
+    interactions=[];
+  }
 }
 
-// ═══════════════════════════════════
-//  ACTIVITY LOG
-// ═══════════════════════════════════
-function addLog(type,name,extra=""){
-  const entry={type,name,extra,ts:new Date().toISOString()};
-  activityLog.unshift(entry);
-  if(activityLog.length>200)activityLog=activityLog.slice(0,200);
-  saveData();
-  renderLog();
-  updateLastUpdated();
-}
-function renderLog(){
-  const list=document.getElementById("logList");
-  if(!activityLog.length){list.innerHTML='<div class="log-empty">No activity yet. Add or edit contacts to see history.</div>';return;}
-  // Group by date
-  const groups={};
-  activityLog.forEach(e=>{
-    const d=new Date(e.ts).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
-    if(!groups[d])groups[d]=[];
-    groups[d].push(e);
-  });
-  let html="";
-  Object.keys(groups).forEach(date=>{
-    html+=`<div style="font-size:10.5px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;padding:4px 0 2px;">${date}</div>`;
-    groups[date].forEach(e=>{
-      const dotCls=e.type==="add"?"add":e.type==="edit"?"edit":"del";
-      const icon=e.type==="add"?"ti-user-plus":e.type==="edit"?"ti-edit":"ti-trash";
-      const actionTxt=e.type==="add"?"Added":e.type==="edit"?"Updated":"Deleted";
-      html+=`<div class="log-item">
-        <div class="log-item-dot ${dotCls}"></div>
-        <div class="log-item-info">
-          <div class="log-item-action"><i class="ti ${icon}" style="font-size:12px;margin-right:4px;"></i>${actionTxt}: ${e.name}${e.extra?" <span style='color:var(--t3);font-weight:400;'>· "+e.extra+"</span>":""}</div>
-          <div class="log-item-time">${fmtDate(e.ts)}</div>
-        </div>
-      </div>`;
-    });
-  });
-  list.innerHTML=html;
-}
-function toggleLog(){
-  const b=document.getElementById("logBanner");
-  b.classList.toggle("show");
-  if(b.classList.contains("show"))renderLog();
-}
-function updateLastUpdated(){
-  if(!activityLog.length){document.getElementById("lastUpdatedTxt").style.display="none";return;}
-  document.getElementById("lastUpdatedTxt").style.display="flex";
-  document.getElementById("lastUpdatedVal").textContent=fmtDate(activityLog[0].ts);
+// ═══════════════════ HELPERS ═══════════════════
+function getHrInteractions(hrId){return interactions.filter(i=>i.hrId===hrId);}
+function getIntStatusCls(status){return(STATUS_MAP[status]||STATUS_MAP["Not Contacted"]).cls;}
+function statusBadgeHTML(status){
+  const cls=getIntStatusCls(status);
+  return `<span class="status-badge ${cls}">${status}</span>`;
 }
 
-// ═══════════════════════════════════
-//  THEME
-// ═══════════════════════════════════
+// ═══════════════════ THEME ═══════════════════
 function toggleTheme(){
   isDark=!isDark;
   document.documentElement.setAttribute("data-theme",isDark?"dark":"light");
@@ -705,30 +874,15 @@ function toggleTheme(){
   render();
 }
 
-// ═══════════════════════════════════
-//  SIDEBAR
-// ═══════════════════════════════════
-function openSidebar(){
-  document.getElementById("sidebar").classList.add("open");
-  const ov=document.getElementById("sbOverlay");ov.classList.add("show");ov.style.display="block";
-}
-function closeSidebar(){
-  document.getElementById("sidebar").classList.remove("open");
-  const ov=document.getElementById("sbOverlay");ov.classList.remove("show");
-  setTimeout(()=>ov.style.display="none",300);
-}
+// ═══════════════════ SIDEBAR ═══════════════════
+function openSidebar(){document.getElementById("sidebar").classList.add("open");const ov=document.getElementById("sbOverlay");ov.classList.add("show");ov.style.display="block";}
+function closeSidebar(){document.getElementById("sidebar").classList.remove("open");const ov=document.getElementById("sbOverlay");ov.classList.remove("show");setTimeout(()=>ov.style.display="none",300);}
 function filterSidebarItems(){
   const q=document.getElementById("sbSearchInput").value.toLowerCase().trim();
-  document.getElementById("sbSearchClear").style.display=q?"block":"none";
-  const items=document.querySelectorAll(".sb-item[data-cat]");
-  let any=false;
-  items.forEach(el=>{
-    const v=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q)||"all contacts".includes(q);
-    el.classList.toggle("hidden",!v);if(v)any=true;
+  document.querySelectorAll(".sb-item[data-cat]").forEach(el=>{
+    el.style.display=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q)?"":"none";
   });
-  document.getElementById("sbNoResults").style.display=any?"none":"block";
 }
-function clearSbSearch(){document.getElementById("sbSearchInput").value="";document.getElementById("sbSearchClear").style.display="none";filterSidebarItems();document.getElementById("sbSearchInput").focus();}
 
 function initSidebar(){
   const nav=document.getElementById("sidebarNav");
@@ -736,7 +890,7 @@ function initSidebar(){
   let html=`<div class="sb-nav-label">Categories</div>
     <div class="sb-item active" data-cat="All" onclick="setSidebarCat('All',this)">
       <i class="ti ti-layout-grid"></i><span class="sb-label">All Contacts</span>
-      <span class="sb-count" id="sbAllCnt">${data.length}</span>
+      <span class="sb-count">${data.length}</span>
     </div>`;
   cats.forEach(c=>{
     const cfg=catCfg[c]||catCfg["Other"];
@@ -745,12 +899,11 @@ function initSidebar(){
       <span class="sb-count">${data.filter(d=>d.cat===c).length}</span>
     </div>`;
   });
-  // Insert before no-results
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
   updateSbStats();
+  updateSbPipeline();
 }
 function refreshSidebar(){
-  // Remove old items
   document.querySelectorAll(".sb-item[data-cat],.sb-nav-label").forEach(e=>e.remove());
   const cats=[...new Set(data.map(d=>d.cat))];
   let html=`<div class="sb-nav-label">Categories</div>
@@ -767,6 +920,7 @@ function refreshSidebar(){
   });
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
   updateSbStats();
+  updateSbPipeline();
 }
 function updateSbStats(){
   const cats=[...new Set(data.map(d=>d.cat))];
@@ -775,39 +929,62 @@ function updateSbStats(){
     <div class="sb-stat-item"><div class="sb-stat-val">${data.length}</div><div class="sb-stat-lbl">Contacts</div></div>
     <div class="sb-stat-item"><div class="sb-stat-val">${cats.length}</div><div class="sb-stat-lbl">Categories</div></div>
     <div class="sb-stat-item"><div class="sb-stat-val">${cos.length}</div><div class="sb-stat-lbl">Companies</div></div>
-    <div class="sb-stat-item"><div class="sb-stat-val">IN</div><div class="sb-stat-lbl">Region</div></div>`;
+    <div class="sb-stat-item"><div class="sb-stat-val">${interactions.length}</div><div class="sb-stat-lbl">Interactions</div></div>`;
+}
+function updateSbPipeline(){
+  const statuses=Object.keys(STATUS_MAP);
+  const mini=document.getElementById("sbPipelineMini");
+  mini.innerHTML=statuses.map(s=>{
+    const cnt=interactions.filter(i=>i.status===s).length;
+    const dot=STATUS_MAP[s].dot;
+    return `<div class="sb-pl-row">
+      <div class="pl-dot" style="background:${dot};"></div>
+      <span class="pl-label">${s}</span>
+      <span class="pl-num">${cnt}</span>
+    </div>`;
+  }).join("");
 }
 function setSidebarCat(cat,el){
   activeCat=cat;activeCo="All";
-  document.querySelectorAll(".sb-item").forEach(i=>i.classList.remove("active"));
-  el.classList.add("active");
+  document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i===el));
   document.getElementById("coBtnText").textContent="All Companies";
   document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
-  document.querySelectorAll("#catMenu .dd-opt,.#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
-  const a1=document.querySelector("#catMenu .dd-opt[data-val='All']");if(a1&&cat==="All")a1.classList.add("active");
-  const a2=document.querySelector("#coMenu .dd-opt[data-val='All']");if(a2)a2.classList.add("active");
   document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
+  switchView("contacts");
   renderCoOpts();render();
   if(window.innerWidth<=700)closeSidebar();
 }
 
-// ═══════════════════════════════════
-//  DROPDOWNS
-// ═══════════════════════════════════
-function toggleCatDD(){
-  const m2=document.getElementById("catMenu"),b=document.getElementById("catBtn"),o=m2.classList.contains("open");
-  document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");
-  m2.classList.toggle("open",!o);b.classList.toggle("open",!o);
+// ═══════════════════ VIEW SWITCHING ═══════════════════
+function switchView(v){
+  currentView=v;
+  ["contacts","pipeline","interactions"].forEach(n=>{
+    document.getElementById("view-"+n).classList.toggle("active",n===v);
+    document.getElementById("tab-"+n).classList.toggle("active",n===v);
+  });
+  if(v==="pipeline"){
+    document.getElementById("topbarTitle").textContent="Pipeline";
+    document.getElementById("topbarSub").textContent="Interaction Tracker";
+    renderPipeline();
+  } else if(v==="interactions"){
+    document.getElementById("topbarTitle").textContent="All Interactions";
+    document.getElementById("topbarSub").textContent="Complete Record";
+    renderIntTable();
+  } else {
+    document.getElementById("topbarTitle").textContent=activeCat==="All"?"All Contacts":activeCat;
+    document.getElementById("topbarSub").textContent="HR Directory";
+    render();
+  }
 }
+
+// ═══════════════════ DROPDOWNS ═══════════════════
+function toggleCatDD(){const m2=document.getElementById("catMenu"),b=document.getElementById("catBtn"),o=m2.classList.contains("open");document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);}
 function setCatDD(cat,el){
   activeCat=cat;activeCo="All";
-  document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));
-  el.classList.add("active");
+  document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");
   document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
   document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");
   document.getElementById("coBtnText").textContent="All Companies";
-  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
-  const a=document.querySelector("#coMenu .dd-opt[data-val='All']");if(a)a.classList.add("active");
   document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
   document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i.dataset.cat===cat));
   renderCoOpts();render();
@@ -823,31 +1000,18 @@ function initCatOpts(){
     </div>`;
   }).join("");
 }
-function toggleCoDD(){
-  const m2=document.getElementById("coMenu"),b=document.getElementById("coBtn"),o=m2.classList.contains("open");
-  document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");
-  m2.classList.toggle("open",!o);b.classList.toggle("open",!o);
-  if(!o)setTimeout(()=>{const s=document.getElementById("coSearch");if(s)s.focus();},50);
-}
+function toggleCoDD(){const m2=document.getElementById("coMenu"),b=document.getElementById("coBtn"),o=m2.classList.contains("open");document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);}
 function renderCoOpts(){
-  const cos=[...new Set(data.map(d=>d.co))];
-  const vis=activeCat==="All"?cos:[...new Set(data.filter(d=>d.cat===activeCat).map(d=>d.co))];
-  document.getElementById("coAllCnt").textContent=data.filter(d=>activeCat==="All"||d.cat===activeCat).length;
+  const vis=activeCat==="All"?[...new Set(data.map(d=>d.co))]:[...new Set(data.filter(d=>d.cat===activeCat).map(d=>d.co))];
   document.getElementById("coOpts").innerHTML=vis.map(c=>`
-    <div class="dd-opt" data-val="${c}" onclick="setCoDD('${c.replace(/'/g,"\\'")}',this)">
+    <div class="dd-opt${activeCo===c?" active":""}" data-val="${c}" onclick="setCoDD('${c.replace(/'/g,"\\'")}',this)">
       <span class="opt-lbl">${c}</span>
       <span class="opt-cnt">${data.filter(d=>d.co===c).length}</span>
     </div>`).join("");
-  document.querySelectorAll("#coOpts .dd-opt").forEach(el=>{if(el.dataset.val===activeCo)el.classList.add("active");});
-}
-function filterCoOpts(){
-  const q=document.getElementById("coSearch").value.toLowerCase();
-  document.querySelectorAll("#coOpts .dd-opt").forEach(el=>{el.style.display=el.querySelector(".opt-lbl").textContent.toLowerCase().includes(q)?"":"none";});
 }
 function setCoDD(co,el){
   activeCo=co;
-  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));
-  el.classList.add("active");
+  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");
   document.getElementById("coBtnText").textContent=co==="All"?"All Companies":co;
   document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");
   render();
@@ -857,9 +1021,7 @@ document.addEventListener("click",e=>{
   if(!e.target.closest("#coWrap")){document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");}
 });
 
-// ═══════════════════════════════════
-//  MODAL — ADD / EDIT
-// ═══════════════════════════════════
+// ═══════════════════ CONTACT MODAL ═══════════════════
 function openAddModal(){
   document.getElementById("f_editId").value="";
   document.getElementById("modalTitle").textContent="Add New Contact";
@@ -867,9 +1029,7 @@ function openAddModal(){
   ["f_name","f_desig","f_co","f_ph","f_email","f_li"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("f_cat").value="FMCG";
   clearAllErrs();
-  // Populate datalist
-  const dl=document.getElementById("coList");
-  dl.innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");
+  document.getElementById("coList").innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");
   document.getElementById("modalOverlay").classList.add("open");
   setTimeout(()=>document.getElementById("f_name").focus(),200);
 }
@@ -887,14 +1047,11 @@ function openEditModal(id){
   document.getElementById("f_li").value=d.li||"";
   clearAllErrs();
   document.getElementById("modalOverlay").classList.add("open");
-  setTimeout(()=>document.getElementById("f_name").focus(),200);
 }
 function closeModal(){document.getElementById("modalOverlay").classList.remove("open");}
 function handleModalOutsideClick(e){if(e.target===document.getElementById("modalOverlay"))closeModal();}
-
 function clearErr(id){document.getElementById(id).classList.remove("show");}
 function clearAllErrs(){["e_name","e_desig","e_co","e_ph","e_email"].forEach(id=>document.getElementById(id).classList.remove("show"));}
-
 function validateForm(){
   let ok=true;
   const name=document.getElementById("f_name").value.trim();
@@ -909,7 +1066,6 @@ function validateForm(){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById("e_email").classList.add("show");ok=false;}
   return ok;
 }
-
 function saveContact(){
   if(!validateForm())return;
   const editId=document.getElementById("f_editId").value;
@@ -921,62 +1077,231 @@ function saveContact(){
   const email=document.getElementById("f_email").value.trim();
   const li=document.getElementById("f_li").value.trim()||"#";
   const now=new Date().toISOString();
-
   if(editId){
     const idx=data.findIndex(x=>x.id===parseInt(editId));
-    if(idx>=0){
-      data[idx]={...data[idx],name,desig,co,cat,ph,email,li,updatedAt:now};
-      addLog("edit",name,co);
-      showToast("success","Contact updated successfully");
-    }
+    if(idx>=0)data[idx]={...data[idx],name,desig,co,cat,ph,email,li,updatedAt:now};
+    showToast("success","Contact updated");
   } else {
-    const newContact={id:nextId++,cat,co,name,ph,email,li,desig,addedAt:now,updatedAt:null};
-    data.unshift(newContact);
-    addLog("add",name,co);
-    showToast("success","New contact added!");
+    data.unshift({id:nextId++,cat,co,name,ph,email,li,desig,addedAt:now,updatedAt:null});
+    showToast("success","Contact added!");
   }
-  saveData();
-  rebuildCoMap();
-  refreshSidebar();
-  initCatOpts();
-  renderCoOpts();
-  closeModal();
-  render();
-  // Briefly highlight new card
-  if(!editId){
-    setTimeout(()=>{
-      const el=document.querySelector('.card[data-id="'+(nextId-1)+'"]');
-      if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("new-highlight");setTimeout(()=>el.classList.remove("new-highlight"),3000);}
-    },150);
-  }
+  saveData();rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();closeModal();render();
 }
 
-// ═══════════════════════════════════
-//  DELETE
-// ═══════════════════════════════════
+// ═══════════════════ INTERACTION MODAL ═══════════════════
+function openIntModal(hrId){
+  currentIntHrId=hrId;editingIntId=null;
+  const hr=data.find(x=>x.id===hrId);if(!hr)return;
+  document.getElementById("intModalTitle").textContent="Interactions — "+hr.name;
+  document.getElementById("intHrName").textContent=hr.name+" · "+hr.desig;
+  document.getElementById("intHrCo").textContent=hr.co;
+  resetIntForm();
+  // Populate student datalist with previously used names
+  const usedStudents=[...new Set(interactions.map(i=>i.student))];
+  document.getElementById("studentList").innerHTML=usedStudents.map(s=>`<option value="${s}">`).join("");
+  renderExistingInts(hrId);
+  document.getElementById("intModalOverlay").classList.add("open");
+  setTimeout(()=>document.getElementById("int_student").focus(),200);
+}
+function closeIntModal(){document.getElementById("intModalOverlay").classList.remove("open");currentIntHrId=null;editingIntId=null;}
+function handleIntModalOutside(e){if(e.target===document.getElementById("intModalOverlay"))closeIntModal();}
+
+function renderExistingInts(hrId){
+  const list=document.getElementById("existingIntsList");
+  const hrInts=getHrInteractions(hrId);
+  if(!hrInts.length){
+    list.innerHTML=`<div class="tbl-empty" style="padding:1rem;"><i class="ti ti-messages" style="font-size:24px;opacity:.3;display:block;margin-bottom:5px;"></i>No interactions yet</div>`;
+    return;
+  }
+  list.innerHTML=hrInts.map(i=>`
+    <div class="existing-int-item">
+      <div class="ei-left">
+        <div class="ei-student">${i.student} &nbsp;${statusBadgeHTML(i.status)}</div>
+        ${i.note?`<div class="ei-note">${i.note}</div>`:""}
+        <div class="ei-date"><i class="ti ti-calendar" style="font-size:11px;margin-right:3px;"></i>${fmtDateTime(i.ts)}</div>
+      </div>
+      <div class="ei-actions">
+        <button class="ei-edit" onclick="editIntItem(${i.id})"><i class="ti ti-edit"></i></button>
+        <button class="ei-del" onclick="deleteIntItem(${i.id})"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`).join("");
+}
+
+function editIntItem(intId){
+  const item=interactions.find(i=>i.id===intId);if(!item)return;
+  editingIntId=intId;
+  document.getElementById("int_student").value=item.student;
+  document.getElementById("int_status").value=item.status;
+  document.getElementById("int_note").value=item.note||"";
+  document.getElementById("int_edit_id").value=intId;
+  document.getElementById("int_student").focus();
+}
+function deleteIntItem(intId){
+  interactions=interactions.filter(i=>i.id!==intId);
+  saveData();
+  if(currentIntHrId)renderExistingInts(currentIntHrId);
+  updateSbPipeline();renderPipelineIfActive();renderIntTableIfActive();render();
+  showToast("info","Interaction deleted");
+}
+function resetIntForm(){
+  document.getElementById("int_student").value="";
+  document.getElementById("int_status").value="Not Contacted";
+  document.getElementById("int_note").value="";
+  document.getElementById("int_edit_id").value="";
+  document.getElementById("int_e_student").classList.remove("show");
+  editingIntId=null;
+}
+function saveInteraction(){
+  const student=document.getElementById("int_student").value.trim();
+  const status=document.getElementById("int_status").value;
+  const note=document.getElementById("int_note").value.trim();
+  if(!student){document.getElementById("int_e_student").classList.add("show");return;}
+  document.getElementById("int_e_student").classList.remove("show");
+  const now=new Date().toISOString();
+  if(editingIntId){
+    const idx=interactions.findIndex(i=>i.id===editingIntId);
+    if(idx>=0)interactions[idx]={...interactions[idx],student,status,note,ts:now};
+    showToast("success","Interaction updated");
+  } else {
+    interactions.push({id:nextIntId++,hrId:currentIntHrId,student,status,note,ts:now});
+    showToast("success","Interaction saved!");
+  }
+  saveData();resetIntForm();
+  if(currentIntHrId)renderExistingInts(currentIntHrId);
+  updateSbStats();updateSbPipeline();renderPipelineIfActive();renderIntTableIfActive();render();
+}
+function renderPipelineIfActive(){if(currentView==="pipeline")renderPipeline();}
+function renderIntTableIfActive(){if(currentView==="interactions")renderIntTable();}
+
+// ═══════════════════ PIPELINE VIEW ═══════════════════
+function renderPipeline(){
+  const statuses=Object.keys(STATUS_MAP);
+  // Summary cards
+  let sumHTML="";
+  const allCls="nc";
+  const totalInts=interactions.length;
+  sumHTML+=`<div class="pl-sum-card nc${plStatusFilter==="All"?" active-filter":""}" onclick="setPlFilter('All')">
+    <div class="pl-sum-val">${totalInts}</div>
+    <div class="pl-sum-lbl">Total</div>
+  </div>`;
+  statuses.forEach(s=>{
+    const cls=STATUS_MAP[s].cls;
+    const cnt=interactions.filter(i=>i.status===s).length;
+    sumHTML+=`<div class="pl-sum-card ${cls}${plStatusFilter===s?" active-filter":""}" onclick="setPlFilter('${s}')">
+      <div class="pl-sum-val">${cnt}</div>
+      <div class="pl-sum-lbl">${s}</div>
+    </div>`;
+  });
+  document.getElementById("pipelineSummary").innerHTML=sumHTML;
+
+  // Filter bar
+  document.getElementById("plFilterBar").innerHTML=buildFilterBar(plStatusFilter,"pl");
+
+  // Table
+  let rows=interactions;
+  if(plStatusFilter!=="All")rows=rows.filter(i=>i.status===plStatusFilter);
+  renderIntRows(rows,"plTableBody");
+  document.getElementById("plTableTitle").textContent=plStatusFilter==="All"?"All Interactions":plStatusFilter+" ("+rows.length+")";
+}
+function setPlFilter(s){
+  plStatusFilter=s;
+  renderPipeline();
+}
+
+function renderIntTable(){
+  const q=(document.getElementById("intSearchInput").value||"").toLowerCase();
+  document.getElementById("intFilterBar").innerHTML=buildFilterBar(intStatusFilter,"int");
+  let rows=interactions;
+  if(intStatusFilter!=="All")rows=rows.filter(i=>i.status===intStatusFilter);
+  if(q)rows=rows.filter(i=>
+    i.student.toLowerCase().includes(q)||
+    (data.find(d=>d.id===i.hrId)||{name:""}).name.toLowerCase().includes(q)||
+    (data.find(d=>d.id===i.hrId)||{co:""}).co.toLowerCase().includes(q)||
+    (i.note||"").toLowerCase().includes(q)
+  );
+  renderIntRows(rows,"intTableBody");
+}
+function setIntFilter(s){
+  intStatusFilter=s;renderIntTable();
+}
+
+function buildFilterBar(active,prefix){
+  const statuses=Object.keys(STATUS_MAP);
+  let h=`<button class="sf-btn all${active==="All"?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('All')">All (${interactions.length})</button>`;
+  statuses.forEach(s=>{
+    const cls=STATUS_MAP[s].cls;
+    const cnt=interactions.filter(i=>i.status===s).length;
+    h+=`<button class="sf-btn ${cls}${active===s?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('${s}')">${s} (${cnt})</button>`;
+  });
+  return h;
+}
+
+function renderIntRows(rows,tbodyId){
+  const tbody=document.getElementById(tbodyId);
+  if(!rows.length){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><i class="ti ti-inbox"></i>No interactions found</div></td></tr>`;
+    return;
+  }
+  // Sort newest first
+  const sorted=[...rows].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  tbody.innerHTML=sorted.map(i=>{
+    const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—"};
+    return `<tr>
+      <td class="td-name">${i.student}</td>
+      <td><div class="td-name" style="font-size:12px;">${hr.name}</div><div class="td-co">${hr.co}</div></td>
+      <td>${statusBadgeHTML(i.status)}</td>
+      <td class="td-note" title="${(i.note||"").replace(/"/g,"&quot;")}">${i.note||"<span style='color:var(--t3);font-style:italic;'>No note</span>"}</td>
+      <td class="td-date">${fmtDate(i.ts)}</td>
+      <td><div class="td-actions">
+        <button class="tbl-action-btn" onclick="openIntModalFromTable(${i.hrId})" title="Add/Edit"><i class="ti ti-messages"></i></button>
+        <button class="tbl-action-btn del" onclick="deleteIntItem(${i.id})" title="Delete"><i class="ti ti-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join("");
+}
+function openIntModalFromTable(hrId){openIntModal(hrId);}
+
+// ═══════════════════ EXPORT CSV ═══════════════════
+function exportCSV(){
+  let rows=interactions;
+  const headers=["Student","HR Name","Company","Category","Status","Note","Date"];
+  const csv=[headers.join(",")];
+  rows.forEach(i=>{
+    const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—",cat:"—"};
+    const row=[i.student,hr.name,hr.co,hr.cat,i.status,(i.note||"").replace(/,/g,";"),fmtDate(i.ts)];
+    csv.push(row.map(v=>`"${v}"`).join(","));
+  });
+  const blob=new Blob([csv.join("\n")],{type:"text/csv"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="hr_interactions_"+new Date().toISOString().slice(0,10)+".csv";
+  a.click();URL.revokeObjectURL(url);
+  showToast("success","CSV exported!");
+}
+
+// ═══════════════════ DELETE ═══════════════════
 function openDeleteConfirm(id){
   const d=data.find(x=>x.id===id);if(!d)return;
-  deleteTargetId=id;
-  document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}?`;
+  deleteTargetId=id;deleteTargetType="contact";
+  document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}? Their interactions will also be removed.`;
   document.getElementById("confirmOverlay").classList.add("open");
   document.getElementById("confirmDeleteBtn").onclick=()=>confirmDelete();
 }
 function closeConfirm(){document.getElementById("confirmOverlay").classList.remove("open");deleteTargetId=null;}
 function confirmDelete(){
-  const d=data.find(x=>x.id===deleteTargetId);if(!d)return;
-  const name=d.name,co=d.co;
-  data=data.filter(x=>x.id!==deleteTargetId);
-  addLog("del",name,co);
-  saveData();rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();
-  closeConfirm();render();
-  showToast("info","Contact deleted");
+  if(deleteTargetType==="contact"){
+    const d=data.find(x=>x.id===deleteTargetId);
+    interactions=interactions.filter(i=>i.hrId!==deleteTargetId);
+    data=data.filter(x=>x.id!==deleteTargetId);
+    saveData();rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();
+    showToast("info","Contact deleted");
+  }
+  closeConfirm();render();updateSbPipeline();
 }
 
-// ═══════════════════════════════════
-//  TOAST
-// ═══════════════════════════════════
+// ═══════════════════ TOAST ═══════════════════
 function showToast(type,msg){
-  const icon=type==="success"?"ti-circle-check-filled":type==="error"?"ti-circle-x-filled":"ti-info-circle-filled";
+  const icon=type==="success"?"ti-circle-check":type==="error"?"ti-circle-x":"ti-info-circle";
   const t=document.createElement("div");
   t.className=`toast ${type}`;
   t.innerHTML=`<i class="ti ${icon}"></i>${msg}`;
@@ -985,18 +1310,22 @@ function showToast(type,msg){
   setTimeout(()=>t.remove(),2900);
 }
 
-// ═══════════════════════════════════
-//  CARD
-// ═══════════════════════════════════
+// ═══════════════════ CARD ═══════════════════
 function cardHTML(d,idx){
   const av=avCol(d.co);
-  const banner=bannerColor(d.cat,idx);
+  const bannerColors=["#590016","#3d0010","#260009"];
+  const banner=bannerColors[idx%3];
   const cfg=catCfg[d.cat]||catCfg["Other"];
-  const isNew=d.addedAt&&(Date.now()-new Date(d.addedAt).getTime())<86400000*3;
-  const dateLabel=d.addedAt?`<div class="card-added-date"><i class="ti ti-calendar-plus"></i>Added ${new Date(d.addedAt).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})}</div>`:
-    d.updatedAt?`<div class="card-added-date"><i class="ti ti-calendar-event"></i>Updated ${new Date(d.updatedAt).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})}</div>`:"";
+  const hrInts=getHrInteractions(d.id);
+  const latestInt=hrInts.sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
+  const intCount=hrInts.length;
+
+  // Latest status badge
+  const latestStatusHTML=latestInt
+    ?statusBadgeHTML(latestInt.status)
+    :`<span class="status-badge nc">Not Contacted</span>`;
+
   return `<div class="card" data-id="${d.id}">
-    ${isNew?'<div class="card-new-badge">NEW</div>':""}
     <div class="card-banner" style="background:${banner};">
       <div class="card-avatar" style="background:${av.bg};color:${av.c};">${inits(d.name)}</div>
       <span class="card-cat-badge"><i class="ti ${cfg.icon}" style="font-size:9px;vertical-align:-1px;margin-right:3px;"></i>${d.cat}</span>
@@ -1005,12 +1334,20 @@ function cardHTML(d,idx){
       <div class="card-name">${d.name}</div>
       <div class="card-desig">${d.desig}</div>
       <div class="card-co"><i class="ti ti-building"></i>${d.co}</div>
-      ${dateLabel}
       <div class="contact-rows">
         <div class="info-row"><div class="icon-pill phone"><i class="ti ti-phone"></i></div><span>${d.ph}</span></div>
         <div class="info-row"><div class="icon-pill mail"><i class="ti ti-mail"></i></div><a href="mailto:${d.email}" title="${d.email}">${d.email}</a></div>
         <div class="info-row"><div class="icon-pill li"><i class="ti ti-brand-linkedin"></i></div><a href="${d.li&&d.li!="#"?d.li:"#"}" target="_blank" rel="noopener">${d.li&&d.li!="#"?"View LinkedIn":"Not added"}</a></div>
       </div>
+    </div>
+    <div class="card-int-bar">
+      <div class="card-int-left">
+        ${latestStatusHTML}
+        ${intCount>0?`<span style="font-size:10px;color:var(--t3);">${intCount} interaction${intCount>1?"s":""}</span>`:""}
+      </div>
+      <button class="card-int-add" onclick="openIntModal(${d.id})">
+        <i class="ti ti-plus"></i> Track
+      </button>
     </div>
     <div class="card-footer">
       <a href="tel:${d.ph}" class="card-action call"><i class="ti ti-phone"></i>Call</a>
@@ -1021,9 +1358,7 @@ function cardHTML(d,idx){
   </div>`;
 }
 
-// ═══════════════════════════════════
-//  RENDER
-// ═══════════════════════════════════
+// ═══════════════════ RENDER CONTACTS ═══════════════════
 function render(){
   const q=document.getElementById("searchInput").value.toLowerCase();
   const filtered=data.filter(d=>{
@@ -1040,8 +1375,8 @@ function render(){
     container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found.</p></div></div>`;
     return;
   }
-  const isSearching=q||activeCo!=="All";
-  if(isSearching||activeCat!=="All"){
+  const isFiltered=q||activeCo!=="All";
+  if(isFiltered||activeCat!=="All"){
     container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;
     return;
   }
@@ -1062,15 +1397,12 @@ function render(){
   container.innerHTML=html;
 }
 
-// ═══════════════════════════════════
-//  INIT
-// ═══════════════════════════════════
+// ═══════════════════ INIT ═══════════════════
 loadData();
 rebuildCoMap();
 initSidebar();
 initCatOpts();
 renderCoOpts();
-updateLastUpdated();
 render();
 </script>
 </body>
