@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/hr_directory_v3.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -17,8 +18,7 @@
   --shadow-sm:0 1px 4px rgba(89,0,22,0.07);--shadow-md:0 4px 20px rgba(89,0,22,0.12);--shadow-lg:0 8px 32px rgba(89,0,22,0.18);
   --r:14px;--rsm:9px;--rpill:100px;
   --phone-bg:#fce7f3;--phone-c:#9d174d;--mail-bg:#dbeafe;--mail-c:#1d4ed8;--li-bg:#e0e7ff;--li-c:#4338ca;
-  --sw:230px;
-  --green:#16a34a;--green-bg:#dcfce7;
+  --sw:230px;--green:#16a34a;--green-bg:#dcfce7;
   --status-nc-bg:#f1f5f9;--status-nc-c:#475569;
   --status-ct-bg:#dbeafe;--status-ct-c:#1d4ed8;
   --status-in-bg:#dcfce7;--status-in-c:#15803d;
@@ -43,7 +43,37 @@
   --status-pl-bg:#422006;--status-pl-c:#fde047;
   --status-fu-bg:#2e1065;--status-fu-c:#c4b5fd;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;display:flex;overflow-x:hidden;}
+
+/* ══ LOGIN SCREEN ══ */
+.login-screen{position:fixed;inset:0;background:var(--maroon);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1rem;}
+.login-box{background:#fff;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.8rem;}
+.login-logo-icon{width:44px;height:44px;border-radius:12px;background:var(--maroon);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;flex-shrink:0;}
+.login-logo-text{font-size:18px;font-weight:800;color:#1a1a2e;}
+.login-logo-sub{font-size:11px;color:#9090a8;margin-top:1px;}
+.login-title{font-size:20px;font-weight:800;color:#1a1a2e;margin-bottom:.3rem;}
+.login-sub{font-size:13px;color:#6b6b8a;margin-bottom:1.6rem;}
+.login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;}
+.login-label{font-size:12px;font-weight:600;color:#4a4a6a;}
+.login-input{padding:11px 14px;border:1.5px solid #e2dbc8;border-radius:9px;font-size:14px;color:#1a1a2e;outline:none;transition:border-color .15s;background:#fffcef;}
+.login-input:focus{border-color:#590016;}
+.login-pw-wrap{position:relative;}
+.login-pw-wrap input{width:100%;padding-right:40px;}
+.login-pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9090a8;font-size:16px;padding:2px;}
+.login-pw-toggle:hover{color:#590016;}
+.login-btn{width:100%;padding:12px;border-radius:9px;background:#590016;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+.login-btn:hover{background:#3d0010;}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;}
+.login-error{font-size:12px;color:#dc2626;background:#fee2e2;border-radius:7px;padding:8px 12px;margin-top:.8rem;display:none;}
+.login-error.show{display:block;}
+.login-loading{text-align:center;font-size:13px;color:#9090a8;padding:.5rem 0;display:none;}
+.login-loading.show{display:block;}
+
+/* ══ APP SCREEN ══ */
+.app-screen{display:none;}
+.app-screen.show{display:flex;}
+
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;}
 
 /* SIDEBAR */
 .sidebar{width:var(--sw);min-height:100vh;background:var(--maroon);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(89,0,22,0.2);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;scrollbar-width:none;}
@@ -88,13 +118,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sb-action-btn i{font-size:15px;}
 .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;opacity:0;transition:opacity .3s;}
 .sb-overlay.show{opacity:1;}
-
-/* PIPELINE SIDEBAR STATS */
 .sb-pipeline-mini{margin:.5rem .7rem 0;display:flex;flex-direction:column;gap:4px;}
 .sb-pl-row{display:flex;align-items:center;justify-content:space-between;padding:5px 9px;border-radius:7px;background:rgba(255,255,255,0.08);font-size:11px;color:rgba(255,255,255,0.7);}
 .sb-pl-row .pl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:6px;}
 .sb-pl-row .pl-label{flex:1;}
 .sb-pl-row .pl-num{font-weight:700;color:#fff;}
+
+/* SYNC STATUS */
+.sync-bar{display:flex;align-items:center;gap:6px;margin:.5rem .7rem 0;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.08);font-size:10.5px;color:rgba(255,255,255,0.6);}
+.sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sync-dot.ok{background:#4ade80;}
+.sync-dot.syncing{background:#fbbf24;animation:pulse .8s infinite;}
+.sync-dot.err{background:#f87171;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 /* MAIN */
 .main{margin-left:var(--sw);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;}
@@ -143,13 +179,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .dd-opt .opt-lbl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .dd-opt .opt-cnt{font-size:10.5px;color:var(--t3);flex-shrink:0;}
 .dd-divider{height:1px;background:var(--bdr);margin:2px 0;}
-
-/* TOOLBAR */
 .toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:8px;}
 .count-txt{font-size:12.5px;color:var(--t3);}
 .count-txt b{color:var(--t1);}
 
-/* SECTION HEADER */
+/* SECTION */
 .section-block{margin-bottom:1.8rem;}
 .section-header{display:flex;align-items:center;gap:10px;margin-bottom:.9rem;}
 .section-line{flex:1;height:1px;background:var(--bdr);}
@@ -159,7 +193,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:13px;}
 
-/* STATUS BADGE */
+/* STATUS */
 .status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);white-space:nowrap;}
 .status-badge.nc{background:var(--status-nc-bg);color:var(--status-nc-c);}
 .status-badge.ct{background:var(--status-ct-bg);color:var(--status-ct-c);}
@@ -168,19 +202,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .status-badge.pl{background:var(--status-pl-bg);color:var(--status-pl-c);}
 .status-badge.fu{background:var(--status-fu-bg);color:var(--status-fu-c);}
 
-/* INTERACTION COUNT PILL on card */
-.int-count-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);background:var(--maroon-light);color:var(--maroon);cursor:pointer;border:none;transition:background .15s;}
-.int-count-pill:hover{background:var(--maroon-light2);}
-[data-theme="dark"] .int-count-pill{background:var(--maroon-light2);color:#f9a8d4;}
-
 /* CARD */
 .card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s,border-color .2s;position:relative;}
 .card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--bdr-h);}
-.card.new-highlight{border-color:var(--green);box-shadow:0 0 0 2px rgba(22,163,74,0.15);}
 .card-banner{height:72px;display:flex;align-items:flex-end;padding:0 1rem 0;position:relative;}
 .card-avatar{width:48px;height:48px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;position:absolute;bottom:-20px;left:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.15);flex-shrink:0;}
 .card-cat-badge{margin-left:auto;margin-bottom:8px;font-size:9.5px;font-weight:700;background:rgba(255,255,255,0.18);color:#fff;padding:2px 9px;border-radius:var(--rpill);}
-.card-new-badge{position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;background:var(--green);color:#fff;padding:2px 8px;border-radius:var(--rpill);}
 .card-body{padding:26px 1rem 8px;}
 .card-name{font-weight:700;font-size:14px;color:var(--t1);margin-bottom:1px;}
 .card-desig{font-size:11px;color:var(--t2);line-height:1.4;margin-bottom:6px;}
@@ -194,15 +221,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .icon-pill.li{background:var(--li-bg);color:var(--li-c);}
 .info-row a{color:var(--maroon);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:185px;display:block;}
 .info-row a:hover{text-decoration:underline;}
-
-/* INTERACTION BAR on card */
 .card-int-bar{border-top:1px solid var(--bdr);padding:7px 1rem;display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .card-int-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .card-int-add{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--maroon);background:var(--maroon-light);border:none;border-radius:6px;padding:4px 9px;cursor:pointer;transition:background .15s;}
 .card-int-add:hover{background:var(--maroon-light2);}
 [data-theme="dark"] .card-int-add{background:var(--maroon-light2);color:#f9a8d4;}
 .card-int-add i{font-size:13px;}
-
 .card-footer{border-top:1px solid var(--bdr);padding:.55rem 1rem;display:flex;gap:6px;}
 .card-action{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:5px 6px;border-radius:7px;font-size:11px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .15s;border:1.5px solid var(--bdr);background:var(--surface2);color:var(--t2);}
 .card-action:hover{border-color:var(--bdr-h);color:var(--t1);}
@@ -210,21 +234,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card-action.email-btn:hover{background:var(--mail-bg);border-color:#93c5fd;color:var(--mail-c);}
 .card-action.del-btn:hover{background:#fee2e2;border-color:#fca5a5;color:#dc2626;}
 .card-action i{font-size:12px;}
-
-/* EMPTY */
 .empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--t3);}
 .empty i{font-size:44px;display:block;margin-bottom:11px;opacity:.35;}
 .empty p{font-size:13.5px;}
 
-/* ══ PIPELINE VIEW ══ */
+/* PIPELINE */
 .pipeline-view{display:none;}
 .pipeline-view.active{display:block;}
 .contacts-view{display:none;}
 .contacts-view.active{display:block;}
 .interactions-view{display:none;}
 .interactions-view.active{display:block;}
-
-/* Pipeline summary cards */
 .pipeline-summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:1.4rem;}
 .pl-sum-card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);padding:.9rem 1rem;text-align:center;cursor:pointer;transition:all .2s;}
 .pl-sum-card:hover{border-color:var(--bdr-h);transform:translateY(-2px);}
@@ -243,8 +263,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .pl-sum-card.ni.active-filter{border-color:var(--status-ni-c);}
 .pl-sum-card.pl.active-filter{border-color:var(--status-pl-c);}
 .pl-sum-card.fu.active-filter{border-color:var(--status-fu-c);}
-
-/* Interactions table */
 .int-table-wrap{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-sm);}
 .int-table-header{padding:.9rem 1.1rem;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .int-table-title{font-size:13.5px;font-weight:700;color:var(--t1);flex:1;}
@@ -269,7 +287,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sf-btn.pl.off{background:none;color:var(--t3);border-color:var(--bdr);}
 .sf-btn.fu{background:var(--status-fu-bg);color:var(--status-fu-c);}
 .sf-btn.fu.off{background:none;color:var(--t3);border-color:var(--bdr);}
-
 table.int-table{width:100%;border-collapse:collapse;}
 table.int-table th{padding:9px 1.1rem;font-size:11px;font-weight:700;color:var(--t3);text-align:left;text-transform:uppercase;letter-spacing:.06em;background:var(--surface2);border-bottom:1px solid var(--bdr);}
 table.int-table td{padding:10px 1.1rem;font-size:12.5px;color:var(--t2);border-bottom:1px solid var(--bdr);vertical-align:middle;}
@@ -285,19 +302,26 @@ table.int-table tr:hover td{background:var(--surface2);}
 .tbl-action-btn.del:hover{border-color:#fca5a5;color:#dc2626;background:#fee2e2;}
 .tbl-empty{text-align:center;padding:3rem;color:var(--t3);font-size:13px;}
 .tbl-empty i{font-size:36px;display:block;margin-bottom:8px;opacity:.3;}
-.export-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;background:var(--surface2);border:1.5px solid var(--bdr);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;}
+.export-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:7px;background:var(--surface2);border:1.5px solid var(--bdr);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
 .export-btn:hover{border-color:var(--bdr-h);color:var(--t1);}
 .export-btn i{font-size:14px;}
+
+/* LOADING OVERLAY */
+.loading-overlay{position:fixed;inset:0;background:rgba(89,0,22,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:8888;gap:14px;}
+.loading-overlay.hide{display:none;}
+.loading-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);}
 
 /* BOTTOM CHIP */
 .bottom-chip{position:fixed;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;background:var(--maroon);border-radius:var(--rpill);padding:7px 14px 7px 11px;font-size:12.5px;font-weight:700;color:#fff;box-shadow:var(--shadow-md);z-index:100;pointer-events:none;}
 .bottom-chip i{font-size:15px;color:rgba(255,255,255,0.8);}
 
-/* ══ MODAL — CONTACT ══ */
+/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal{background:var(--surface);border-radius:var(--r);width:100%;max-width:520px;box-shadow:var(--shadow-lg);overflow:hidden;transform:translateY(20px) scale(0.97);transition:transform .25s;}
-.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-overlay.open .modal{transform:none;}
 .modal-header{background:var(--maroon);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:10px;}
 .modal-header-icon{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0;}
 .modal-title{font-size:15px;font-weight:800;color:#fff;flex:1;}
@@ -314,7 +338,6 @@ table.int-table tr:hover td{background:var(--surface2);}
 .form-input::placeholder{color:var(--t3);}
 .form-select{padding:9px 12px;border:1.5px solid var(--bdr);border-radius:var(--rsm);background:var(--surface2);color:var(--t1);font-size:13px;outline:none;cursor:pointer;width:100%;transition:border-color .15s;}
 .form-select:focus{border-color:var(--maroon);}
-.form-hint{font-size:10.5px;color:var(--t3);}
 .form-error{font-size:10.5px;color:#dc2626;display:none;}
 .form-error.show{display:block;}
 .modal-footer{padding:1rem 1.4rem 1.2rem;border-top:1px solid var(--bdr);display:flex;gap:10px;justify-content:flex-end;}
@@ -324,23 +347,21 @@ table.int-table tr:hover td{background:var(--surface2);}
 .btn-save{background:var(--maroon);color:#fff;}
 .btn-save:hover{background:var(--maroon-2);}
 
-/* ══ INTERACTION MODAL ══ */
+/* INTERACTION MODAL */
 .int-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:350;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;}
 .int-modal-overlay.open{opacity:1;pointer-events:all;}
 .int-modal{background:var(--surface);border-radius:var(--r);width:100%;max-width:480px;box-shadow:var(--shadow-lg);overflow:hidden;transform:translateY(20px) scale(0.97);transition:transform .25s;}
 .int-modal-overlay.open .int-modal{transform:none;}
 .int-modal-header{background:var(--maroon);padding:1rem 1.3rem;display:flex;align-items:center;gap:10px;}
-.int-modal-body{padding:1.3rem;display:flex;flex-direction:column;gap:12px;}
-.int-hr-info{background:var(--surface2);border-radius:9px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:2px;}
+.int-modal-body{padding:1.3rem;display:flex;flex-direction:column;gap:12px;max-height:80vh;overflow-y:auto;}
+.int-hr-info{background:var(--surface2);border-radius:9px;padding:.8rem 1rem;}
 .int-hr-name{font-size:13.5px;font-weight:700;color:var(--t1);}
-.int-hr-co{font-size:11.5px;color:var(--maroon);font-weight:600;}
-
-/* Existing interactions list in modal */
-.existing-ints{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto;}
+.int-hr-co{font-size:11.5px;color:var(--maroon);font-weight:600;margin-top:2px;}
+.existing-ints{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;}
 .existing-int-item{background:var(--surface2);border-radius:8px;padding:8px 10px;display:flex;align-items:flex-start;gap:8px;}
 .ei-left{flex:1;}
 .ei-student{font-size:12px;font-weight:700;color:var(--t1);}
-.ei-note{font-size:11px;color:var(--t3);margin-top:1px;}
+.ei-note{font-size:11px;color:var(--t3);margin-top:2px;}
 .ei-date{font-size:10.5px;color:var(--t3);margin-top:2px;}
 .ei-actions{display:flex;gap:4px;flex-shrink:0;}
 .ei-del{background:none;border:1px solid var(--bdr);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--t3);font-size:11px;transition:all .15s;}
@@ -348,7 +369,7 @@ table.int-table tr:hover td{background:var(--surface2);}
 .ei-edit{background:none;border:1px solid var(--bdr);border-radius:5px;padding:3px 6px;cursor:pointer;color:var(--t3);font-size:11px;transition:all .15s;}
 .ei-edit:hover{border-color:var(--bdr-h);color:var(--t1);}
 .add-int-form{background:var(--surface2);border-radius:9px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:10px;}
-.add-int-title{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;}
+.add-int-title{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;}
 
 /* CONFIRM */
 .confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:400;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -370,7 +391,6 @@ table.int-table tr:hover td{background:var(--surface2);}
 .toast.info i{color:#60a5fa;}
 @keyframes toastIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-/* RESPONSIVE */
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:700px){
   :root{--sw:0px;}
@@ -388,191 +408,188 @@ table.int-table tr:hover td{background:var(--surface2);}
   .topbar-add-btn span{display:none;}
   table.int-table th:nth-child(4),table.int-table td:nth-child(4){display:none;}
 }
-@media(max-width:480px){.topbar-sub{display:none;}.pipeline-summary{grid-template-columns:repeat(3,1fr);}}
 </style>
 </head>
 <body>
 
-<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Connecting to database…</div>
+</div>
 
-<!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-  <div class="sb-brand">
-    <div class="sb-logo">
-      <div class="sb-logo-icon"><i class="ti ti-address-book"></i></div>
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon"><i class="ti ti-address-book"></i></div>
       <div>
-        <div class="sb-logo-text">HR Directory</div>
-        <div class="sb-logo-sub">Talent Network</div>
+        <div class="login-logo-text">HR Directory</div>
+        <div class="login-logo-sub">Talent Network — Navneet Pathak</div>
       </div>
     </div>
-    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-profile">
-      <div class="sb-profile-av">NP</div>
-      <div>
-        <div class="sb-profile-name">Navneet Pathak</div>
-        <div class="sb-profile-role">View my profile →</div>
-      </div>
-    </a>
-  </div>
-  <div class="sb-search">
-    <div class="sb-search-wrap">
-      <i class="ti ti-search ssi"></i>
-      <input type="text" id="sbSearchInput" placeholder="Quick filter…" oninput="filterSidebarItems()"/>
+    <div class="login-title">Welcome back</div>
+    <div class="login-sub">Sign in to access your HR contacts</div>
+    <div class="login-field">
+      <label class="login-label">Username</label>
+      <input class="login-input" id="loginUser" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
+    <div class="login-field">
+      <label class="login-label">Password</label>
+      <div class="login-pw-wrap">
+        <input class="login-input" id="loginPass" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <button class="login-pw-toggle" onclick="togglePwVis()"><i class="ti ti-eye" id="pwEyeIcon"></i></button>
+      </div>
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect username or password. Please try again.</div>
+    <div class="login-loading" id="loginLoading">Verifying…</div>
   </div>
-  <nav class="sb-nav" id="sidebarNav">
-    <div class="sb-no-results" id="sbNoResults">No match found</div>
-  </nav>
-  <button class="sb-add-btn" onclick="openAddModal()">
-    <i class="ti ti-user-plus"></i> Add New Contact
-  </button>
-  <div class="sb-stats" id="sbStats"></div>
+</div>
 
-  <!-- Pipeline mini stats -->
-  <div style="padding:.5rem .7rem 0;font-size:9px;font-weight:700;color:var(--ton-m3);text-transform:uppercase;letter-spacing:.1em;margin-top:.5rem;">Pipeline</div>
-  <div class="sb-pipeline-mini" id="sbPipelineMini"></div>
-
-  <div class="sb-bottom">
-    <button class="sb-action-btn" onclick="toggleTheme()">
-      <i class="ti ti-moon" id="themeIconSb"></i>
-      <span id="themeLabelSb">Dark</span>
+<!-- APP SCREEN -->
+<div class="app-screen" id="appScreen">
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">
+        <div class="sb-logo-icon"><i class="ti ti-address-book"></i></div>
+        <div>
+          <div class="sb-logo-text">HR Directory</div>
+          <div class="sb-logo-sub">Talent Network</div>
+        </div>
+      </div>
+      <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-profile">
+        <div class="sb-profile-av">NP</div>
+        <div>
+          <div class="sb-profile-name">Navneet Pathak</div>
+          <div class="sb-profile-role">View my profile →</div>
+        </div>
+      </a>
+    </div>
+    <div class="sb-search">
+      <div class="sb-search-wrap">
+        <i class="ti ti-search ssi"></i>
+        <input type="text" id="sbSearchInput" placeholder="Quick filter…" oninput="filterSidebarItems()"/>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sidebarNav">
+      <div class="sb-no-results" id="sbNoResults">No match found</div>
+    </nav>
+    <button class="sb-add-btn" onclick="openAddModal()">
+      <i class="ti ti-user-plus"></i> Add New Contact
     </button>
-    <a href="https://navneetpa.github.io/my-profile" target="_blank" rel="noopener" class="sb-action-btn">
-      <i class="ti ti-user-circle"></i><span>Profile</span>
-    </a>
-    <button class="sb-action-btn" onclick="switchView('pipeline')">
-      <i class="ti ti-chart-bar"></i><span>Pipeline</span>
-    </button>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<div class="main">
-  <header class="topbar">
-    <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
-    <span class="topbar-title" id="topbarTitle">All Contacts</span>
-    <span class="topbar-sub" id="topbarSub">HR Directory</span>
-    <div class="topbar-right">
-      <span class="topbar-count" id="topbarCount">— contacts</span>
-      <button class="topbar-add-btn" onclick="openAddModal()">
-        <i class="ti ti-user-plus"></i><span>Add Contact</span>
+    <div class="sb-stats" id="sbStats"></div>
+    <div style="padding:.5rem .7rem 0;font-size:9px;font-weight:700;color:var(--ton-m3);text-transform:uppercase;letter-spacing:.1em;margin-top:.5rem;">Pipeline</div>
+    <div class="sb-pipeline-mini" id="sbPipelineMini"></div>
+    <div class="sync-bar" id="syncBar">
+      <div class="sync-dot ok" id="syncDot"></div>
+      <span id="syncText">Synced with Firebase</span>
+    </div>
+    <div class="sb-bottom">
+      <button class="sb-action-btn" onclick="toggleTheme()">
+        <i class="ti ti-moon" id="themeIconSb"></i>
+        <span id="themeLabelSb">Dark</span>
       </button>
-      <button class="theme-btn" onclick="toggleTheme()">
-        <i class="ti ti-moon" id="themeIcon2"></i>
-        <span id="themeLabel2">Dark</span>
+      <button class="sb-action-btn" onclick="switchView('pipeline')">
+        <i class="ti ti-chart-bar"></i><span>Pipeline</span>
+      </button>
+      <button class="sb-action-btn" onclick="doLogout()">
+        <i class="ti ti-logout"></i><span>Logout</span>
       </button>
     </div>
-  </header>
+  </aside>
 
-  <div class="content">
-    <!-- VIEW TABS -->
-    <div class="view-tabs">
-      <button class="view-tab active" id="tab-contacts" onclick="switchView('contacts')">
-        <i class="ti ti-users"></i> Contacts
-      </button>
-      <button class="view-tab" id="tab-pipeline" onclick="switchView('pipeline')">
-        <i class="ti ti-chart-bar"></i> Pipeline
-      </button>
-      <button class="view-tab" id="tab-interactions" onclick="switchView('interactions')">
-        <i class="ti ti-messages"></i> All Interactions
-      </button>
-    </div>
+  <div class="main">
+    <header class="topbar">
+      <button class="hamburger" onclick="openSidebar()"><i class="ti ti-menu-2"></i></button>
+      <span class="topbar-title" id="topbarTitle">All Contacts</span>
+      <span class="topbar-sub" id="topbarSub">HR Directory</span>
+      <div class="topbar-right">
+        <span class="topbar-count" id="topbarCount">— contacts</span>
+        <button class="topbar-add-btn" onclick="openAddModal()">
+          <i class="ti ti-user-plus"></i><span>Add Contact</span>
+        </button>
+        <button class="theme-btn" onclick="toggleTheme()">
+          <i class="ti ti-moon" id="themeIcon2"></i>
+          <span id="themeLabel2">Dark</span>
+        </button>
+      </div>
+    </header>
 
-    <!-- ══ CONTACTS VIEW ══ -->
-    <div class="contacts-view active" id="view-contacts">
-      <div class="controls">
-        <div class="search-wrap">
-          <i class="ti ti-search si"></i>
-          <input type="text" id="searchInput" placeholder="Search name, company or role…" oninput="render()"/>
-        </div>
-        <div class="dropdown-wrap" id="catWrap">
-          <button class="dropdown-btn" id="catBtn" onclick="toggleCatDD()">
-            <i class="ti ti-layout-grid di"></i>
-            <span class="sel-txt" id="catBtnText">All Categories</span>
-            <i class="ti ti-chevron-down arrow"></i>
-          </button>
-          <div class="dropdown-menu" id="catMenu">
-            <div class="dd-opt active" data-val="All" onclick="setCatDD('All',this)">
-              <span class="opt-lbl">All Categories</span>
-              <span class="opt-cnt" id="catAllCnt">—</span>
+    <div class="content">
+      <div class="view-tabs">
+        <button class="view-tab active" id="tab-contacts" onclick="switchView('contacts')"><i class="ti ti-users"></i> Contacts</button>
+        <button class="view-tab" id="tab-pipeline" onclick="switchView('pipeline')"><i class="ti ti-chart-bar"></i> Pipeline</button>
+        <button class="view-tab" id="tab-interactions" onclick="switchView('interactions')"><i class="ti ti-messages"></i> All Interactions</button>
+      </div>
+
+      <!-- CONTACTS VIEW -->
+      <div class="contacts-view active" id="view-contacts">
+        <div class="controls">
+          <div class="search-wrap">
+            <i class="ti ti-search si"></i>
+            <input type="text" id="searchInput" placeholder="Search name, company or role…" oninput="render()"/>
+          </div>
+          <div class="dropdown-wrap" id="catWrap">
+            <button class="dropdown-btn" id="catBtn" onclick="toggleCatDD()">
+              <i class="ti ti-layout-grid di"></i>
+              <span class="sel-txt" id="catBtnText">All Categories</span>
+              <i class="ti ti-chevron-down arrow"></i>
+            </button>
+            <div class="dropdown-menu" id="catMenu">
+              <div class="dd-opt active" data-val="All" onclick="setCatDD('All',this)">
+                <span class="opt-lbl">All Categories</span>
+                <span class="opt-cnt" id="catAllCnt">—</span>
+              </div>
+              <div class="dd-divider"></div>
+              <div id="catOpts"></div>
             </div>
-            <div class="dd-divider"></div>
-            <div id="catOpts"></div>
           </div>
-        </div>
-        <div class="dropdown-wrap" id="coWrap">
-          <button class="dropdown-btn" id="coBtn" onclick="toggleCoDD()">
-            <i class="ti ti-building di"></i>
-            <span class="sel-txt" id="coBtnText">All Companies</span>
-            <i class="ti ti-chevron-down arrow"></i>
-          </button>
-          <div class="dropdown-menu" id="coMenu">
-            <div class="dd-opt active" data-val="All" onclick="setCoDD('All',this)">
-              <span class="opt-lbl">All Companies</span>
+          <div class="dropdown-wrap" id="coWrap">
+            <button class="dropdown-btn" id="coBtn" onclick="toggleCoDD()">
+              <i class="ti ti-building di"></i>
+              <span class="sel-txt" id="coBtnText">All Companies</span>
+              <i class="ti ti-chevron-down arrow"></i>
+            </button>
+            <div class="dropdown-menu" id="coMenu">
+              <div class="dd-opt active" data-val="All" onclick="setCoDD('All',this)">
+                <span class="opt-lbl">All Companies</span>
+              </div>
+              <div class="dd-divider"></div>
+              <div id="coOpts"></div>
             </div>
-            <div class="dd-divider"></div>
-            <div id="coOpts"></div>
           </div>
         </div>
-      </div>
-      <div class="toolbar">
-        <div class="count-txt" id="countTxt"></div>
-      </div>
-      <div id="sectionsContainer"></div>
-    </div>
-
-    <!-- ══ PIPELINE VIEW ══ -->
-    <div class="pipeline-view" id="view-pipeline">
-      <div class="pipeline-summary" id="pipelineSummary"></div>
-      <div class="int-table-wrap">
-        <div class="int-table-header">
-          <span class="int-table-title" id="plTableTitle">All Interactions</span>
-          <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+        <div class="toolbar">
+          <div class="count-txt" id="countTxt"></div>
         </div>
-        <div class="status-filter-bar" id="plFilterBar"></div>
-        <div style="overflow-x:auto;">
-          <table class="int-table">
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th>HR / Company</th>
-                <th>Status</th>
-                <th>Note</th>
-                <th>Date</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="plTableBody"></tbody>
-          </table>
-        </div>
+        <div id="sectionsContainer"></div>
       </div>
-    </div>
 
-    <!-- ══ ALL INTERACTIONS VIEW ══ -->
-    <div class="interactions-view" id="view-interactions">
-      <div class="int-table-wrap">
-        <div class="int-table-header">
-          <span class="int-table-title">All Interactions</span>
-          <div class="int-table-search">
-            <i class="ti ti-search"></i>
-            <input type="text" id="intSearchInput" placeholder="Search student, HR, company…" oninput="renderIntTable()"/>
+      <!-- PIPELINE VIEW -->
+      <div class="pipeline-view" id="view-pipeline">
+        <div class="pipeline-summary" id="pipelineSummary"></div>
+        <div class="int-table-wrap">
+          <div class="int-table-header">
+            <span class="int-table-title" id="plTableTitle">All Interactions</span>
+            <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
           </div>
-          <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+          <div class="status-filter-bar" id="plFilterBar"></div>
+          <div style="overflow-x:auto;"><table class="int-table"><thead><tr><th>Student</th><th>HR / Company</th><th>Status</th><th>Note</th><th>Date</th><th></th></tr></thead><tbody id="plTableBody"></tbody></table></div>
         </div>
-        <div class="status-filter-bar" id="intFilterBar"></div>
-        <div style="overflow-x:auto;">
-          <table class="int-table">
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th>HR / Company</th>
-                <th>Status</th>
-                <th>Note</th>
-                <th>Date</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="intTableBody"></tbody>
-          </table>
+      </div>
+
+      <!-- ALL INTERACTIONS VIEW -->
+      <div class="interactions-view" id="view-interactions">
+        <div class="int-table-wrap">
+          <div class="int-table-header">
+            <span class="int-table-title">All Interactions</span>
+            <div class="int-table-search"><i class="ti ti-search"></i><input type="text" id="intSearchInput" placeholder="Search student, HR, company…" oninput="renderIntTable()"/></div>
+            <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+          </div>
+          <div class="status-filter-bar" id="intFilterBar"></div>
+          <div style="overflow-x:auto;"><table class="int-table"><thead><tr><th>Student</th><th>HR / Company</th><th>Status</th><th>Note</th><th>Date</th><th></th></tr></thead><tbody id="intTableBody"></tbody></table></div>
         </div>
       </div>
     </div>
@@ -594,52 +611,18 @@ table.int-table tr:hover td{background:var(--surface2);}
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Full Name <span>*</span></label>
-          <input class="form-input" id="f_name" placeholder="e.g. Priya Sharma" oninput="clearErr('e_name')"/>
-          <span class="form-error" id="e_name">Name is required</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Designation <span>*</span></label>
-          <input class="form-input" id="f_desig" placeholder="e.g. Talent Acquisition Specialist" oninput="clearErr('e_desig')"/>
-          <span class="form-error" id="e_desig">Designation is required</span>
-        </div>
+        <div class="form-group"><label class="form-label">Full Name <span>*</span></label><input class="form-input" id="f_name" placeholder="e.g. Priya Sharma" oninput="clearErr('e_name')"/><span class="form-error" id="e_name">Name is required</span></div>
+        <div class="form-group"><label class="form-label">Designation <span>*</span></label><input class="form-input" id="f_desig" placeholder="e.g. Talent Acquisition Specialist" oninput="clearErr('e_desig')"/><span class="form-error" id="e_desig">Designation is required</span></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Company <span>*</span></label>
-          <input class="form-input" id="f_co" placeholder="e.g. Infosys" oninput="clearErr('e_co')" list="coList"/>
-          <datalist id="coList"></datalist>
-          <span class="form-error" id="e_co">Company is required</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Category <span>*</span></label>
-          <select class="form-select" id="f_cat">
-            <option value="FMCG">FMCG</option>
-            <option value="Tech">Tech</option>
-            <option value="Finance">Finance</option>
-            <option value="Ecommerce">Ecommerce</option>
-            <option value="Consulting">Consulting</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+        <div class="form-group"><label class="form-label">Company <span>*</span></label><input class="form-input" id="f_co" placeholder="e.g. Infosys" oninput="clearErr('e_co')" list="coList"/><datalist id="coList"></datalist><span class="form-error" id="e_co">Company is required</span></div>
+        <div class="form-group"><label class="form-label">Category <span>*</span></label><select class="form-select" id="f_cat"><option value="FMCG">FMCG</option><option value="Tech">Tech</option><option value="Finance">Finance</option><option value="Ecommerce">Ecommerce</option><option value="Consulting">Consulting</option><option value="Other">Other</option></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Phone Number <span>*</span></label>
-          <input class="form-input" id="f_ph" placeholder="10-digit mobile" maxlength="10" oninput="clearErr('e_ph')"/>
-          <span class="form-error" id="e_ph">Valid 10-digit number required</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address <span>*</span></label>
-          <input class="form-input" id="f_email" placeholder="name@company.com" type="email" oninput="clearErr('e_email')"/>
-          <span class="form-error" id="e_email">Valid email required</span>
-        </div>
+        <div class="form-group"><label class="form-label">Phone Number <span>*</span></label><input class="form-input" id="f_ph" placeholder="10-digit mobile" maxlength="10" oninput="clearErr('e_ph')"/><span class="form-error" id="e_ph">Valid 10-digit number required</span></div>
+        <div class="form-group"><label class="form-label">Email Address <span>*</span></label><input class="form-input" id="f_email" placeholder="name@company.com" type="email" oninput="clearErr('e_email')"/><span class="form-error" id="e_email">Valid email required</span></div>
       </div>
-      <div class="form-group full">
-        <label class="form-label">LinkedIn Profile URL</label>
-        <input class="form-input" id="f_li" placeholder="https://www.linkedin.com/in/username"/>
-      </div>
+      <div class="form-group full"><label class="form-label">LinkedIn Profile URL</label><input class="form-input" id="f_li" placeholder="https://www.linkedin.com/in/username"/></div>
       <input type="hidden" id="f_editId" value=""/>
     </div>
     <div class="modal-footer">
@@ -658,45 +641,18 @@ table.int-table tr:hover td{background:var(--surface2);}
       <button class="modal-close" onclick="closeIntModal()"><i class="ti ti-x"></i></button>
     </div>
     <div class="int-modal-body">
-      <div class="int-hr-info">
-        <div class="int-hr-name" id="intHrName">—</div>
-        <div class="int-hr-co" id="intHrCo">—</div>
-      </div>
-
-      <!-- existing interactions -->
+      <div class="int-hr-info"><div class="int-hr-name" id="intHrName">—</div><div class="int-hr-co" id="intHrCo">—</div></div>
       <div>
         <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Existing Interactions</div>
-        <div class="existing-ints" id="existingIntsList">
-          <div class="tbl-empty" style="padding:1rem;"><i class="ti ti-messages" style="font-size:24px;opacity:.3;display:block;margin-bottom:5px;"></i>No interactions yet</div>
-        </div>
+        <div class="existing-ints" id="existingIntsList"></div>
       </div>
-
-      <!-- add new -->
       <div class="add-int-form">
-        <div class="add-int-title"><i class="ti ti-plus" style="font-size:12px;margin-right:4px;"></i>Add Interaction</div>
+        <div class="add-int-title"><i class="ti ti-plus" style="font-size:12px;margin-right:4px;"></i>Add / Update Interaction</div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Student Name <span>*</span></label>
-            <input class="form-input" id="int_student" placeholder="e.g. Rahul Verma" list="studentList"/>
-            <datalist id="studentList"></datalist>
-            <span class="form-error" id="int_e_student">Required</span>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Status <span>*</span></label>
-            <select class="form-select" id="int_status">
-              <option value="Not Contacted">Not Contacted</option>
-              <option value="Contacted">Contacted</option>
-              <option value="Interested">Interested</option>
-              <option value="Not Interested">Not Interested</option>
-              <option value="Follow Up">Follow Up</option>
-              <option value="Placed">Placed</option>
-            </select>
-          </div>
+          <div class="form-group"><label class="form-label">Student Name <span>*</span></label><input class="form-input" id="int_student" placeholder="e.g. Rahul Verma" list="studentList"/><datalist id="studentList"></datalist><span class="form-error" id="int_e_student">Required</span></div>
+          <div class="form-group"><label class="form-label">Status <span>*</span></label><select class="form-select" id="int_status"><option value="Not Contacted">Not Contacted</option><option value="Contacted">Contacted</option><option value="Interested">Interested</option><option value="Not Interested">Not Interested</option><option value="Follow Up">Follow Up</option><option value="Placed">Placed</option></select></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Company Response / Note</label>
-          <input class="form-input" id="int_note" placeholder="e.g. Said will revert in 2 weeks, opening for MBA batch"/>
-        </div>
+        <div class="form-group"><label class="form-label">Company Response / Note</label><input class="form-input" id="int_note" placeholder="e.g. Said will revert in 2 weeks"/></div>
         <input type="hidden" id="int_edit_id" value=""/>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
           <button class="btn btn-cancel" style="padding:7px 14px;font-size:12px;" onclick="resetIntForm()">Clear</button>
@@ -707,163 +663,255 @@ table.int-table tr:hover td{background:var(--surface2);}
   </div>
 </div>
 
-<!-- CONFIRM DELETE -->
+<!-- CONFIRM -->
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
-    <div class="confirm-body">
-      <div class="confirm-icon"><i class="ti ti-trash"></i></div>
-      <div class="confirm-title">Confirm Delete</div>
-      <div class="confirm-msg" id="confirmMsg">This action cannot be undone.</div>
-    </div>
-    <div class="confirm-footer">
-      <button class="btn btn-cancel" style="flex:1" onclick="closeConfirm()">Cancel</button>
-      <button class="btn btn-save" style="flex:1;background:#dc2626;" id="confirmDeleteBtn">Delete</button>
-    </div>
+    <div class="confirm-body"><div class="confirm-icon"><i class="ti ti-trash"></i></div><div class="confirm-title">Confirm Delete</div><div class="confirm-msg" id="confirmMsg">This cannot be undone.</div></div>
+    <div class="confirm-footer"><button class="btn btn-cancel" style="flex:1" onclick="closeConfirm()">Cancel</button><button class="btn btn-save" style="flex:1;background:#dc2626;" id="confirmDeleteBtn">Delete</button></div>
   </div>
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
 
-<script>
-// ═══════════════════ BASE DATA ═══════════════════
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC4JMfS8VlHWELXGUDE0GODybZqNYzNk7Y",
+  authDomain: "hr-directory-32899.firebaseapp.com",
+  projectId: "hr-directory-32899",
+  storageBucket: "hr-directory-32899.firebasestorage.app",
+  messagingSenderId: "946916173919",
+  appId: "1:946916173919:web:da041d691bafed13df93ea"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ═══ CREDENTIALS — change password here ═══
+const CREDENTIALS = {
+  "Navneet": "Navneet@2004"
+};
+
+// ═══ BASE DATA (loaded to Firebase on first run) ═══
 const BASE_DATA=[
-  {id:1,cat:"FMCG",co:"Hindustan Unilever Limited",name:"Aditi Arora",ph:"9875275144",email:"aditi.arora@unilever.com",li:"https://www.linkedin.com/in/aditi-arora-604952213/",desig:"Senior HR Executive"},
-  {id:2,cat:"FMCG",co:"Procter & Gamble",name:"Rajat Sharma",ph:"7838840455",email:"sharma.r@pg.com",li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",desig:"Human Resources Payroll Executive"},
-  {id:3,cat:"FMCG",co:"Nestlé Nespresso SA",name:"Anusheel Pandey",ph:"9754800308",email:"anusheel.pandey@nespresso.com",li:"https://www.linkedin.com/in/anusheelpandey/",desig:"Talent Acquisition Specialist"},
-  {id:4,cat:"FMCG",co:"Marico Limited",name:"Kimberly Fernandes",ph:"8291420082",email:"kimberly.fernandes@marico.com",li:"https://www.linkedin.com/in/kimberlyfernandes2206/",desig:"Talent Acquisition Executive"},
-  {id:5,cat:"FMCG",co:"Marico Limited",name:"Ajinkya Utekar",ph:"9969069712",email:"ajinkya.utekar@marico.com",li:"https://www.linkedin.com/in/ajinkya-utekar-3546271a4/",desig:"HR - Talent Acquisition"},
-  {id:6,cat:"FMCG",co:"Marico Limited",name:"Latika Kapoor",ph:"7144297103",email:"latika.kapoor@marico.com",li:"https://www.linkedin.com/in/latika-kapoor-062520165/",desig:"Senior Officer Talent Acquisition"},
-  {id:7,cat:"FMCG",co:"Godrej Consumer Products Limited",name:"Kavitendra Joshi",ph:"7773020103",email:"kavitendra.joshi@godrejcp.com",li:"https://www.linkedin.com/in/kavitendra-joshi-063481231/",desig:"Senior Associate Talent Acquisition"},
-  {id:8,cat:"FMCG",co:"ITC Limited",name:"Abhirup Dasgupta",ph:"9748880958",email:"abhirup.dasgupta@itc.in",li:"https://www.linkedin.com/in/abhirup-dasgupta-2852bb189/",desig:"Talent Acquisition Specialist"},
-  {id:9,cat:"FMCG",co:"ITC Limited",name:"Astha Gupta",ph:"9516662700",email:"astha.gupta@itc.in",li:"https://www.linkedin.com/in/astha-gupta-7111b1160/",desig:"Manager - Talent Acquisition and DEI"},
-  {id:10,cat:"FMCG",co:"ITC Limited",name:"Beauty Kumari",ph:"9903002705",email:"beauty.kumari@itc.in",li:"https://www.linkedin.com/in/beauty-kumari-20281170/",desig:"Talent Acquisition Specialist"},
-  {id:11,cat:"FMCG",co:"Dabur India Limited",name:"Shubham Bhardwaj",ph:"9582045602",email:"shubham.bhardwaj@dabur.com",li:"https://www.linkedin.com/in/shubham-bhardwaj-51860970/",desig:"Corporate HR - Talent Acquisition"},
-  {id:12,cat:"FMCG",co:"Dabur India Limited",name:"Rahul Grover",ph:"9899467184",email:"rahul.grover@dabur.com",li:"https://www.linkedin.com/in/rahul-grover-1b3a4610/",desig:"Talent Acquisition Manager"},
-  {id:13,cat:"FMCG",co:"Britannia Industries Limited",name:"Disha Makani",ph:"8088359178",email:"disham@britindia.com",li:"https://www.linkedin.com/in/disha-makani-43b403215/",desig:"Human Resources Management"},
-  {id:14,cat:"FMCG",co:"Britannia Industries Limited",name:"Shruti Pawar",ph:"8000114533",email:"shrutipawar@britindia.com",li:"https://www.linkedin.com/in/shruti-pawar-8ba42b162/",desig:"Human Resources Officer"},
-  {id:15,cat:"FMCG",co:"Titan Company Limited",name:"Pragya Chaudhary",ph:"9883379294",email:"pragya@titan.co.in",li:"https://www.linkedin.com/in/pragya-chaudhary-946048aa/",desig:"Talent Management Lead"},
-  {id:16,cat:"FMCG",co:"Colgate-Palmolive (India) Ltd",name:"Ankita Ghag",ph:"9167394473",email:"ankita_ghag@colpal.com",li:"https://www.linkedin.com/in/ankig13/",desig:"Talent Acquisition"},
-  {id:17,cat:"Tech",co:"Google India",name:"Twinkle Sharma",ph:"8448629398",email:"sharmatwinkle@google.com",li:"https://www.linkedin.com/in/twinkle-sharma-770608111/",desig:"Talent Acquisition Specialist"},
-  {id:18,cat:"Tech",co:"Amazon",name:"Swati Nanda",ph:"9348117494",email:"swnanda@amazon.com",li:"https://www.linkedin.com/in/swati-priyambada-nanda-12670a18a/",desig:"Talent Acquisition Specialist"},
-  {id:19,cat:"Tech",co:"Amazon",name:"Isha Siddiqui",ph:"9958070190",email:"siddiquii@amazon.com",li:"https://www.linkedin.com/in/isha-siddiqui-79837322b/",desig:"Talent Acquisition Specialist"},
-  {id:20,cat:"Tech",co:"Meta",name:"Sakshi Jaiswal",ph:"9999110428",email:"sjaiswal@meta.com",li:"https://www.linkedin.com/in/sakshi-jaiswal-67b97321b/",desig:"Talent Acquisition Specialist"},
-  {id:21,cat:"Tech",co:"Microsoft",name:"Vishnu Prakash",ph:"9650040736",email:"vprakash@microsoft.com",li:"https://www.linkedin.com/in/vishnuprakash/",desig:"Talent Acquisition Specialist"},
-  {id:22,cat:"Tech",co:"Microsoft",name:"Akriti Jain",ph:"8805982789",email:"jaina@microsoft.com",li:"https://www.linkedin.com/in/akriti-jain-1b9808240/",desig:"Talent Acquisition Specialist"},
-  {id:23,cat:"Tech",co:"Infosys",name:"Sushrita Digal",ph:"9535008561",email:"sushrita.digal@infosys.com",li:"https://www.linkedin.com/in/sushrita-digal-1966282a/",desig:"Talent Acquisition Specialist"},
-  {id:24,cat:"Tech",co:"Wipro",name:"Supriya Dubey",ph:"6812065314",email:"supriya.dubey@wipro.com",li:"https://www.linkedin.com/in/supriya-dubey-22288b121/",desig:"Talent Acquisition Specialist"},
-  {id:25,cat:"Tech",co:"Wipro",name:"Anish Singh",ph:"9910966150",email:"anish.singh11@wipro.com",li:"https://www.linkedin.com/in/anish-kumar-singh-310306114/",desig:"Talent Acquisition Specialist"},
-  {id:26,cat:"Tech",co:"Wipro",name:"Priyanka B",ph:"9816668340",email:"priyanka.b81@wipro.com",li:"https://www.linkedin.com/in/priyanka-b-a70858218/",desig:"Talent Acquisition Specialist"},
-  {id:27,cat:"Tech",co:"Tata Consultancy Services",name:"Shalu Mishra",ph:"9319563276",email:"m.shalu@tcs.com",li:"https://www.linkedin.com/in/shalu-mishra-a77a7b174/",desig:"Talent Acquisition Specialist"},
-  {id:28,cat:"Tech",co:"Tata Consultancy Services",name:"Priya Jha",ph:"7489358526",email:"jha.priya5@tcs.com",li:"https://www.linkedin.com/in/priya-jha-31b262251/",desig:"Talent Acquisition Specialist"},
-  {id:29,cat:"Tech",co:"Larsen & Toubro",name:"Sripriya Prakash",ph:"9840505276",email:"sripriya.prakash@larsentoubro.com",li:"https://www.linkedin.com/in/sripriya-prakash-739b203a/",desig:"Talent Acquisition Specialist"},
-  {id:30,cat:"Ecommerce",co:"PhonePe",name:"Komal Sharma",ph:"8968644475",email:"komal.sharma@phonepe.com",li:"https://www.linkedin.com/in/komalsharma6/",desig:"Talent Acquisition Specialist"},
-  {id:31,cat:"Ecommerce",co:"PhonePe",name:"Deepali Upadhyay",ph:"7991155160",email:"deepali.netam.con@phonepe.com",li:"https://www.linkedin.com/in/deepali-kumari-upadhyay-927814387/",desig:"Talent Acquisition Recruiter"},
-  {id:32,cat:"Ecommerce",co:"CRED",name:"Melveena Hilton",ph:"9930922595",email:"melveena.hilton@cred.club",li:"https://www.linkedin.com/in/melveena-hilton-b70346212/",desig:"Talent Acquisition Consultant"},
-  {id:33,cat:"Ecommerce",co:"Swiggy",name:"Shashank Jain",ph:"8124363686",email:"shashank.jain@instamart.in",li:"https://www.linkedin.com/in/shashank-jain-02b780197/",desig:"Talent Acquisition Specialist"},
-  {id:34,cat:"Ecommerce",co:"Myntra",name:"Divya Mohanty",ph:"7606003551",email:"divya.mohanty1@myntra.com",li:"https://www.linkedin.com/in/divya-mohanty-696025108/",desig:"Talent Acquisition Specialist"},
-  {id:35,cat:"Finance",co:"HDFC Bank",name:"Aarti Bansode",ph:"8554811777",email:"aarti.bansode@hdfcbank.com",li:"https://www.linkedin.com/in/aarti-bansode-2146a6148/",desig:"Talent Acquisition Specialist"},
-  {id:36,cat:"Finance",co:"ICICI Bank",name:"Anjan Acharya",ph:"7749080378",email:"anjan.acharya@icicibank.com",li:"https://www.linkedin.com/in/anjan-kumar-acharya-66888861/",desig:"Chief Manager HR - Talent Acquisition & BP"},
-  {id:37,cat:"Finance",co:"Axis Bank",name:"Preeti Bakliwal",ph:"8767656264",email:"preeti.bakliwal@axisbank.com",li:"https://www.linkedin.com/in/preeti-bakliwal-85933a19a/",desig:"Talent Acquisition Specialist"},
-  {id:38,cat:"Finance",co:"Razorpay",name:"Ravi Kumar",ph:"7349498064",email:"ravi.kumar@razorpay.com",li:"https://www.linkedin.com/in/singhkravi/",desig:"Talent Acquisition Specialist"},
-  {id:39,cat:"Finance",co:"Razorpay",name:"Sumit Premi",ph:"8826363651",email:"sumitpremi01@gmail.com",li:"https://www.linkedin.com/in/sumitpremi/",desig:"Head Talent Acquisition Specialist"},
-  {id:40,cat:"Finance",co:"Groww",name:"Himanshu Rawat",ph:"7409041942",email:"himanshuta@groww.in",li:"https://www.linkedin.com/in/himanshu-rawat-496887190/",desig:"Talent Acquisition Specialist"},
-  {id:41,cat:"Finance",co:"Bajaj Finserv",name:"Muskan Gupta",ph:"9399469810",email:"muskan.gupta2@bajajfinserv.in",li:"https://www.linkedin.com/in/muskan-gupta-259b89200/",desig:"Talent Acquisition"},
-  {id:42,cat:"Finance",co:"IDFC FIRST Bank",name:"Sunisha Bachhav",ph:"9075759475",email:"sunisha.bachhav@idfcfirstbank.com",li:"https://www.linkedin.com/in/sunishab/",desig:"Talent Acquisition"},
-  {id:43,cat:"Finance",co:"IDFC FIRST Bank",name:"Ashish Ojha",ph:"9325830001",email:"ashish.ojha@idfcfirstbank.com",li:"https://www.linkedin.com/in/ashishidfc/",desig:"Talent Acquisition"},
-  {id:44,cat:"Finance",co:"Angel One",name:"Vaishnavi Kedlaya",ph:"8867172337",email:"vaishnavi.kedlaya@angelbroking.com",li:"https://www.linkedin.com/in/vaishnavi-kedlaya/",desig:"Talent Acquisition Manager"},
-  {id:45,cat:"Finance",co:"Angel One",name:"Ashi Khare",ph:"7898754296",email:"ashi.2khare@angelbroking.com",li:"https://www.linkedin.com/in/ashikhare/",desig:"Talent Acquisition"},
-  {id:46,cat:"Consulting",co:"Deloitte",name:"Aishwarya Ramesh",ph:"7004034677",email:"raishwarya@deloitte.com",li:"https://www.linkedin.com/in/aishwarya-ramesh-bba92aa0/",desig:"Talent Acquisition"},
-  {id:47,cat:"Consulting",co:"Deloitte",name:"Swarali Donde",ph:"7066033385",email:"swdonde@deloitte.com",li:"https://www.linkedin.com/in/swarali-donde-56a48377/",desig:"Talent Acquisition Specialist"},
-  {id:48,cat:"Consulting",co:"Capgemini",name:"Neha Mittal",ph:"9718309865",email:"nmittal@capgemini.com",li:"https://www.linkedin.com/in/neha-mittal-4b15132a/",desig:"Talent Acquisition Specialist"},
-  {id:49,cat:"Consulting",co:"Capgemini",name:"Ashish Tiwari",ph:"9986312757",email:"ashish.e.tiwari@capgemini.com",li:"https://www.linkedin.com/in/ashishtiwari-talentacquistion/",desig:"Talent Acquisition Manager"},
-  {id:50,cat:"Consulting",co:"KPMG India",name:"Akansha Bamne",ph:"7300714753",email:"akanshabamne@kpmg.com",li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",desig:"Talent Acquisition Specialist"},
+  {id:"c1",cat:"FMCG",co:"Hindustan Unilever Limited",name:"Aditi Arora",ph:"9875275144",email:"aditi.arora@unilever.com",li:"https://www.linkedin.com/in/aditi-arora-604952213/",desig:"Senior HR Executive"},
+  {id:"c2",cat:"FMCG",co:"Procter & Gamble",name:"Rajat Sharma",ph:"7838840455",email:"sharma.r@pg.com",li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",desig:"Human Resources Payroll Executive"},
+  {id:"c3",cat:"FMCG",co:"Nestlé Nespresso SA",name:"Anusheel Pandey",ph:"9754800308",email:"anusheel.pandey@nespresso.com",li:"https://www.linkedin.com/in/anusheelpandey/",desig:"Talent Acquisition Specialist"},
+  {id:"c4",cat:"FMCG",co:"Marico Limited",name:"Kimberly Fernandes",ph:"8291420082",email:"kimberly.fernandes@marico.com",li:"https://www.linkedin.com/in/kimberlyfernandes2206/",desig:"Talent Acquisition Executive"},
+  {id:"c5",cat:"FMCG",co:"Marico Limited",name:"Ajinkya Utekar",ph:"9969069712",email:"ajinkya.utekar@marico.com",li:"https://www.linkedin.com/in/ajinkya-utekar-3546271a4/",desig:"HR - Talent Acquisition"},
+  {id:"c6",cat:"FMCG",co:"Marico Limited",name:"Latika Kapoor",ph:"7144297103",email:"latika.kapoor@marico.com",li:"https://www.linkedin.com/in/latika-kapoor-062520165/",desig:"Senior Officer Talent Acquisition"},
+  {id:"c7",cat:"FMCG",co:"Godrej Consumer Products Limited",name:"Kavitendra Joshi",ph:"7773020103",email:"kavitendra.joshi@godrejcp.com",li:"https://www.linkedin.com/in/kavitendra-joshi-063481231/",desig:"Senior Associate Talent Acquisition"},
+  {id:"c8",cat:"FMCG",co:"ITC Limited",name:"Abhirup Dasgupta",ph:"9748880958",email:"abhirup.dasgupta@itc.in",li:"https://www.linkedin.com/in/abhirup-dasgupta-2852bb189/",desig:"Talent Acquisition Specialist"},
+  {id:"c9",cat:"FMCG",co:"ITC Limited",name:"Astha Gupta",ph:"9516662700",email:"astha.gupta@itc.in",li:"https://www.linkedin.com/in/astha-gupta-7111b1160/",desig:"Manager - Talent Acquisition and DEI"},
+  {id:"c10",cat:"FMCG",co:"ITC Limited",name:"Beauty Kumari",ph:"9903002705",email:"beauty.kumari@itc.in",li:"https://www.linkedin.com/in/beauty-kumari-20281170/",desig:"Talent Acquisition Specialist"},
+  {id:"c11",cat:"FMCG",co:"Dabur India Limited",name:"Shubham Bhardwaj",ph:"9582045602",email:"shubham.bhardwaj@dabur.com",li:"https://www.linkedin.com/in/shubham-bhardwaj-51860970/",desig:"Corporate HR - Talent Acquisition"},
+  {id:"c12",cat:"FMCG",co:"Dabur India Limited",name:"Rahul Grover",ph:"9899467184",email:"rahul.grover@dabur.com",li:"https://www.linkedin.com/in/rahul-grover-1b3a4610/",desig:"Talent Acquisition Manager"},
+  {id:"c13",cat:"FMCG",co:"Britannia Industries Limited",name:"Disha Makani",ph:"8088359178",email:"disham@britindia.com",li:"https://www.linkedin.com/in/disha-makani-43b403215/",desig:"Human Resources Management"},
+  {id:"c14",cat:"FMCG",co:"Britannia Industries Limited",name:"Shruti Pawar",ph:"8000114533",email:"shrutipawar@britindia.com",li:"https://www.linkedin.com/in/shruti-pawar-8ba42b162/",desig:"Human Resources Officer"},
+  {id:"c15",cat:"FMCG",co:"Titan Company Limited",name:"Pragya Chaudhary",ph:"9883379294",email:"pragya@titan.co.in",li:"https://www.linkedin.com/in/pragya-chaudhary-946048aa/",desig:"Talent Management Lead"},
+  {id:"c16",cat:"FMCG",co:"Colgate-Palmolive (India) Ltd",name:"Ankita Ghag",ph:"9167394473",email:"ankita_ghag@colpal.com",li:"https://www.linkedin.com/in/ankig13/",desig:"Talent Acquisition"},
+  {id:"c17",cat:"Tech",co:"Google India",name:"Twinkle Sharma",ph:"8448629398",email:"sharmatwinkle@google.com",li:"https://www.linkedin.com/in/twinkle-sharma-770608111/",desig:"Talent Acquisition Specialist"},
+  {id:"c18",cat:"Tech",co:"Amazon",name:"Swati Nanda",ph:"9348117494",email:"swnanda@amazon.com",li:"https://www.linkedin.com/in/swati-priyambada-nanda-12670a18a/",desig:"Talent Acquisition Specialist"},
+  {id:"c19",cat:"Tech",co:"Amazon",name:"Isha Siddiqui",ph:"9958070190",email:"siddiquii@amazon.com",li:"https://www.linkedin.com/in/isha-siddiqui-79837322b/",desig:"Talent Acquisition Specialist"},
+  {id:"c20",cat:"Tech",co:"Meta",name:"Sakshi Jaiswal",ph:"9999110428",email:"sjaiswal@meta.com",li:"https://www.linkedin.com/in/sakshi-jaiswal-67b97321b/",desig:"Talent Acquisition Specialist"},
+  {id:"c21",cat:"Tech",co:"Microsoft",name:"Vishnu Prakash",ph:"9650040736",email:"vprakash@microsoft.com",li:"https://www.linkedin.com/in/vishnuprakash/",desig:"Talent Acquisition Specialist"},
+  {id:"c22",cat:"Tech",co:"Microsoft",name:"Akriti Jain",ph:"8805982789",email:"jaina@microsoft.com",li:"https://www.linkedin.com/in/akriti-jain-1b9808240/",desig:"Talent Acquisition Specialist"},
+  {id:"c23",cat:"Tech",co:"Infosys",name:"Sushrita Digal",ph:"9535008561",email:"sushrita.digal@infosys.com",li:"https://www.linkedin.com/in/sushrita-digal-1966282a/",desig:"Talent Acquisition Specialist"},
+  {id:"c24",cat:"Tech",co:"Wipro",name:"Supriya Dubey",ph:"6812065314",email:"supriya.dubey@wipro.com",li:"https://www.linkedin.com/in/supriya-dubey-22288b121/",desig:"Talent Acquisition Specialist"},
+  {id:"c25",cat:"Tech",co:"Wipro",name:"Anish Singh",ph:"9910966150",email:"anish.singh11@wipro.com",li:"https://www.linkedin.com/in/anish-kumar-singh-310306114/",desig:"Talent Acquisition Specialist"},
+  {id:"c26",cat:"Tech",co:"Wipro",name:"Priyanka B",ph:"9816668340",email:"priyanka.b81@wipro.com",li:"https://www.linkedin.com/in/priyanka-b-a70858218/",desig:"Talent Acquisition Specialist"},
+  {id:"c27",cat:"Tech",co:"Tata Consultancy Services",name:"Shalu Mishra",ph:"9319563276",email:"m.shalu@tcs.com",li:"https://www.linkedin.com/in/shalu-mishra-a77a7b174/",desig:"Talent Acquisition Specialist"},
+  {id:"c28",cat:"Tech",co:"Tata Consultancy Services",name:"Priya Jha",ph:"7489358526",email:"jha.priya5@tcs.com",li:"https://www.linkedin.com/in/priya-jha-31b262251/",desig:"Talent Acquisition Specialist"},
+  {id:"c29",cat:"Tech",co:"Larsen & Toubro",name:"Sripriya Prakash",ph:"9840505276",email:"sripriya.prakash@larsentoubro.com",li:"https://www.linkedin.com/in/sripriya-prakash-739b203a/",desig:"Talent Acquisition Specialist"},
+  {id:"c30",cat:"Ecommerce",co:"PhonePe",name:"Komal Sharma",ph:"8968644475",email:"komal.sharma@phonepe.com",li:"https://www.linkedin.com/in/komalsharma6/",desig:"Talent Acquisition Specialist"},
+  {id:"c31",cat:"Ecommerce",co:"PhonePe",name:"Deepali Upadhyay",ph:"7991155160",email:"deepali.netam.con@phonepe.com",li:"https://www.linkedin.com/in/deepali-kumari-upadhyay-927814387/",desig:"Talent Acquisition Recruiter"},
+  {id:"c32",cat:"Ecommerce",co:"CRED",name:"Melveena Hilton",ph:"9930922595",email:"melveena.hilton@cred.club",li:"https://www.linkedin.com/in/melveena-hilton-b70346212/",desig:"Talent Acquisition Consultant"},
+  {id:"c33",cat:"Ecommerce",co:"Swiggy",name:"Shashank Jain",ph:"8124363686",email:"shashank.jain@instamart.in",li:"https://www.linkedin.com/in/shashank-jain-02b780197/",desig:"Talent Acquisition Specialist"},
+  {id:"c34",cat:"Ecommerce",co:"Myntra",name:"Divya Mohanty",ph:"7606003551",email:"divya.mohanty1@myntra.com",li:"https://www.linkedin.com/in/divya-mohanty-696025108/",desig:"Talent Acquisition Specialist"},
+  {id:"c35",cat:"Finance",co:"HDFC Bank",name:"Aarti Bansode",ph:"8554811777",email:"aarti.bansode@hdfcbank.com",li:"https://www.linkedin.com/in/aarti-bansode-2146a6148/",desig:"Talent Acquisition Specialist"},
+  {id:"c36",cat:"Finance",co:"ICICI Bank",name:"Anjan Acharya",ph:"7749080378",email:"anjan.acharya@icicibank.com",li:"https://www.linkedin.com/in/anjan-kumar-acharya-66888861/",desig:"Chief Manager HR - Talent Acquisition & BP"},
+  {id:"c37",cat:"Finance",co:"Axis Bank",name:"Preeti Bakliwal",ph:"8767656264",email:"preeti.bakliwal@axisbank.com",li:"https://www.linkedin.com/in/preeti-bakliwal-85933a19a/",desig:"Talent Acquisition Specialist"},
+  {id:"c38",cat:"Finance",co:"Razorpay",name:"Ravi Kumar",ph:"7349498064",email:"ravi.kumar@razorpay.com",li:"https://www.linkedin.com/in/singhkravi/",desig:"Talent Acquisition Specialist"},
+  {id:"c39",cat:"Finance",co:"Razorpay",name:"Sumit Premi",ph:"8826363651",email:"sumitpremi01@gmail.com",li:"https://www.linkedin.com/in/sumitpremi/",desig:"Head Talent Acquisition Specialist"},
+  {id:"c40",cat:"Finance",co:"Groww",name:"Himanshu Rawat",ph:"7409041942",email:"himanshuta@groww.in",li:"https://www.linkedin.com/in/himanshu-rawat-496887190/",desig:"Talent Acquisition Specialist"},
+  {id:"c41",cat:"Finance",co:"Bajaj Finserv",name:"Muskan Gupta",ph:"9399469810",email:"muskan.gupta2@bajajfinserv.in",li:"https://www.linkedin.com/in/muskan-gupta-259b89200/",desig:"Talent Acquisition"},
+  {id:"c42",cat:"Finance",co:"IDFC FIRST Bank",name:"Sunisha Bachhav",ph:"9075759475",email:"sunisha.bachhav@idfcfirstbank.com",li:"https://www.linkedin.com/in/sunishab/",desig:"Talent Acquisition"},
+  {id:"c43",cat:"Finance",co:"IDFC FIRST Bank",name:"Ashish Ojha",ph:"9325830001",email:"ashish.ojha@idfcfirstbank.com",li:"https://www.linkedin.com/in/ashishidfc/",desig:"Talent Acquisition"},
+  {id:"c44",cat:"Finance",co:"Angel One",name:"Vaishnavi Kedlaya",ph:"8867172337",email:"vaishnavi.kedlaya@angelbroking.com",li:"https://www.linkedin.com/in/vaishnavi-kedlaya/",desig:"Talent Acquisition Manager"},
+  {id:"c45",cat:"Finance",co:"Angel One",name:"Ashi Khare",ph:"7898754296",email:"ashi.2khare@angelbroking.com",li:"https://www.linkedin.com/in/ashikhare/",desig:"Talent Acquisition"},
+  {id:"c46",cat:"Consulting",co:"Deloitte",name:"Aishwarya Ramesh",ph:"7004034677",email:"raishwarya@deloitte.com",li:"https://www.linkedin.com/in/aishwarya-ramesh-bba92aa0/",desig:"Talent Acquisition"},
+  {id:"c47",cat:"Consulting",co:"Deloitte",name:"Swarali Donde",ph:"7066033385",email:"swdonde@deloitte.com",li:"https://www.linkedin.com/in/swarali-donde-56a48377/",desig:"Talent Acquisition Specialist"},
+  {id:"c48",cat:"Consulting",co:"Capgemini",name:"Neha Mittal",ph:"9718309865",email:"nmittal@capgemini.com",li:"https://www.linkedin.com/in/neha-mittal-4b15132a/",desig:"Talent Acquisition Specialist"},
+  {id:"c49",cat:"Consulting",co:"Capgemini",name:"Ashish Tiwari",ph:"9986312757",email:"ashish.e.tiwari@capgemini.com",li:"https://www.linkedin.com/in/ashishtiwari-talentacquistion/",desig:"Talent Acquisition Manager"},
+  {id:"c50",cat:"Consulting",co:"KPMG India",name:"Akansha Bamne",ph:"7300714753",email:"akanshabamne@kpmg.com",li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",desig:"Talent Acquisition Specialist"},
 ];
 
-// ═══════════════════ STATE ═══════════════════
+// ═══ APP STATE ═══
 let data=[], interactions=[];
-let nextId=1000, nextIntId=2000;
 let isDark=false, activeCat="All", activeCo="All";
-let deleteTargetId=null, deleteTargetType="contact";
-let currentIntHrId=null, editingIntId=null;
-let plStatusFilter="All", intStatusFilter="All";
-let currentView="contacts";
+let deleteTargetId=null, currentIntHrId=null, editingIntId=null;
+let plStatusFilter="All", intStatusFilter="All", currentView="contacts";
+let isLoggedIn=false;
+let nextIntId=()=>"i"+Date.now()+Math.random().toString(36).slice(2,6);
+let nextContactId=()=>"c"+Date.now()+Math.random().toString(36).slice(2,6);
 
-const STORE_KEY="hrdir_data_v3";
-const INT_KEY="hrdir_interactions_v1";
-
-const STATUS_MAP={
-  "Not Contacted":{cls:"nc",dot:"#64748b"},
-  "Contacted":{cls:"ct",dot:"#1d4ed8"},
-  "Interested":{cls:"in",dot:"#15803d"},
-  "Not Interested":{cls:"ni",dot:"#dc2626"},
-  "Follow Up":{cls:"fu",dot:"#7c3aed"},
-  "Placed":{cls:"pl",dot:"#a16207"}
-};
-
-const catCfg={
-  "All":{icon:"ti-layout-grid"},"FMCG":{icon:"ti-shopping-cart"},"Tech":{icon:"ti-cpu"},
-  "Finance":{icon:"ti-coin"},"Ecommerce":{icon:"ti-device-mobile"},"Consulting":{icon:"ti-briefcase"},"Other":{icon:"ti-tag"}
-};
-const avatarPal=[
-  {l:{bg:"#dbeafe",c:"#1e40af"},d:{bg:"#1e3a5f",c:"#93c5fd"}},
-  {l:{bg:"#d1fae5",c:"#065f46"},d:{bg:"#064e3b",c:"#6ee7b7"}},
-  {l:{bg:"#fef3c7",c:"#92400e"},d:{bg:"#451a03",c:"#fcd34d"}},
-  {l:{bg:"#ede9fe",c:"#4c1d95"},d:{bg:"#2e1065",c:"#c4b5fd"}},
-  {l:{bg:"#fce7f3",c:"#9d174d"},d:{bg:"#500724",c:"#f9a8d4"}},
-  {l:{bg:"#ccfbf1",c:"#134e4a"},d:{bg:"#042f2e",c:"#5eead4"}},
-  {l:{bg:"#fee2e2",c:"#991b1b"},d:{bg:"#450a0a",c:"#fca5a5"}},
-  {l:{bg:"#fef9c3",c:"#854d0e"},d:{bg:"#422006",c:"#fde047"}},
-];
+const STATUS_MAP={"Not Contacted":{cls:"nc",dot:"#64748b"},"Contacted":{cls:"ct",dot:"#1d4ed8"},"Interested":{cls:"in",dot:"#15803d"},"Not Interested":{cls:"ni",dot:"#dc2626"},"Follow Up":{cls:"fu",dot:"#7c3aed"},"Placed":{cls:"pl",dot:"#a16207"}};
+const catCfg={"All":{icon:"ti-layout-grid"},"FMCG":{icon:"ti-shopping-cart"},"Tech":{icon:"ti-cpu"},"Finance":{icon:"ti-coin"},"Ecommerce":{icon:"ti-device-mobile"},"Consulting":{icon:"ti-briefcase"},"Other":{icon:"ti-tag"}};
+const avatarPal=[{l:{bg:"#dbeafe",c:"#1e40af"},d:{bg:"#1e3a5f",c:"#93c5fd"}},{l:{bg:"#d1fae5",c:"#065f46"},d:{bg:"#064e3b",c:"#6ee7b7"}},{l:{bg:"#fef3c7",c:"#92400e"},d:{bg:"#451a03",c:"#fcd34d"}},{l:{bg:"#ede9fe",c:"#4c1d95"},d:{bg:"#2e1065",c:"#c4b5fd"}},{l:{bg:"#fce7f3",c:"#9d174d"},d:{bg:"#500724",c:"#f9a8d4"}},{l:{bg:"#ccfbf1",c:"#134e4a"},d:{bg:"#042f2e",c:"#5eead4"}},{l:{bg:"#fee2e2",c:"#991b1b"},d:{bg:"#450a0a",c:"#fca5a5"}},{l:{bg:"#fef9c3",c:"#854d0e"},d:{bg:"#422006",c:"#fde047"}}];
 const m=()=>isDark?"d":"l";
 const inits=n=>n.split(" ").slice(0,2).map(x=>x[0]).join("").toUpperCase();
 const coMap={};
 function rebuildCoMap(){Object.keys(coMap).forEach(k=>delete coMap[k]);[...new Set(data.map(d=>d.co))].forEach((c,i)=>coMap[c]=i%avatarPal.length);}
 const avCol=co=>{const idx=coMap[co]!==undefined?coMap[co]:0;return avatarPal[idx][m()];};
+function fmtDate(iso){if(!iso)return"—";return new Date(iso).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}
+function fmtDateTime(iso){if(!iso)return"—";const d=new Date(iso);return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});}
 
-function fmtDate(iso){
-  if(!iso)return"—";
-  const d=new Date(iso);
-  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
-}
-function fmtDateTime(iso){
-  if(!iso)return"—";
-  const d=new Date(iso);
-  return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});
+// ═══ SYNC STATUS ═══
+function setSyncStatus(status,text){
+  const dot=document.getElementById("syncDot");
+  const txt=document.getElementById("syncText");
+  if(!dot)return;
+  dot.className="sync-dot "+status;
+  txt.textContent=text;
 }
 
-// ═══════════════════ PERSISTENCE ═══════════════════
-function saveData(){
+// ═══ LOGIN ═══
+window.togglePwVis=function(){
+  const inp=document.getElementById("loginPass");
+  const icon=document.getElementById("pwEyeIcon");
+  if(inp.type==="password"){inp.type="text";icon.className="ti ti-eye-off";}
+  else{inp.type="password";icon.className="ti ti-eye";}
+};
+
+window.doLogin=async function(){
+  const user=document.getElementById("loginUser").value.trim();
+  const pass=document.getElementById("loginPass").value;
+  const errEl=document.getElementById("loginError");
+  const loadEl=document.getElementById("loginLoading");
+  const btn=document.getElementById("loginBtn");
+  errEl.classList.remove("show");
+  if(!user||!pass){errEl.textContent="Please enter username and password.";errEl.classList.add("show");return;}
+  if(CREDENTIALS[user]&&CREDENTIALS[user]===pass){
+    btn.disabled=true;loadEl.classList.add("show");
+    sessionStorage.setItem("hrdir_auth","1");
+    await loadAndShowApp();
+  } else {
+    errEl.textContent="Incorrect username or password.";
+    errEl.classList.add("show");
+  }
+};
+
+window.doLogout=function(){
+  sessionStorage.removeItem("hrdir_auth");
+  document.getElementById("appScreen").classList.remove("show");
+  document.getElementById("loginScreen").style.display="flex";
+  document.getElementById("loginUser").value="";
+  document.getElementById("loginPass").value="";
+  document.getElementById("loginBtn").disabled=false;
+  document.getElementById("loginLoading").classList.remove("show");
+};
+
+async function loadAndShowApp(){
+  document.getElementById("loadingOverlay").classList.remove("hide");
+  document.getElementById("loadingText").textContent="Loading contacts…";
   try{
-    localStorage.setItem(STORE_KEY,JSON.stringify(data));
-    localStorage.setItem(INT_KEY,JSON.stringify(interactions));
-  }catch(e){}
-}
-function loadData(){
-  try{
-    const d=localStorage.getItem(STORE_KEY);
-    const i=localStorage.getItem(INT_KEY);
-    if(d)data=JSON.parse(d);
-    else data=BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}));
-    if(i)interactions=JSON.parse(i);
-    else interactions=[];
-    nextId=data.reduce((mx,d)=>Math.max(mx,d.id),999)+1;
-    nextIntId=interactions.reduce((mx,i)=>Math.max(mx,i.id),1999)+1;
-  }catch(e){
-    data=BASE_DATA.map(x=>({...x,addedAt:null,updatedAt:null}));
-    interactions=[];
+    // Load contacts
+    const contactsSnap=await getDocs(collection(db,"contacts"));
+    if(contactsSnap.empty){
+      // First time — seed base data
+      document.getElementById("loadingText").textContent="Setting up database…";
+      const batch=writeBatch(db);
+      BASE_DATA.forEach(c=>batch.set(doc(db,"contacts",c.id),c));
+      await batch.commit();
+      data=BASE_DATA.map(x=>({...x}));
+    } else {
+      data=contactsSnap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+    // Load interactions
+    document.getElementById("loadingText").textContent="Loading interactions…";
+    const intSnap=await getDocs(collection(db,"interactions"));
+    interactions=intSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    // Show app
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("appScreen").classList.add("show");
+    document.getElementById("loadingOverlay").classList.add("hide");
+    rebuildCoMap();
+    initSidebar();
+    initCatOpts();
+    renderCoOpts();
+    render();
+    setSyncStatus("ok","Synced with Firebase");
+
+    // Real-time listeners
+    onSnapshot(collection(db,"contacts"),snap=>{
+      data=snap.docs.map(d=>({id:d.id,...d.data()}));
+      rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();render();
+      setSyncStatus("ok","Synced · "+new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true}));
+    });
+    onSnapshot(collection(db,"interactions"),snap=>{
+      interactions=snap.docs.map(d=>({id:d.id,...d.data()}));
+      updateSbPipeline();
+      if(currentIntHrId)renderExistingInts(currentIntHrId);
+      if(currentView==="pipeline")renderPipeline();
+      if(currentView==="interactions")renderIntTable();
+      render();
+    });
+  } catch(e){
+    document.getElementById("loadingText").textContent="Error: "+e.message;
+    setSyncStatus("err","Connection error");
+    setTimeout(()=>document.getElementById("loadingOverlay").classList.add("hide"),3000);
   }
 }
 
-// ═══════════════════ HELPERS ═══════════════════
-function getHrInteractions(hrId){return interactions.filter(i=>i.hrId===hrId);}
-function getIntStatusCls(status){return(STATUS_MAP[status]||STATUS_MAP["Not Contacted"]).cls;}
-function statusBadgeHTML(status){
-  const cls=getIntStatusCls(status);
-  return `<span class="status-badge ${cls}">${status}</span>`;
+// Auto-login if session exists
+window.addEventListener("load",async()=>{
+  if(sessionStorage.getItem("hrdir_auth")==="1"){
+    document.getElementById("loginScreen").style.display="none";
+    await loadAndShowApp();
+  } else {
+    document.getElementById("loadingOverlay").classList.add("hide");
+  }
+});
+
+// ═══ FIREBASE CRUD ═══
+async function fbSaveContact(contact){
+  setSyncStatus("syncing","Saving…");
+  try{
+    await setDoc(doc(db,"contacts",contact.id),contact);
+    setSyncStatus("ok","Saved ✓");
+  }catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed: "+e.message);}
+}
+async function fbDeleteContact(id){
+  setSyncStatus("syncing","Deleting…");
+  try{
+    await deleteDoc(doc(db,"contacts",id));
+    // Also delete interactions for this contact
+    const toDelete=interactions.filter(i=>i.hrId===id);
+    for(const i of toDelete)await deleteDoc(doc(db,"interactions",i.id));
+    setSyncStatus("ok","Deleted ✓");
+  }catch(e){setSyncStatus("err","Delete failed");showToast("error","Delete failed");}
+}
+async function fbSaveInteraction(interaction){
+  setSyncStatus("syncing","Saving…");
+  try{
+    await setDoc(doc(db,"interactions",interaction.id),interaction);
+    setSyncStatus("ok","Saved ✓");
+  }catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed");}
+}
+async function fbDeleteInteraction(id){
+  setSyncStatus("syncing","Deleting…");
+  try{
+    await deleteDoc(doc(db,"interactions",id));
+    setSyncStatus("ok","Deleted ✓");
+  }catch(e){setSyncStatus("err","Delete failed");}
 }
 
-// ═══════════════════ THEME ═══════════════════
-function toggleTheme(){
+// ═══ THEME ═══
+window.toggleTheme=function(){
   isDark=!isDark;
   document.documentElement.setAttribute("data-theme",isDark?"dark":"light");
   const ic=isDark?"ti ti-sun":"ti ti-moon",lb=isDark?"Light":"Dark";
@@ -872,201 +920,84 @@ function toggleTheme(){
   document.getElementById("themeLabelSb").textContent=lb;
   document.getElementById("themeLabel2").textContent=lb;
   render();
-}
+};
 
-// ═══════════════════ SIDEBAR ═══════════════════
-function openSidebar(){document.getElementById("sidebar").classList.add("open");const ov=document.getElementById("sbOverlay");ov.classList.add("show");ov.style.display="block";}
-function closeSidebar(){document.getElementById("sidebar").classList.remove("open");const ov=document.getElementById("sbOverlay");ov.classList.remove("show");setTimeout(()=>ov.style.display="none",300);}
-function filterSidebarItems(){
+// ═══ SIDEBAR ═══
+window.openSidebar=function(){document.getElementById("sidebar").classList.add("open");const ov=document.getElementById("sbOverlay");ov.classList.add("show");ov.style.display="block";};
+window.closeSidebar=function(){document.getElementById("sidebar").classList.remove("open");const ov=document.getElementById("sbOverlay");ov.classList.remove("show");setTimeout(()=>ov.style.display="none",300);};
+window.filterSidebarItems=function(){
   const q=document.getElementById("sbSearchInput").value.toLowerCase().trim();
-  document.querySelectorAll(".sb-item[data-cat]").forEach(el=>{
-    el.style.display=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q)?"":"none";
-  });
-}
+  document.querySelectorAll(".sb-item[data-cat]").forEach(el=>{el.style.display=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q)?"":"none";});
+};
 
 function initSidebar(){
-  const nav=document.getElementById("sidebarNav");
   const cats=[...new Set(data.map(d=>d.cat))];
   let html=`<div class="sb-nav-label">Categories</div>
     <div class="sb-item active" data-cat="All" onclick="setSidebarCat('All',this)">
-      <i class="ti ti-layout-grid"></i><span class="sb-label">All Contacts</span>
-      <span class="sb-count">${data.length}</span>
+      <i class="ti ti-layout-grid"></i><span class="sb-label">All Contacts</span><span class="sb-count">${data.length}</span>
     </div>`;
-  cats.forEach(c=>{
-    const cfg=catCfg[c]||catCfg["Other"];
-    html+=`<div class="sb-item" data-cat="${c}" onclick="setSidebarCat('${c}',this)">
-      <i class="ti ${cfg.icon}"></i><span class="sb-label">${c}</span>
-      <span class="sb-count">${data.filter(d=>d.cat===c).length}</span>
-    </div>`;
-  });
+  cats.forEach(c=>{const cfg=catCfg[c]||catCfg["Other"];html+=`<div class="sb-item" data-cat="${c}" onclick="setSidebarCat('${c}',this)"><i class="ti ${cfg.icon}"></i><span class="sb-label">${c}</span><span class="sb-count">${data.filter(d=>d.cat===c).length}</span></div>`;});
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
-  updateSbStats();
-  updateSbPipeline();
+  updateSbStats();updateSbPipeline();
 }
 function refreshSidebar(){
   document.querySelectorAll(".sb-item[data-cat],.sb-nav-label").forEach(e=>e.remove());
   const cats=[...new Set(data.map(d=>d.cat))];
-  let html=`<div class="sb-nav-label">Categories</div>
-    <div class="sb-item${activeCat==="All"?" active":""}" data-cat="All" onclick="setSidebarCat('All',this)">
-      <i class="ti ti-layout-grid"></i><span class="sb-label">All Contacts</span>
-      <span class="sb-count">${data.length}</span>
-    </div>`;
-  cats.forEach(c=>{
-    const cfg=catCfg[c]||catCfg["Other"];
-    html+=`<div class="sb-item${activeCat===c?" active":""}" data-cat="${c}" onclick="setSidebarCat('${c}',this)">
-      <i class="ti ${cfg.icon}"></i><span class="sb-label">${c}</span>
-      <span class="sb-count">${data.filter(d=>d.cat===c).length}</span>
-    </div>`;
-  });
+  let html=`<div class="sb-nav-label">Categories</div><div class="sb-item${activeCat==="All"?" active":""}" data-cat="All" onclick="setSidebarCat('All',this)"><i class="ti ti-layout-grid"></i><span class="sb-label">All Contacts</span><span class="sb-count">${data.length}</span></div>`;
+  cats.forEach(c=>{const cfg=catCfg[c]||catCfg["Other"];html+=`<div class="sb-item${activeCat===c?" active":""}" data-cat="${c}" onclick="setSidebarCat('${c}',this)"><i class="ti ${cfg.icon}"></i><span class="sb-label">${c}</span><span class="sb-count">${data.filter(d=>d.cat===c).length}</span></div>`;});
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
-  updateSbStats();
-  updateSbPipeline();
+  updateSbStats();updateSbPipeline();
 }
 function updateSbStats(){
   const cats=[...new Set(data.map(d=>d.cat))];
   const cos=[...new Set(data.map(d=>d.co))];
-  document.getElementById("sbStats").innerHTML=`
-    <div class="sb-stat-item"><div class="sb-stat-val">${data.length}</div><div class="sb-stat-lbl">Contacts</div></div>
-    <div class="sb-stat-item"><div class="sb-stat-val">${cats.length}</div><div class="sb-stat-lbl">Categories</div></div>
-    <div class="sb-stat-item"><div class="sb-stat-val">${cos.length}</div><div class="sb-stat-lbl">Companies</div></div>
-    <div class="sb-stat-item"><div class="sb-stat-val">${interactions.length}</div><div class="sb-stat-lbl">Interactions</div></div>`;
+  document.getElementById("sbStats").innerHTML=`<div class="sb-stat-item"><div class="sb-stat-val">${data.length}</div><div class="sb-stat-lbl">Contacts</div></div><div class="sb-stat-item"><div class="sb-stat-val">${cats.length}</div><div class="sb-stat-lbl">Categories</div></div><div class="sb-stat-item"><div class="sb-stat-val">${cos.length}</div><div class="sb-stat-lbl">Companies</div></div><div class="sb-stat-item"><div class="sb-stat-val">${interactions.length}</div><div class="sb-stat-lbl">Interactions</div></div>`;
 }
 function updateSbPipeline(){
-  const statuses=Object.keys(STATUS_MAP);
   const mini=document.getElementById("sbPipelineMini");
-  mini.innerHTML=statuses.map(s=>{
-    const cnt=interactions.filter(i=>i.status===s).length;
-    const dot=STATUS_MAP[s].dot;
-    return `<div class="sb-pl-row">
-      <div class="pl-dot" style="background:${dot};"></div>
-      <span class="pl-label">${s}</span>
-      <span class="pl-num">${cnt}</span>
-    </div>`;
-  }).join("");
+  if(!mini)return;
+  mini.innerHTML=Object.keys(STATUS_MAP).map(s=>`<div class="sb-pl-row"><div class="pl-dot" style="background:${STATUS_MAP[s].dot};"></div><span class="pl-label">${s}</span><span class="pl-num">${interactions.filter(i=>i.status===s).length}</span></div>`).join("");
 }
-function setSidebarCat(cat,el){
+window.setSidebarCat=function(cat,el){
   activeCat=cat;activeCo="All";
   document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i===el));
   document.getElementById("coBtnText").textContent="All Companies";
   document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
   document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
-  switchView("contacts");
-  renderCoOpts();render();
+  switchView("contacts");renderCoOpts();render();
   if(window.innerWidth<=700)closeSidebar();
-}
+};
 
-// ═══════════════════ VIEW SWITCHING ═══════════════════
-function switchView(v){
+// ═══ VIEW SWITCHING ═══
+window.switchView=function(v){
   currentView=v;
   ["contacts","pipeline","interactions"].forEach(n=>{
     document.getElementById("view-"+n).classList.toggle("active",n===v);
     document.getElementById("tab-"+n).classList.toggle("active",n===v);
   });
-  if(v==="pipeline"){
-    document.getElementById("topbarTitle").textContent="Pipeline";
-    document.getElementById("topbarSub").textContent="Interaction Tracker";
-    renderPipeline();
-  } else if(v==="interactions"){
-    document.getElementById("topbarTitle").textContent="All Interactions";
-    document.getElementById("topbarSub").textContent="Complete Record";
-    renderIntTable();
-  } else {
-    document.getElementById("topbarTitle").textContent=activeCat==="All"?"All Contacts":activeCat;
-    document.getElementById("topbarSub").textContent="HR Directory";
-    render();
-  }
-}
+  if(v==="pipeline"){document.getElementById("topbarTitle").textContent="Pipeline";document.getElementById("topbarSub").textContent="Interaction Tracker";renderPipeline();}
+  else if(v==="interactions"){document.getElementById("topbarTitle").textContent="All Interactions";document.getElementById("topbarSub").textContent="Complete Record";renderIntTable();}
+  else{document.getElementById("topbarTitle").textContent=activeCat==="All"?"All Contacts":activeCat;document.getElementById("topbarSub").textContent="HR Directory";render();}
+};
 
-// ═══════════════════ DROPDOWNS ═══════════════════
-function toggleCatDD(){const m2=document.getElementById("catMenu"),b=document.getElementById("catBtn"),o=m2.classList.contains("open");document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);}
-function setCatDD(cat,el){
-  activeCat=cat;activeCo="All";
-  document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");
-  document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;
-  document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");
-  document.getElementById("coBtnText").textContent="All Companies";
-  document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;
-  document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i.dataset.cat===cat));
-  renderCoOpts();render();
-}
-function initCatOpts(){
-  document.getElementById("catAllCnt").textContent=data.length;
-  const cats=[...new Set(data.map(d=>d.cat))];
-  document.getElementById("catOpts").innerHTML=cats.map(c=>{
-    const cfg=catCfg[c]||catCfg["Other"];
-    return `<div class="dd-opt" data-val="${c}" onclick="setCatDD('${c}',this)">
-      <span class="opt-lbl"><i class="ti ${cfg.icon}" style="font-size:13px;margin-right:5px;vertical-align:-1px;"></i>${c}</span>
-      <span class="opt-cnt">${data.filter(d=>d.cat===c).length}</span>
-    </div>`;
-  }).join("");
-}
-function toggleCoDD(){const m2=document.getElementById("coMenu"),b=document.getElementById("coBtn"),o=m2.classList.contains("open");document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);}
-function renderCoOpts(){
-  const vis=activeCat==="All"?[...new Set(data.map(d=>d.co))]:[...new Set(data.filter(d=>d.cat===activeCat).map(d=>d.co))];
-  document.getElementById("coOpts").innerHTML=vis.map(c=>`
-    <div class="dd-opt${activeCo===c?" active":""}" data-val="${c}" onclick="setCoDD('${c.replace(/'/g,"\\'")}',this)">
-      <span class="opt-lbl">${c}</span>
-      <span class="opt-cnt">${data.filter(d=>d.co===c).length}</span>
-    </div>`).join("");
-}
-function setCoDD(co,el){
-  activeCo=co;
-  document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");
-  document.getElementById("coBtnText").textContent=co==="All"?"All Companies":co;
-  document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");
-  render();
-}
-document.addEventListener("click",e=>{
-  if(!e.target.closest("#catWrap")){document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");}
-  if(!e.target.closest("#coWrap")){document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");}
-});
+// ═══ DROPDOWNS ═══
+window.toggleCatDD=function(){const m2=document.getElementById("catMenu"),b=document.getElementById("catBtn"),o=m2.classList.contains("open");document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);};
+window.setCatDD=function(cat,el){activeCat=cat;activeCo="All";document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");document.getElementById("coBtnText").textContent="All Companies";document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i.dataset.cat===cat));renderCoOpts();render();};
+function initCatOpts(){document.getElementById("catAllCnt").textContent=data.length;const cats=[...new Set(data.map(d=>d.cat))];document.getElementById("catOpts").innerHTML=cats.map(c=>{const cfg=catCfg[c]||catCfg["Other"];return`<div class="dd-opt" data-val="${c}" onclick="setCatDD('${c}',this)"><span class="opt-lbl"><i class="ti ${cfg.icon}" style="font-size:13px;margin-right:5px;vertical-align:-1px;"></i>${c}</span><span class="opt-cnt">${data.filter(d=>d.cat===c).length}</span></div>`;}).join("");}
+window.toggleCoDD=function(){const m2=document.getElementById("coMenu"),b=document.getElementById("coBtn"),o=m2.classList.contains("open");document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);};
+function renderCoOpts(){const vis=activeCat==="All"?[...new Set(data.map(d=>d.co))]:[...new Set(data.filter(d=>d.cat===activeCat).map(d=>d.co))];document.getElementById("coOpts").innerHTML=vis.map(c=>`<div class="dd-opt${activeCo===c?" active":""}" data-val="${c}" onclick="setCoDD('${c.replace(/'/g,"\\'")}',this)"><span class="opt-lbl">${c}</span><span class="opt-cnt">${data.filter(d=>d.co===c).length}</span></div>`).join("");}
+window.setCoDD=function(co,el){activeCo=co;document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");document.getElementById("coBtnText").textContent=co==="All"?"All Companies":co;document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");render();};
+document.addEventListener("click",e=>{if(!e.target.closest("#catWrap")){document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");}if(!e.target.closest("#coWrap")){document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");}});
 
-// ═══════════════════ CONTACT MODAL ═══════════════════
-function openAddModal(){
-  document.getElementById("f_editId").value="";
-  document.getElementById("modalTitle").textContent="Add New Contact";
-  document.getElementById("modalIcon").className="ti ti-user-plus";
-  ["f_name","f_desig","f_co","f_ph","f_email","f_li"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("f_cat").value="FMCG";
-  clearAllErrs();
-  document.getElementById("coList").innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");
-  document.getElementById("modalOverlay").classList.add("open");
-  setTimeout(()=>document.getElementById("f_name").focus(),200);
-}
-function openEditModal(id){
-  const d=data.find(x=>x.id===id);if(!d)return;
-  document.getElementById("f_editId").value=id;
-  document.getElementById("modalTitle").textContent="Edit Contact";
-  document.getElementById("modalIcon").className="ti ti-edit";
-  document.getElementById("f_name").value=d.name;
-  document.getElementById("f_desig").value=d.desig;
-  document.getElementById("f_co").value=d.co;
-  document.getElementById("f_cat").value=d.cat;
-  document.getElementById("f_ph").value=d.ph;
-  document.getElementById("f_email").value=d.email;
-  document.getElementById("f_li").value=d.li||"";
-  clearAllErrs();
-  document.getElementById("modalOverlay").classList.add("open");
-}
-function closeModal(){document.getElementById("modalOverlay").classList.remove("open");}
-function handleModalOutsideClick(e){if(e.target===document.getElementById("modalOverlay"))closeModal();}
-function clearErr(id){document.getElementById(id).classList.remove("show");}
+// ═══ CONTACT MODAL ═══
+window.openAddModal=function(){document.getElementById("f_editId").value="";document.getElementById("modalTitle").textContent="Add New Contact";document.getElementById("modalIcon").className="ti ti-user-plus";["f_name","f_desig","f_co","f_ph","f_email","f_li"].forEach(id=>document.getElementById(id).value="");document.getElementById("f_cat").value="FMCG";clearAllErrs();document.getElementById("coList").innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");document.getElementById("modalOverlay").classList.add("open");setTimeout(()=>document.getElementById("f_name").focus(),200);};
+window.openEditModal=function(id){const d=data.find(x=>x.id===id);if(!d)return;document.getElementById("f_editId").value=id;document.getElementById("modalTitle").textContent="Edit Contact";document.getElementById("modalIcon").className="ti ti-edit";document.getElementById("f_name").value=d.name;document.getElementById("f_desig").value=d.desig;document.getElementById("f_co").value=d.co;document.getElementById("f_cat").value=d.cat;document.getElementById("f_ph").value=d.ph;document.getElementById("f_email").value=d.email;document.getElementById("f_li").value=d.li||"";clearAllErrs();document.getElementById("modalOverlay").classList.add("open");};
+window.closeModal=function(){document.getElementById("modalOverlay").classList.remove("open");};
+window.handleModalOutsideClick=function(e){if(e.target===document.getElementById("modalOverlay"))closeModal();};
+window.clearErr=function(id){document.getElementById(id).classList.remove("show");};
 function clearAllErrs(){["e_name","e_desig","e_co","e_ph","e_email"].forEach(id=>document.getElementById(id).classList.remove("show"));}
-function validateForm(){
-  let ok=true;
-  const name=document.getElementById("f_name").value.trim();
-  const desig=document.getElementById("f_desig").value.trim();
-  const co=document.getElementById("f_co").value.trim();
-  const ph=document.getElementById("f_ph").value.trim();
-  const email=document.getElementById("f_email").value.trim();
-  if(!name){document.getElementById("e_name").classList.add("show");ok=false;}
-  if(!desig){document.getElementById("e_desig").classList.add("show");ok=false;}
-  if(!co){document.getElementById("e_co").classList.add("show");ok=false;}
-  if(!/^\d{10}$/.test(ph)){document.getElementById("e_ph").classList.add("show");ok=false;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById("e_email").classList.add("show");ok=false;}
-  return ok;
-}
-function saveContact(){
+function validateForm(){let ok=true;const name=document.getElementById("f_name").value.trim();const desig=document.getElementById("f_desig").value.trim();const co=document.getElementById("f_co").value.trim();const ph=document.getElementById("f_ph").value.trim();const email=document.getElementById("f_email").value.trim();if(!name){document.getElementById("e_name").classList.add("show");ok=false;}if(!desig){document.getElementById("e_desig").classList.add("show");ok=false;}if(!co){document.getElementById("e_co").classList.add("show");ok=false;}if(!/^\d{10}$/.test(ph)){document.getElementById("e_ph").classList.add("show");ok=false;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById("e_email").classList.add("show");ok=false;}return ok;}
+window.saveContact=async function(){
   if(!validateForm())return;
   const editId=document.getElementById("f_editId").value;
   const name=document.getElementById("f_name").value.trim();
@@ -1075,257 +1006,129 @@ function saveContact(){
   const cat=document.getElementById("f_cat").value;
   const ph=document.getElementById("f_ph").value.trim();
   const email=document.getElementById("f_email").value.trim();
-  const li=document.getElementById("f_li").value.trim()||"#";
+  const li=document.getElementById("f_li").value.trim()||"";
   const now=new Date().toISOString();
   if(editId){
-    const idx=data.findIndex(x=>x.id===parseInt(editId));
-    if(idx>=0)data[idx]={...data[idx],name,desig,co,cat,ph,email,li,updatedAt:now};
-    showToast("success","Contact updated");
+    const existing=data.find(x=>x.id===editId);
+    const updated={...existing,name,desig,co,cat,ph,email,li,updatedAt:now};
+    await fbSaveContact(updated);
+    showToast("success","Contact updated!");
   } else {
-    data.unshift({id:nextId++,cat,co,name,ph,email,li,desig,addedAt:now,updatedAt:null});
+    const newContact={id:nextContactId(),cat,co,name,ph,email,li,desig,addedAt:now};
+    await fbSaveContact(newContact);
     showToast("success","Contact added!");
   }
-  saveData();rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();closeModal();render();
-}
+  closeModal();
+};
 
-// ═══════════════════ INTERACTION MODAL ═══════════════════
-function openIntModal(hrId){
+// ═══ INTERACTION MODAL ═══
+window.openIntModal=function(hrId){
   currentIntHrId=hrId;editingIntId=null;
   const hr=data.find(x=>x.id===hrId);if(!hr)return;
   document.getElementById("intModalTitle").textContent="Interactions — "+hr.name;
   document.getElementById("intHrName").textContent=hr.name+" · "+hr.desig;
   document.getElementById("intHrCo").textContent=hr.co;
   resetIntForm();
-  // Populate student datalist with previously used names
   const usedStudents=[...new Set(interactions.map(i=>i.student))];
   document.getElementById("studentList").innerHTML=usedStudents.map(s=>`<option value="${s}">`).join("");
   renderExistingInts(hrId);
   document.getElementById("intModalOverlay").classList.add("open");
   setTimeout(()=>document.getElementById("int_student").focus(),200);
-}
-function closeIntModal(){document.getElementById("intModalOverlay").classList.remove("open");currentIntHrId=null;editingIntId=null;}
-function handleIntModalOutside(e){if(e.target===document.getElementById("intModalOverlay"))closeIntModal();}
+};
+window.closeIntModal=function(){document.getElementById("intModalOverlay").classList.remove("open");currentIntHrId=null;editingIntId=null;};
+window.handleIntModalOutside=function(e){if(e.target===document.getElementById("intModalOverlay"))closeIntModal();};
 
 function renderExistingInts(hrId){
   const list=document.getElementById("existingIntsList");
-  const hrInts=getHrInteractions(hrId);
-  if(!hrInts.length){
-    list.innerHTML=`<div class="tbl-empty" style="padding:1rem;"><i class="ti ti-messages" style="font-size:24px;opacity:.3;display:block;margin-bottom:5px;"></i>No interactions yet</div>`;
-    return;
-  }
-  list.innerHTML=hrInts.map(i=>`
-    <div class="existing-int-item">
-      <div class="ei-left">
-        <div class="ei-student">${i.student} &nbsp;${statusBadgeHTML(i.status)}</div>
-        ${i.note?`<div class="ei-note">${i.note}</div>`:""}
-        <div class="ei-date"><i class="ti ti-calendar" style="font-size:11px;margin-right:3px;"></i>${fmtDateTime(i.ts)}</div>
-      </div>
-      <div class="ei-actions">
-        <button class="ei-edit" onclick="editIntItem(${i.id})"><i class="ti ti-edit"></i></button>
-        <button class="ei-del" onclick="deleteIntItem(${i.id})"><i class="ti ti-trash"></i></button>
-      </div>
-    </div>`).join("");
+  const hrInts=interactions.filter(i=>i.hrId===hrId).sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+  if(!hrInts.length){list.innerHTML=`<div style="text-align:center;padding:1rem;color:var(--t3);font-size:12.5px;"><i class="ti ti-messages" style="font-size:24px;opacity:.3;display:block;margin-bottom:5px;"></i>No interactions yet</div>`;return;}
+  list.innerHTML=hrInts.map(i=>`<div class="existing-int-item"><div class="ei-left"><div class="ei-student">${i.student} &nbsp;<span class="status-badge ${STATUS_MAP[i.status]?.cls||'nc'}">${i.status}</span></div>${i.note?`<div class="ei-note">${i.note}</div>`:""}<div class="ei-date"><i class="ti ti-calendar" style="font-size:11px;margin-right:3px;"></i>${fmtDateTime(i.ts)}</div></div><div class="ei-actions"><button class="ei-edit" onclick="editIntItem('${i.id}')"><i class="ti ti-edit"></i></button><button class="ei-del" onclick="deleteIntItem('${i.id}')"><i class="ti ti-trash"></i></button></div></div>`).join("");
 }
-
-function editIntItem(intId){
-  const item=interactions.find(i=>i.id===intId);if(!item)return;
-  editingIntId=intId;
-  document.getElementById("int_student").value=item.student;
-  document.getElementById("int_status").value=item.status;
-  document.getElementById("int_note").value=item.note||"";
-  document.getElementById("int_edit_id").value=intId;
-  document.getElementById("int_student").focus();
-}
-function deleteIntItem(intId){
-  interactions=interactions.filter(i=>i.id!==intId);
-  saveData();
-  if(currentIntHrId)renderExistingInts(currentIntHrId);
-  updateSbPipeline();renderPipelineIfActive();renderIntTableIfActive();render();
-  showToast("info","Interaction deleted");
-}
-function resetIntForm(){
-  document.getElementById("int_student").value="";
-  document.getElementById("int_status").value="Not Contacted";
-  document.getElementById("int_note").value="";
-  document.getElementById("int_edit_id").value="";
-  document.getElementById("int_e_student").classList.remove("show");
-  editingIntId=null;
-}
-function saveInteraction(){
+window.editIntItem=function(intId){const item=interactions.find(i=>i.id===intId);if(!item)return;editingIntId=intId;document.getElementById("int_student").value=item.student;document.getElementById("int_status").value=item.status;document.getElementById("int_note").value=item.note||"";document.getElementById("int_edit_id").value=intId;document.getElementById("int_student").focus();};
+window.deleteIntItem=async function(intId){await fbDeleteInteraction(intId);showToast("info","Interaction deleted");};
+window.resetIntForm=function(){document.getElementById("int_student").value="";document.getElementById("int_status").value="Not Contacted";document.getElementById("int_note").value="";document.getElementById("int_edit_id").value="";document.getElementById("int_e_student").classList.remove("show");editingIntId=null;};
+window.saveInteraction=async function(){
   const student=document.getElementById("int_student").value.trim();
   const status=document.getElementById("int_status").value;
   const note=document.getElementById("int_note").value.trim();
   if(!student){document.getElementById("int_e_student").classList.add("show");return;}
   document.getElementById("int_e_student").classList.remove("show");
   const now=new Date().toISOString();
-  if(editingIntId){
-    const idx=interactions.findIndex(i=>i.id===editingIntId);
-    if(idx>=0)interactions[idx]={...interactions[idx],student,status,note,ts:now};
-    showToast("success","Interaction updated");
+  const editId=document.getElementById("int_edit_id").value;
+  if(editId){
+    const existing=interactions.find(i=>i.id===editId);
+    await fbSaveInteraction({...existing,student,status,note,ts:now});
+    showToast("success","Interaction updated!");
   } else {
-    interactions.push({id:nextIntId++,hrId:currentIntHrId,student,status,note,ts:now});
+    await fbSaveInteraction({id:nextIntId(),hrId:currentIntHrId,student,status,note,ts:now});
     showToast("success","Interaction saved!");
   }
-  saveData();resetIntForm();
-  if(currentIntHrId)renderExistingInts(currentIntHrId);
-  updateSbStats();updateSbPipeline();renderPipelineIfActive();renderIntTableIfActive();render();
-}
-function renderPipelineIfActive(){if(currentView==="pipeline")renderPipeline();}
-function renderIntTableIfActive(){if(currentView==="interactions")renderIntTable();}
+  resetIntForm();
+};
 
-// ═══════════════════ PIPELINE VIEW ═══════════════════
+// ═══ PIPELINE ═══
 function renderPipeline(){
   const statuses=Object.keys(STATUS_MAP);
-  // Summary cards
-  let sumHTML="";
-  const allCls="nc";
-  const totalInts=interactions.length;
-  sumHTML+=`<div class="pl-sum-card nc${plStatusFilter==="All"?" active-filter":""}" onclick="setPlFilter('All')">
-    <div class="pl-sum-val">${totalInts}</div>
-    <div class="pl-sum-lbl">Total</div>
-  </div>`;
-  statuses.forEach(s=>{
-    const cls=STATUS_MAP[s].cls;
-    const cnt=interactions.filter(i=>i.status===s).length;
-    sumHTML+=`<div class="pl-sum-card ${cls}${plStatusFilter===s?" active-filter":""}" onclick="setPlFilter('${s}')">
-      <div class="pl-sum-val">${cnt}</div>
-      <div class="pl-sum-lbl">${s}</div>
-    </div>`;
-  });
+  let sumHTML=`<div class="pl-sum-card nc${plStatusFilter==="All"?" active-filter":""}" onclick="setPlFilter('All')"><div class="pl-sum-val">${interactions.length}</div><div class="pl-sum-lbl">Total</div></div>`;
+  statuses.forEach(s=>{const cls=STATUS_MAP[s].cls;const cnt=interactions.filter(i=>i.status===s).length;sumHTML+=`<div class="pl-sum-card ${cls}${plStatusFilter===s?" active-filter":""}" onclick="setPlFilter('${s}')"><div class="pl-sum-val">${cnt}</div><div class="pl-sum-lbl">${s}</div></div>`;});
   document.getElementById("pipelineSummary").innerHTML=sumHTML;
-
-  // Filter bar
   document.getElementById("plFilterBar").innerHTML=buildFilterBar(plStatusFilter,"pl");
-
-  // Table
-  let rows=interactions;
-  if(plStatusFilter!=="All")rows=rows.filter(i=>i.status===plStatusFilter);
+  let rows=plStatusFilter==="All"?interactions:interactions.filter(i=>i.status===plStatusFilter);
   renderIntRows(rows,"plTableBody");
   document.getElementById("plTableTitle").textContent=plStatusFilter==="All"?"All Interactions":plStatusFilter+" ("+rows.length+")";
 }
-function setPlFilter(s){
-  plStatusFilter=s;
-  renderPipeline();
-}
-
+window.setPlFilter=function(s){plStatusFilter=s;renderPipeline();};
 function renderIntTable(){
-  const q=(document.getElementById("intSearchInput").value||"").toLowerCase();
+  const q=(document.getElementById("intSearchInput")?.value||"").toLowerCase();
   document.getElementById("intFilterBar").innerHTML=buildFilterBar(intStatusFilter,"int");
-  let rows=interactions;
-  if(intStatusFilter!=="All")rows=rows.filter(i=>i.status===intStatusFilter);
-  if(q)rows=rows.filter(i=>
-    i.student.toLowerCase().includes(q)||
-    (data.find(d=>d.id===i.hrId)||{name:""}).name.toLowerCase().includes(q)||
-    (data.find(d=>d.id===i.hrId)||{co:""}).co.toLowerCase().includes(q)||
-    (i.note||"").toLowerCase().includes(q)
-  );
+  let rows=intStatusFilter==="All"?interactions:interactions.filter(i=>i.status===intStatusFilter);
+  if(q)rows=rows.filter(i=>i.student.toLowerCase().includes(q)||(data.find(d=>d.id===i.hrId)||{name:""}).name.toLowerCase().includes(q)||(data.find(d=>d.id===i.hrId)||{co:""}).co.toLowerCase().includes(q)||(i.note||"").toLowerCase().includes(q));
   renderIntRows(rows,"intTableBody");
 }
-function setIntFilter(s){
-  intStatusFilter=s;renderIntTable();
-}
-
+window.setIntFilter=function(s){intStatusFilter=s;renderIntTable();};
 function buildFilterBar(active,prefix){
   const statuses=Object.keys(STATUS_MAP);
   let h=`<button class="sf-btn all${active==="All"?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('All')">All (${interactions.length})</button>`;
-  statuses.forEach(s=>{
-    const cls=STATUS_MAP[s].cls;
-    const cnt=interactions.filter(i=>i.status===s).length;
-    h+=`<button class="sf-btn ${cls}${active===s?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('${s}')">${s} (${cnt})</button>`;
-  });
+  statuses.forEach(s=>{const cls=STATUS_MAP[s].cls;const cnt=interactions.filter(i=>i.status===s).length;h+=`<button class="sf-btn ${cls}${active===s?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('${s}')">${s} (${cnt})</button>`;});
   return h;
 }
-
 function renderIntRows(rows,tbodyId){
   const tbody=document.getElementById(tbodyId);
-  if(!rows.length){
-    tbody.innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><i class="ti ti-inbox"></i>No interactions found</div></td></tr>`;
-    return;
-  }
-  // Sort newest first
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><i class="ti ti-inbox"></i>No interactions found</div></td></tr>`;return;}
   const sorted=[...rows].sort((a,b)=>new Date(b.ts)-new Date(a.ts));
-  tbody.innerHTML=sorted.map(i=>{
-    const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—"};
-    return `<tr>
-      <td class="td-name">${i.student}</td>
-      <td><div class="td-name" style="font-size:12px;">${hr.name}</div><div class="td-co">${hr.co}</div></td>
-      <td>${statusBadgeHTML(i.status)}</td>
-      <td class="td-note" title="${(i.note||"").replace(/"/g,"&quot;")}">${i.note||"<span style='color:var(--t3);font-style:italic;'>No note</span>"}</td>
-      <td class="td-date">${fmtDate(i.ts)}</td>
-      <td><div class="td-actions">
-        <button class="tbl-action-btn" onclick="openIntModalFromTable(${i.hrId})" title="Add/Edit"><i class="ti ti-messages"></i></button>
-        <button class="tbl-action-btn del" onclick="deleteIntItem(${i.id})" title="Delete"><i class="ti ti-trash"></i></button>
-      </div></td>
-    </tr>`;
-  }).join("");
+  tbody.innerHTML=sorted.map(i=>{const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—"};return`<tr><td class="td-name">${i.student}</td><td><div class="td-name" style="font-size:12px;">${hr.name}</div><div class="td-co">${hr.co}</div></td><td><span class="status-badge ${STATUS_MAP[i.status]?.cls||'nc'}">${i.status}</span></td><td class="td-note" title="${(i.note||"").replace(/"/g,"&quot;")}">${i.note||'<span style="color:var(--t3);font-style:italic;">No note</span>'}</td><td class="td-date">${fmtDate(i.ts)}</td><td><div class="td-actions"><button class="tbl-action-btn" onclick="openIntModal('${i.hrId}')" title="Open"><i class="ti ti-messages"></i></button><button class="tbl-action-btn del" onclick="deleteIntItem('${i.id}')" title="Delete"><i class="ti ti-trash"></i></button></div></td></tr>`;}).join("");
 }
-function openIntModalFromTable(hrId){openIntModal(hrId);}
 
-// ═══════════════════ EXPORT CSV ═══════════════════
-function exportCSV(){
-  let rows=interactions;
+// ═══ EXPORT ═══
+window.exportCSV=function(){
   const headers=["Student","HR Name","Company","Category","Status","Note","Date"];
   const csv=[headers.join(",")];
-  rows.forEach(i=>{
-    const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—",cat:"—"};
-    const row=[i.student,hr.name,hr.co,hr.cat,i.status,(i.note||"").replace(/,/g,";"),fmtDate(i.ts)];
-    csv.push(row.map(v=>`"${v}"`).join(","));
-  });
+  interactions.forEach(i=>{const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—",cat:"—"};csv.push([i.student,hr.name,hr.co,hr.cat||"—",i.status,(i.note||"").replace(/,/g,";"),fmtDate(i.ts)].map(v=>`"${v}"`).join(","));});
   const blob=new Blob([csv.join("\n")],{type:"text/csv"});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download="hr_interactions_"+new Date().toISOString().slice(0,10)+".csv";
-  a.click();URL.revokeObjectURL(url);
+  const a=document.createElement("a");a.href=url;a.download="hr_interactions_"+new Date().toISOString().slice(0,10)+".csv";a.click();URL.revokeObjectURL(url);
   showToast("success","CSV exported!");
-}
+};
 
-// ═══════════════════ DELETE ═══════════════════
-function openDeleteConfirm(id){
-  const d=data.find(x=>x.id===id);if(!d)return;
-  deleteTargetId=id;deleteTargetType="contact";
-  document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}? Their interactions will also be removed.`;
-  document.getElementById("confirmOverlay").classList.add("open");
-  document.getElementById("confirmDeleteBtn").onclick=()=>confirmDelete();
-}
-function closeConfirm(){document.getElementById("confirmOverlay").classList.remove("open");deleteTargetId=null;}
-function confirmDelete(){
-  if(deleteTargetType==="contact"){
-    const d=data.find(x=>x.id===deleteTargetId);
-    interactions=interactions.filter(i=>i.hrId!==deleteTargetId);
-    data=data.filter(x=>x.id!==deleteTargetId);
-    saveData();rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();
-    showToast("info","Contact deleted");
-  }
-  closeConfirm();render();updateSbPipeline();
-}
+// ═══ DELETE CONTACT ═══
+window.openDeleteConfirm=function(id){const d=data.find(x=>x.id===id);if(!d)return;deleteTargetId=id;document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}? Their interactions will also be removed.`;document.getElementById("confirmOverlay").classList.add("open");document.getElementById("confirmDeleteBtn").onclick=()=>confirmDelete();};
+window.closeConfirm=function(){document.getElementById("confirmOverlay").classList.remove("open");deleteTargetId=null;};
+async function confirmDelete(){await fbDeleteContact(deleteTargetId);showToast("info","Contact deleted");closeConfirm();}
 
-// ═══════════════════ TOAST ═══════════════════
-function showToast(type,msg){
-  const icon=type==="success"?"ti-circle-check":type==="error"?"ti-circle-x":"ti-info-circle";
-  const t=document.createElement("div");
-  t.className=`toast ${type}`;
-  t.innerHTML=`<i class="ti ${icon}"></i>${msg}`;
-  document.getElementById("toastContainer").appendChild(t);
-  setTimeout(()=>t.style.opacity="0",2500);
-  setTimeout(()=>t.remove(),2900);
-}
+// ═══ TOAST ═══
+window.showToast=function(type,msg){const icon=type==="success"?"ti-circle-check":type==="error"?"ti-circle-x":"ti-info-circle";const t=document.createElement("div");t.className=`toast ${type}`;t.innerHTML=`<i class="ti ${icon}"></i>${msg}`;document.getElementById("toastContainer").appendChild(t);setTimeout(()=>t.style.opacity="0",2500);setTimeout(()=>t.remove(),2900);};
 
-// ═══════════════════ CARD ═══════════════════
+// ═══ CARD ═══
 function cardHTML(d,idx){
   const av=avCol(d.co);
-  const bannerColors=["#590016","#3d0010","#260009"];
-  const banner=bannerColors[idx%3];
+  const banners=["#590016","#3d0010","#260009"];
+  const banner=banners[idx%3];
   const cfg=catCfg[d.cat]||catCfg["Other"];
-  const hrInts=getHrInteractions(d.id);
+  const hrInts=interactions.filter(i=>i.hrId===d.id);
   const latestInt=hrInts.sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
   const intCount=hrInts.length;
-
-  // Latest status badge
-  const latestStatusHTML=latestInt
-    ?statusBadgeHTML(latestInt.status)
-    :`<span class="status-badge nc">Not Contacted</span>`;
-
-  return `<div class="card" data-id="${d.id}">
+  const latestStatusHTML=latestInt?`<span class="status-badge ${STATUS_MAP[latestInt.status]?.cls||'nc'}">${latestInt.status}</span>`:`<span class="status-badge nc">Not Contacted</span>`;
+  return`<div class="card" data-id="${d.id}">
     <div class="card-banner" style="background:${banner};">
       <div class="card-avatar" style="background:${av.bg};color:${av.c};">${inits(d.name)}</div>
       <span class="card-cat-badge"><i class="ti ${cfg.icon}" style="font-size:9px;vertical-align:-1px;margin-right:3px;"></i>${d.cat}</span>
@@ -1345,65 +1148,44 @@ function cardHTML(d,idx){
         ${latestStatusHTML}
         ${intCount>0?`<span style="font-size:10px;color:var(--t3);">${intCount} interaction${intCount>1?"s":""}</span>`:""}
       </div>
-      <button class="card-int-add" onclick="openIntModal(${d.id})">
-        <i class="ti ti-plus"></i> Track
-      </button>
+      <button class="card-int-add" onclick="openIntModal('${d.id}')"><i class="ti ti-plus"></i> Track</button>
     </div>
     <div class="card-footer">
       <a href="tel:${d.ph}" class="card-action call"><i class="ti ti-phone"></i>Call</a>
       <a href="mailto:${d.email}" class="card-action email-btn"><i class="ti ti-mail"></i>Email</a>
-      <button class="card-action" onclick="openEditModal(${d.id})" style="border:none;cursor:pointer;"><i class="ti ti-edit"></i>Edit</button>
-      <button class="card-action del-btn" onclick="openDeleteConfirm(${d.id})" style="border:none;cursor:pointer;"><i class="ti ti-trash"></i></button>
+      <button class="card-action" onclick="openEditModal('${d.id}')" style="border:none;cursor:pointer;"><i class="ti ti-edit"></i>Edit</button>
+      <button class="card-action del-btn" onclick="openDeleteConfirm('${d.id}')" style="border:none;cursor:pointer;"><i class="ti ti-trash"></i></button>
     </div>
   </div>`;
 }
 
-// ═══════════════════ RENDER CONTACTS ═══════════════════
+// ═══ RENDER ═══
 function render(){
-  const q=document.getElementById("searchInput").value.toLowerCase();
+  const q=(document.getElementById("searchInput")?.value||"").toLowerCase();
   const filtered=data.filter(d=>{
     const mc=activeCat==="All"||d.cat===activeCat;
     const mco=activeCo==="All"||d.co===activeCo;
     const ms=!q||d.name.toLowerCase().includes(q)||d.co.toLowerCase().includes(q)||d.desig.toLowerCase().includes(q);
     return mc&&mco&&ms;
   });
-  document.getElementById("countTxt").innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
-  document.getElementById("topbarCount").textContent=`${filtered.length} contacts`;
-  document.getElementById("bottomChipCount").textContent=`${filtered.length} contacts`;
-  const container=document.getElementById("sectionsContainer");
-  if(!filtered.length){
-    container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found.</p></div></div>`;
-    return;
-  }
+  const ct=document.getElementById("countTxt");if(ct)ct.innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
+  const tc=document.getElementById("topbarCount");if(tc)tc.textContent=`${filtered.length} contacts`;
+  const bc=document.getElementById("bottomChipCount");if(bc)bc.textContent=`${filtered.length} contacts`;
+  const container=document.getElementById("sectionsContainer");if(!container)return;
+  if(!filtered.length){container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found.</p></div></div>`;return;}
   const isFiltered=q||activeCo!=="All";
-  if(isFiltered||activeCat!=="All"){
-    container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;
-    return;
-  }
+  if(isFiltered||activeCat!=="All"){container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;return;}
   const groupedCats=[...new Set(filtered.map(d=>d.cat))];
   let html="";
   groupedCats.forEach(cat=>{
     const group=filtered.filter(d=>d.cat===cat);
     const cfg=catCfg[cat]||catCfg["Other"];
-    html+=`<div class="section-block">
-      <div class="section-header">
-        <div class="section-line"></div>
-        <div class="section-label"><i class="ti ${cfg.icon}"></i>${cat} · ${group.length} contacts</div>
-        <div class="section-line"></div>
-      </div>
-      <div class="grid">${group.map((d,i)=>cardHTML(d,i)).join("")}</div>
-    </div>`;
+    html+=`<div class="section-block"><div class="section-header"><div class="section-line"></div><div class="section-label"><i class="ti ${cfg.icon}"></i>${cat} · ${group.length} contacts</div><div class="section-line"></div></div><div class="grid">${group.map((d,i)=>cardHTML(d,i)).join("")}</div></div>`;
   });
   container.innerHTML=html;
 }
-
-// ═══════════════════ INIT ═══════════════════
-loadData();
-rebuildCoMap();
-initSidebar();
-initCatOpts();
-renderCoOpts();
-render();
 </script>
 </body>
 </html>
+HTMLEOF
+echo "Done"
