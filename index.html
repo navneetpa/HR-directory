@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>HR Directory — Navneet Pathak</title>
+<title>HR Directory</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.4.0/dist/tabler-icons.min.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -43,7 +43,7 @@
   --status-fu-bg:#2e1065;--status-fu-c:#c4b5fd;
 }
 
-/* ══ LOGIN SCREEN ══ */
+/* LOGIN */
 .login-screen{position:fixed;inset:0;background:var(--maroon);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1rem;}
 .login-box{background:#fff;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
 .login-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.8rem;}
@@ -68,10 +68,9 @@
 .login-loading{text-align:center;font-size:13px;color:#9090a8;padding:.5rem 0;display:none;}
 .login-loading.show{display:block;}
 
-/* ══ APP SCREEN ══ */
+/* APP */
 .app-screen{display:none;}
 .app-screen.show{display:flex;}
-
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;}
 
 /* SIDEBAR */
@@ -122,8 +121,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sb-pl-row .pl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:6px;}
 .sb-pl-row .pl-label{flex:1;}
 .sb-pl-row .pl-num{font-weight:700;color:#fff;}
-
-/* SYNC STATUS */
 .sync-bar{display:flex;align-items:center;gap:6px;margin:.5rem .7rem 0;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.08);font-size:10.5px;color:rgba(255,255,255,0.6);}
 .sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .sync-dot.ok{background:#4ade80;}
@@ -237,7 +234,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .empty i{font-size:44px;display:block;margin-bottom:11px;opacity:.35;}
 .empty p{font-size:13.5px;}
 
-/* PIPELINE */
+/* VIEWS */
 .pipeline-view{display:none;}
 .pipeline-view.active{display:block;}
 .contacts-view{display:none;}
@@ -305,7 +302,7 @@ table.int-table tr:hover td{background:var(--surface2);}
 .export-btn:hover{border-color:var(--bdr-h);color:var(--t1);}
 .export-btn i{font-size:14px;}
 
-/* LOADING OVERLAY */
+/* LOADING */
 .loading-overlay{position:fixed;inset:0;background:rgba(89,0,22,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:8888;gap:14px;}
 .loading-overlay.hide{display:none;}
 .loading-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
@@ -390,34 +387,59 @@ table.int-table tr:hover td{background:var(--surface2);}
 .toast.info i{color:#60a5fa;}
 @keyframes toastIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;}}
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:700px){
   :root{--sw:0px;}
-  .sidebar{transform:translateX(-250px);width:250px;}
+  .sidebar{transform:translateX(-260px);width:260px;}
   .sidebar.open{transform:translateX(0);}
   .sb-overlay{display:block;}
   .main{margin-left:0;}
   .hamburger{display:flex;}
-  .topbar{padding:0 1rem;}
-  .content{padding:1.2rem 1rem 5rem;}
-  .grid{grid-template-columns:1fr;gap:9px;}
-  .controls{flex-direction:column;gap:7px;}
-  .search-wrap,.dropdown-wrap{width:100%;min-width:unset;}
-  .form-row{grid-template-columns:1fr;}
+  .topbar{padding:0 1rem;height:52px;}
+  .topbar-sub{display:none;}
+  .topbar-count{display:none;}
+  .theme-btn span{display:none;}
+  .theme-btn{padding:6px 8px;}
   .topbar-add-btn span{display:none;}
+  .topbar-add-btn{padding:7px 10px;}
+  .content{padding:1rem .9rem 5rem;}
+  .grid{grid-template-columns:1fr;gap:10px;}
+  .controls{flex-direction:column;gap:8px;}
+  .search-wrap{width:100%;min-width:unset;flex:unset;}
+  .dropdown-wrap{width:100%;min-width:unset;}
+  .dropdown-btn{width:100%;}
+  .view-tabs{gap:2px;padding:3px;}
+  .view-tab{padding:7px 6px;font-size:11px;gap:4px;}
+  .view-tab i{font-size:14px;}
+  .form-row{grid-template-columns:1fr;}
+  .pipeline-summary{grid-template-columns:repeat(3,1fr);}
   table.int-table th:nth-child(4),table.int-table td:nth-child(4){display:none;}
+  table.int-table th:nth-child(5),table.int-table td:nth-child(5){display:none;}
+  .int-table-header{flex-direction:column;align-items:flex-start;gap:8px;}
+  .int-table-search{width:100%;}
+  .modal{margin:0;border-radius:16px 16px 0 0;max-height:90vh;position:fixed;bottom:0;left:0;right:0;max-width:100%;}
+  .modal-overlay{align-items:flex-end;padding:0;}
+  .int-modal{margin:0;border-radius:16px 16px 0 0;max-height:90vh;position:fixed;bottom:0;left:0;right:0;max-width:100%;}
+  .int-modal-overlay{align-items:flex-end;padding:0;}
+  .bottom-chip{bottom:12px;right:12px;font-size:11.5px;padding:6px 12px 6px 9px;}
+  .sb-stats{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:400px){
+  .pipeline-summary{grid-template-columns:repeat(2,1fr);}
+  .view-tab span{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
-  <div class="loading-text" id="loadingText">Connecting to database…</div>
+  <div class="loading-text" id="loadingText">Connecting…</div>
 </div>
 
-<!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
@@ -441,12 +463,11 @@ table.int-table tr:hover td{background:var(--surface2);}
       </div>
     </div>
     <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
-    <div class="login-error" id="loginError">Incorrect username or password. Please try again.</div>
+    <div class="login-error" id="loginError">Incorrect username or password.</div>
     <div class="login-loading" id="loginLoading">Verifying…</div>
   </div>
 </div>
 
-<!-- APP SCREEN -->
 <div class="app-screen" id="appScreen">
   <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
   <aside class="sidebar" id="sidebar">
@@ -518,9 +539,9 @@ table.int-table tr:hover td{background:var(--surface2);}
 
     <div class="content">
       <div class="view-tabs">
-        <button class="view-tab active" id="tab-contacts" onclick="switchView('contacts')"><i class="ti ti-users"></i> Contacts</button>
-        <button class="view-tab" id="tab-pipeline" onclick="switchView('pipeline')"><i class="ti ti-chart-bar"></i> Pipeline</button>
-        <button class="view-tab" id="tab-interactions" onclick="switchView('interactions')"><i class="ti ti-messages"></i> All Interactions</button>
+        <button class="view-tab active" id="tab-contacts" onclick="switchView('contacts')"><i class="ti ti-users"></i> <span>Contacts</span></button>
+        <button class="view-tab" id="tab-pipeline" onclick="switchView('pipeline')"><i class="ti ti-chart-bar"></i> <span>Pipeline</span></button>
+        <button class="view-tab" id="tab-interactions" onclick="switchView('interactions')"><i class="ti ti-messages"></i> <span>Interactions</span></button>
       </div>
 
       <!-- CONTACTS VIEW -->
@@ -584,8 +605,8 @@ table.int-table tr:hover td{background:var(--surface2);}
         <div class="int-table-wrap">
           <div class="int-table-header">
             <span class="int-table-title">All Interactions</span>
-            <div class="int-table-search"><i class="ti ti-search"></i><input type="text" id="intSearchInput" placeholder="Search student, HR, company…" oninput="renderIntTable()"/></div>
-            <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export CSV</button>
+            <div class="int-table-search"><i class="ti ti-search"></i><input type="text" id="intSearchInput" placeholder="Search…" oninput="renderIntTable()"/></div>
+            <button class="export-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Export</button>
           </div>
           <div class="status-filter-bar" id="intFilterBar"></div>
           <div style="overflow-x:auto;"><table class="int-table"><thead><tr><th>Student</th><th>HR / Company</th><th>Status</th><th>Note</th><th>Date</th><th></th></tr></thead><tbody id="intTableBody"></tbody></table></div>
@@ -611,22 +632,22 @@ table.int-table tr:hover td{background:var(--surface2);}
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group"><label class="form-label">Full Name <span>*</span></label><input class="form-input" id="f_name" placeholder="e.g. Priya Sharma" oninput="clearErr('e_name')"/><span class="form-error" id="e_name">Name is required</span></div>
-        <div class="form-group"><label class="form-label">Designation <span>*</span></label><input class="form-input" id="f_desig" placeholder="e.g. Talent Acquisition Specialist" oninput="clearErr('e_desig')"/><span class="form-error" id="e_desig">Designation is required</span></div>
+        <div class="form-group"><label class="form-label">Designation <span>*</span></label><input class="form-input" id="f_desig" placeholder="e.g. Talent Acquisition" oninput="clearErr('e_desig')"/><span class="form-error" id="e_desig">Designation is required</span></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Company <span>*</span></label><input class="form-input" id="f_co" placeholder="e.g. Infosys" oninput="clearErr('e_co')" list="coList"/><datalist id="coList"></datalist><span class="form-error" id="e_co">Company is required</span></div>
         <div class="form-group"><label class="form-label">Category <span>*</span></label><select class="form-select" id="f_cat"><option value="FMCG">FMCG</option><option value="Tech">Tech</option><option value="Finance">Finance</option><option value="Ecommerce">Ecommerce</option><option value="Consulting">Consulting</option><option value="Other">Other</option></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Phone Number <span>*</span></label><input class="form-input" id="f_ph" placeholder="10-digit mobile" maxlength="10" oninput="clearErr('e_ph')"/><span class="form-error" id="e_ph">Valid 10-digit number required</span></div>
-        <div class="form-group"><label class="form-label">Email Address <span>*</span></label><input class="form-input" id="f_email" placeholder="name@company.com" type="email" oninput="clearErr('e_email')"/><span class="form-error" id="e_email">Valid email required</span></div>
+        <div class="form-group"><label class="form-label">Phone <span>*</span></label><input class="form-input" id="f_ph" placeholder="10-digit number" maxlength="10" oninput="clearErr('e_ph')"/><span class="form-error" id="e_ph">Valid 10-digit number required</span></div>
+        <div class="form-group"><label class="form-label">Email <span>*</span></label><input class="form-input" id="f_email" placeholder="name@company.com" type="email" oninput="clearErr('e_email')"/><span class="form-error" id="e_email">Valid email required</span></div>
       </div>
-      <div class="form-group full"><label class="form-label">LinkedIn Profile URL</label><input class="form-input" id="f_li" placeholder="https://www.linkedin.com/in/username"/></div>
+      <div class="form-group full"><label class="form-label">LinkedIn URL</label><input class="form-input" id="f_li" placeholder="https://linkedin.com/in/username"/></div>
       <input type="hidden" id="f_editId" value=""/>
     </div>
     <div class="modal-footer">
       <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-save" onclick="saveContact()"><i class="ti ti-check" style="font-size:14px;margin-right:4px;"></i>Save Contact</button>
+      <button class="btn btn-save" onclick="saveContact()"><i class="ti ti-check" style="font-size:14px;margin-right:4px;"></i>Save</button>
     </div>
   </div>
 </div>
@@ -651,7 +672,7 @@ table.int-table tr:hover td{background:var(--surface2);}
           <div class="form-group"><label class="form-label">Student Name <span>*</span></label><input class="form-input" id="int_student" placeholder="e.g. Rahul Verma" list="studentList"/><datalist id="studentList"></datalist><span class="form-error" id="int_e_student">Required</span></div>
           <div class="form-group"><label class="form-label">Status <span>*</span></label><select class="form-select" id="int_status"><option value="Not Contacted">Not Contacted</option><option value="Contacted">Contacted</option><option value="Interested">Interested</option><option value="Not Interested">Not Interested</option><option value="Follow Up">Follow Up</option><option value="Placed">Placed</option></select></div>
         </div>
-        <div class="form-group"><label class="form-label">Company Response / Note</label><input class="form-input" id="int_note" placeholder="e.g. Said will revert in 2 weeks"/></div>
+        <div class="form-group"><label class="form-label">Note</label><input class="form-input" id="int_note" placeholder="e.g. Said will revert in 2 weeks"/></div>
         <input type="hidden" id="int_edit_id" value=""/>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px;">
           <button class="btn btn-cancel" style="padding:7px 14px;font-size:12px;" onclick="resetIntForm()">Clear</button>
@@ -672,7 +693,6 @@ table.int-table tr:hover td{background:var(--surface2);}
 
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -689,12 +709,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ═══ CREDENTIALS — change password here ═══
+// ═══ CREDENTIALS ═══
 const CREDENTIALS = {
   "Navneet": "Navneet@2004"
 };
 
-// ═══ BASE DATA (loaded to Firebase on first run) ═══
 const BASE_DATA=[
   {id:"c1",cat:"FMCG",co:"Hindustan Unilever Limited",name:"Aditi Arora",ph:"9875275144",email:"aditi.arora@unilever.com",li:"https://www.linkedin.com/in/aditi-arora-604952213/",desig:"Senior HR Executive"},
   {id:"c2",cat:"FMCG",co:"Procter & Gamble",name:"Rajat Sharma",ph:"7838840455",email:"sharma.r@pg.com",li:"https://www.linkedin.com/in/rajat-sharma-a6424927b/",desig:"Human Resources Payroll Executive"},
@@ -748,14 +767,11 @@ const BASE_DATA=[
   {id:"c50",cat:"Consulting",co:"KPMG India",name:"Akansha Bamne",ph:"7300714753",email:"akanshabamne@kpmg.com",li:"https://www.linkedin.com/in/akansha-bamne-8503b4193/",desig:"Talent Acquisition Specialist"},
 ];
 
-// ═══ APP STATE ═══
+// STATE
 let data=[], interactions=[];
 let isDark=false, activeCat="All", activeCo="All";
 let deleteTargetId=null, currentIntHrId=null, editingIntId=null;
 let plStatusFilter="All", intStatusFilter="All", currentView="contacts";
-let isLoggedIn=false;
-let nextIntId=()=>"i"+Date.now()+Math.random().toString(36).slice(2,6);
-let nextContactId=()=>"c"+Date.now()+Math.random().toString(36).slice(2,6);
 
 const STATUS_MAP={"Not Contacted":{cls:"nc",dot:"#64748b"},"Contacted":{cls:"ct",dot:"#1d4ed8"},"Interested":{cls:"in",dot:"#15803d"},"Not Interested":{cls:"ni",dot:"#dc2626"},"Follow Up":{cls:"fu",dot:"#7c3aed"},"Placed":{cls:"pl",dot:"#a16207"}};
 const catCfg={"All":{icon:"ti-layout-grid"},"FMCG":{icon:"ti-shopping-cart"},"Tech":{icon:"ti-cpu"},"Finance":{icon:"ti-coin"},"Ecommerce":{icon:"ti-device-mobile"},"Consulting":{icon:"ti-briefcase"},"Other":{icon:"ti-tag"}};
@@ -767,8 +783,9 @@ function rebuildCoMap(){Object.keys(coMap).forEach(k=>delete coMap[k]);[...new S
 const avCol=co=>{const idx=coMap[co]!==undefined?coMap[co]:0;return avatarPal[idx][m()];};
 function fmtDate(iso){if(!iso)return"—";return new Date(iso).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});}
 function fmtDateTime(iso){if(!iso)return"—";const d=new Date(iso);return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short"})+" "+d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});}
+const nextIntId=()=>"i"+Date.now()+Math.random().toString(36).slice(2,6);
+const nextContactId=()=>"c"+Date.now()+Math.random().toString(36).slice(2,6);
 
-// ═══ SYNC STATUS ═══
 function setSyncStatus(status,text){
   const dot=document.getElementById("syncDot");
   const txt=document.getElementById("syncText");
@@ -777,7 +794,7 @@ function setSyncStatus(status,text){
   txt.textContent=text;
 }
 
-// ═══ LOGIN ═══
+// LOGIN
 window.togglePwVis=function(){
   const inp=document.getElementById("loginPass");
   const icon=document.getElementById("pwEyeIcon");
@@ -817,10 +834,8 @@ async function loadAndShowApp(){
   document.getElementById("loadingOverlay").classList.remove("hide");
   document.getElementById("loadingText").textContent="Loading contacts…";
   try{
-    // Load contacts
     const contactsSnap=await getDocs(collection(db,"contacts"));
     if(contactsSnap.empty){
-      // First time — seed base data
       document.getElementById("loadingText").textContent="Setting up database…";
       const batch=writeBatch(db);
       BASE_DATA.forEach(c=>batch.set(doc(db,"contacts",c.id),c));
@@ -829,12 +844,10 @@ async function loadAndShowApp(){
     } else {
       data=contactsSnap.docs.map(d=>({id:d.id,...d.data()}));
     }
-    // Load interactions
     document.getElementById("loadingText").textContent="Loading interactions…";
     const intSnap=await getDocs(collection(db,"interactions"));
     interactions=intSnap.docs.map(d=>({id:d.id,...d.data()}));
 
-    // Show app
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("appScreen").classList.add("show");
     document.getElementById("loadingOverlay").classList.add("hide");
@@ -845,7 +858,6 @@ async function loadAndShowApp(){
     render();
     setSyncStatus("ok","Synced with Firebase");
 
-    // Real-time listeners
     onSnapshot(collection(db,"contacts"),snap=>{
       data=snap.docs.map(d=>({id:d.id,...d.data()}));
       rebuildCoMap();refreshSidebar();initCatOpts();renderCoOpts();render();
@@ -866,7 +878,6 @@ async function loadAndShowApp(){
   }
 }
 
-// Auto-login if session exists
 window.addEventListener("load",async()=>{
   if(sessionStorage.getItem("hrdir_auth")==="1"){
     document.getElementById("loginScreen").style.display="none";
@@ -876,19 +887,16 @@ window.addEventListener("load",async()=>{
   }
 });
 
-// ═══ FIREBASE CRUD ═══
+// FIREBASE CRUD
 async function fbSaveContact(contact){
   setSyncStatus("syncing","Saving…");
-  try{
-    await setDoc(doc(db,"contacts",contact.id),contact);
-    setSyncStatus("ok","Saved ✓");
-  }catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed: "+e.message);}
+  try{await setDoc(doc(db,"contacts",contact.id),contact);setSyncStatus("ok","Saved ✓");}
+  catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed: "+e.message);}
 }
 async function fbDeleteContact(id){
   setSyncStatus("syncing","Deleting…");
   try{
     await deleteDoc(doc(db,"contacts",id));
-    // Also delete interactions for this contact
     const toDelete=interactions.filter(i=>i.hrId===id);
     for(const i of toDelete)await deleteDoc(doc(db,"interactions",i.id));
     setSyncStatus("ok","Deleted ✓");
@@ -896,20 +904,16 @@ async function fbDeleteContact(id){
 }
 async function fbSaveInteraction(interaction){
   setSyncStatus("syncing","Saving…");
-  try{
-    await setDoc(doc(db,"interactions",interaction.id),interaction);
-    setSyncStatus("ok","Saved ✓");
-  }catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed");}
+  try{await setDoc(doc(db,"interactions",interaction.id),interaction);setSyncStatus("ok","Saved ✓");}
+  catch(e){setSyncStatus("err","Save failed");showToast("error","Save failed");}
 }
 async function fbDeleteInteraction(id){
   setSyncStatus("syncing","Deleting…");
-  try{
-    await deleteDoc(doc(db,"interactions",id));
-    setSyncStatus("ok","Deleted ✓");
-  }catch(e){setSyncStatus("err","Delete failed");}
+  try{await deleteDoc(doc(db,"interactions",id));setSyncStatus("ok","Deleted ✓");}
+  catch(e){setSyncStatus("err","Delete failed");}
 }
 
-// ═══ THEME ═══
+// THEME
 window.toggleTheme=function(){
   isDark=!isDark;
   document.documentElement.setAttribute("data-theme",isDark?"dark":"light");
@@ -921,12 +925,28 @@ window.toggleTheme=function(){
   render();
 };
 
-// ═══ SIDEBAR ═══
-window.openSidebar=function(){document.getElementById("sidebar").classList.add("open");const ov=document.getElementById("sbOverlay");ov.classList.add("show");ov.style.display="block";};
-window.closeSidebar=function(){document.getElementById("sidebar").classList.remove("open");const ov=document.getElementById("sbOverlay");ov.classList.remove("show");setTimeout(()=>ov.style.display="none",300);};
+// SIDEBAR
+window.openSidebar=function(){
+  document.getElementById("sidebar").classList.add("open");
+  const ov=document.getElementById("sbOverlay");
+  ov.classList.add("show");ov.style.display="block";
+};
+window.closeSidebar=function(){
+  document.getElementById("sidebar").classList.remove("open");
+  const ov=document.getElementById("sbOverlay");
+  ov.classList.remove("show");
+  setTimeout(()=>ov.style.display="none",300);
+};
 window.filterSidebarItems=function(){
   const q=document.getElementById("sbSearchInput").value.toLowerCase().trim();
-  document.querySelectorAll(".sb-item[data-cat]").forEach(el=>{el.style.display=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q)?"":"none";});
+  const noRes=document.getElementById("sbNoResults");
+  let visible=0;
+  document.querySelectorAll(".sb-item[data-cat]").forEach(el=>{
+    const show=!q||el.querySelector(".sb-label").textContent.toLowerCase().includes(q);
+    el.style.display=show?"":"none";
+    if(show)visible++;
+  });
+  noRes.style.display=q&&visible===0?"block":"none";
 };
 
 function initSidebar(){
@@ -939,6 +959,7 @@ function initSidebar(){
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
   updateSbStats();updateSbPipeline();
 }
+
 function refreshSidebar(){
   document.querySelectorAll(".sb-item[data-cat],.sb-nav-label").forEach(e=>e.remove());
   const cats=[...new Set(data.map(d=>d.cat))];
@@ -947,16 +968,19 @@ function refreshSidebar(){
   document.getElementById("sbNoResults").insertAdjacentHTML("beforebegin",html);
   updateSbStats();updateSbPipeline();
 }
+
 function updateSbStats(){
   const cats=[...new Set(data.map(d=>d.cat))];
   const cos=[...new Set(data.map(d=>d.co))];
   document.getElementById("sbStats").innerHTML=`<div class="sb-stat-item"><div class="sb-stat-val">${data.length}</div><div class="sb-stat-lbl">Contacts</div></div><div class="sb-stat-item"><div class="sb-stat-val">${cats.length}</div><div class="sb-stat-lbl">Categories</div></div><div class="sb-stat-item"><div class="sb-stat-val">${cos.length}</div><div class="sb-stat-lbl">Companies</div></div><div class="sb-stat-item"><div class="sb-stat-val">${interactions.length}</div><div class="sb-stat-lbl">Interactions</div></div>`;
 }
+
 function updateSbPipeline(){
   const mini=document.getElementById("sbPipelineMini");
   if(!mini)return;
   mini.innerHTML=Object.keys(STATUS_MAP).map(s=>`<div class="sb-pl-row"><div class="pl-dot" style="background:${STATUS_MAP[s].dot};"></div><span class="pl-label">${s}</span><span class="pl-num">${interactions.filter(i=>i.status===s).length}</span></div>`).join("");
 }
+
 window.setSidebarCat=function(cat,el){
   activeCat=cat;activeCo="All";
   document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i===el));
@@ -967,7 +991,7 @@ window.setSidebarCat=function(cat,el){
   if(window.innerWidth<=700)closeSidebar();
 };
 
-// ═══ VIEW SWITCHING ═══
+// VIEW SWITCHING
 window.switchView=function(v){
   currentView=v;
   ["contacts","pipeline","interactions"].forEach(n=>{
@@ -979,7 +1003,7 @@ window.switchView=function(v){
   else{document.getElementById("topbarTitle").textContent=activeCat==="All"?"All Contacts":activeCat;document.getElementById("topbarSub").textContent="HR Directory";render();}
 };
 
-// ═══ DROPDOWNS ═══
+// DROPDOWNS
 window.toggleCatDD=function(){const m2=document.getElementById("catMenu"),b=document.getElementById("catBtn"),o=m2.classList.contains("open");document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");m2.classList.toggle("open",!o);b.classList.toggle("open",!o);};
 window.setCatDD=function(cat,el){activeCat=cat;activeCo="All";document.querySelectorAll("#catMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");document.getElementById("catBtnText").textContent=cat==="All"?"All Categories":cat;document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");document.getElementById("coBtnText").textContent="All Companies";document.getElementById("topbarTitle").textContent=cat==="All"?"All Contacts":cat;document.querySelectorAll(".sb-item[data-cat]").forEach(i=>i.classList.toggle("active",i.dataset.cat===cat));renderCoOpts();render();};
 function initCatOpts(){document.getElementById("catAllCnt").textContent=data.length;const cats=[...new Set(data.map(d=>d.cat))];document.getElementById("catOpts").innerHTML=cats.map(c=>{const cfg=catCfg[c]||catCfg["Other"];return`<div class="dd-opt" data-val="${c}" onclick="setCatDD('${c}',this)"><span class="opt-lbl"><i class="ti ${cfg.icon}" style="font-size:13px;margin-right:5px;vertical-align:-1px;"></i>${c}</span><span class="opt-cnt">${data.filter(d=>d.cat===c).length}</span></div>`;}).join("");}
@@ -988,14 +1012,51 @@ function renderCoOpts(){const vis=activeCat==="All"?[...new Set(data.map(d=>d.co
 window.setCoDD=function(co,el){activeCo=co;document.querySelectorAll("#coMenu .dd-opt").forEach(o=>o.classList.remove("active"));el.classList.add("active");document.getElementById("coBtnText").textContent=co==="All"?"All Companies":co;document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");render();};
 document.addEventListener("click",e=>{if(!e.target.closest("#catWrap")){document.getElementById("catMenu").classList.remove("open");document.getElementById("catBtn").classList.remove("open");}if(!e.target.closest("#coWrap")){document.getElementById("coMenu").classList.remove("open");document.getElementById("coBtn").classList.remove("open");}});
 
-// ═══ CONTACT MODAL ═══
-window.openAddModal=function(){document.getElementById("f_editId").value="";document.getElementById("modalTitle").textContent="Add New Contact";document.getElementById("modalIcon").className="ti ti-user-plus";["f_name","f_desig","f_co","f_ph","f_email","f_li"].forEach(id=>document.getElementById(id).value="");document.getElementById("f_cat").value="FMCG";clearAllErrs();document.getElementById("coList").innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");document.getElementById("modalOverlay").classList.add("open");setTimeout(()=>document.getElementById("f_name").focus(),200);};
-window.openEditModal=function(id){const d=data.find(x=>x.id===id);if(!d)return;document.getElementById("f_editId").value=id;document.getElementById("modalTitle").textContent="Edit Contact";document.getElementById("modalIcon").className="ti ti-edit";document.getElementById("f_name").value=d.name;document.getElementById("f_desig").value=d.desig;document.getElementById("f_co").value=d.co;document.getElementById("f_cat").value=d.cat;document.getElementById("f_ph").value=d.ph;document.getElementById("f_email").value=d.email;document.getElementById("f_li").value=d.li||"";clearAllErrs();document.getElementById("modalOverlay").classList.add("open");};
+// CONTACT MODAL
+window.openAddModal=function(){
+  document.getElementById("f_editId").value="";
+  document.getElementById("modalTitle").textContent="Add New Contact";
+  document.getElementById("modalIcon").className="ti ti-user-plus";
+  ["f_name","f_desig","f_co","f_ph","f_email","f_li"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("f_cat").value="FMCG";
+  clearAllErrs();
+  document.getElementById("coList").innerHTML=[...new Set(data.map(d=>d.co))].map(c=>`<option value="${c}">`).join("");
+  document.getElementById("modalOverlay").classList.add("open");
+  setTimeout(()=>document.getElementById("f_name").focus(),200);
+};
+window.openEditModal=function(id){
+  const d=data.find(x=>x.id===id);if(!d)return;
+  document.getElementById("f_editId").value=id;
+  document.getElementById("modalTitle").textContent="Edit Contact";
+  document.getElementById("modalIcon").className="ti ti-edit";
+  document.getElementById("f_name").value=d.name;
+  document.getElementById("f_desig").value=d.desig;
+  document.getElementById("f_co").value=d.co;
+  document.getElementById("f_cat").value=d.cat;
+  document.getElementById("f_ph").value=d.ph;
+  document.getElementById("f_email").value=d.email;
+  document.getElementById("f_li").value=d.li||"";
+  clearAllErrs();
+  document.getElementById("modalOverlay").classList.add("open");
+};
 window.closeModal=function(){document.getElementById("modalOverlay").classList.remove("open");};
 window.handleModalOutsideClick=function(e){if(e.target===document.getElementById("modalOverlay"))closeModal();};
 window.clearErr=function(id){document.getElementById(id).classList.remove("show");};
 function clearAllErrs(){["e_name","e_desig","e_co","e_ph","e_email"].forEach(id=>document.getElementById(id).classList.remove("show"));}
-function validateForm(){let ok=true;const name=document.getElementById("f_name").value.trim();const desig=document.getElementById("f_desig").value.trim();const co=document.getElementById("f_co").value.trim();const ph=document.getElementById("f_ph").value.trim();const email=document.getElementById("f_email").value.trim();if(!name){document.getElementById("e_name").classList.add("show");ok=false;}if(!desig){document.getElementById("e_desig").classList.add("show");ok=false;}if(!co){document.getElementById("e_co").classList.add("show");ok=false;}if(!/^\d{10}$/.test(ph)){document.getElementById("e_ph").classList.add("show");ok=false;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById("e_email").classList.add("show");ok=false;}return ok;}
+function validateForm(){
+  let ok=true;
+  const name=document.getElementById("f_name").value.trim();
+  const desig=document.getElementById("f_desig").value.trim();
+  const co=document.getElementById("f_co").value.trim();
+  const ph=document.getElementById("f_ph").value.trim();
+  const email=document.getElementById("f_email").value.trim();
+  if(!name){document.getElementById("e_name").classList.add("show");ok=false;}
+  if(!desig){document.getElementById("e_desig").classList.add("show");ok=false;}
+  if(!co){document.getElementById("e_co").classList.add("show");ok=false;}
+  if(!/^\d{10}$/.test(ph)){document.getElementById("e_ph").classList.add("show");ok=false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){document.getElementById("e_email").classList.add("show");ok=false;}
+  return ok;
+}
 window.saveContact=async function(){
   if(!validateForm())return;
   const editId=document.getElementById("f_editId").value;
@@ -1009,18 +1070,16 @@ window.saveContact=async function(){
   const now=new Date().toISOString();
   if(editId){
     const existing=data.find(x=>x.id===editId);
-    const updated={...existing,name,desig,co,cat,ph,email,li,updatedAt:now};
-    await fbSaveContact(updated);
+    await fbSaveContact({...existing,name,desig,co,cat,ph,email,li,updatedAt:now});
     showToast("success","Contact updated!");
   } else {
-    const newContact={id:nextContactId(),cat,co,name,ph,email,li,desig,addedAt:now};
-    await fbSaveContact(newContact);
+    await fbSaveContact({id:nextContactId(),cat,co,name,ph,email,li,desig,addedAt:now});
     showToast("success","Contact added!");
   }
   closeModal();
 };
 
-// ═══ INTERACTION MODAL ═══
+// INTERACTION MODAL
 window.openIntModal=function(hrId){
   currentIntHrId=hrId;editingIntId=null;
   const hr=data.find(x=>x.id===hrId);if(!hr)return;
@@ -1065,7 +1124,7 @@ window.saveInteraction=async function(){
   resetIntForm();
 };
 
-// ═══ PIPELINE ═══
+// PIPELINE
 function renderPipeline(){
   const statuses=Object.keys(STATUS_MAP);
   let sumHTML=`<div class="pl-sum-card nc${plStatusFilter==="All"?" active-filter":""}" onclick="setPlFilter('All')"><div class="pl-sum-val">${interactions.length}</div><div class="pl-sum-lbl">Total</div></div>`;
@@ -1077,20 +1136,28 @@ function renderPipeline(){
   document.getElementById("plTableTitle").textContent=plStatusFilter==="All"?"All Interactions":plStatusFilter+" ("+rows.length+")";
 }
 window.setPlFilter=function(s){plStatusFilter=s;renderPipeline();};
+
 function renderIntTable(){
-  const q=(document.getElementById("intSearchInput")?.value||"").toLowerCase();
+  const q=(document.getElementById("intSearchInput")?.value||"").toLowerCase().trim();
   document.getElementById("intFilterBar").innerHTML=buildFilterBar(intStatusFilter,"int");
-  let rows=intStatusFilter==="All"?interactions:interactions.filter(i=>i.status===intStatusFilter);
-  if(q)rows=rows.filter(i=>i.student.toLowerCase().includes(q)||(data.find(d=>d.id===i.hrId)||{name:""}).name.toLowerCase().includes(q)||(data.find(d=>d.id===i.hrId)||{co:""}).co.toLowerCase().includes(q)||(i.note||"").toLowerCase().includes(q));
+  let rows=intStatusFilter==="All"?[...interactions]:interactions.filter(i=>i.status===intStatusFilter);
+  if(q){
+    rows=rows.filter(i=>{
+      const hr=data.find(d=>d.id===i.hrId)||{name:"",co:""};
+      return i.student.toLowerCase().includes(q)||hr.name.toLowerCase().includes(q)||hr.co.toLowerCase().includes(q)||(i.note||"").toLowerCase().includes(q);
+    });
+  }
   renderIntRows(rows,"intTableBody");
 }
 window.setIntFilter=function(s){intStatusFilter=s;renderIntTable();};
+
 function buildFilterBar(active,prefix){
   const statuses=Object.keys(STATUS_MAP);
   let h=`<button class="sf-btn all${active==="All"?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('All')">All (${interactions.length})</button>`;
   statuses.forEach(s=>{const cls=STATUS_MAP[s].cls;const cnt=interactions.filter(i=>i.status===s).length;h+=`<button class="sf-btn ${cls}${active===s?"":" off"}" onclick="${prefix==="pl"?"setPl":"setInt"}Filter('${s}')">${s} (${cnt})</button>`;});
   return h;
 }
+
 function renderIntRows(rows,tbodyId){
   const tbody=document.getElementById(tbodyId);
   if(!rows.length){tbody.innerHTML=`<tr><td colspan="6"><div class="tbl-empty"><i class="ti ti-inbox"></i>No interactions found</div></td></tr>`;return;}
@@ -1098,7 +1165,7 @@ function renderIntRows(rows,tbodyId){
   tbody.innerHTML=sorted.map(i=>{const hr=data.find(d=>d.id===i.hrId)||{name:"Unknown",co:"—"};return`<tr><td class="td-name">${i.student}</td><td><div class="td-name" style="font-size:12px;">${hr.name}</div><div class="td-co">${hr.co}</div></td><td><span class="status-badge ${STATUS_MAP[i.status]?.cls||'nc'}">${i.status}</span></td><td class="td-note" title="${(i.note||"").replace(/"/g,"&quot;")}">${i.note||'<span style="color:var(--t3);font-style:italic;">No note</span>'}</td><td class="td-date">${fmtDate(i.ts)}</td><td><div class="td-actions"><button class="tbl-action-btn" onclick="openIntModal('${i.hrId}')" title="Open"><i class="ti ti-messages"></i></button><button class="tbl-action-btn del" onclick="deleteIntItem('${i.id}')" title="Delete"><i class="ti ti-trash"></i></button></div></td></tr>`;}).join("");
 }
 
-// ═══ EXPORT ═══
+// EXPORT
 window.exportCSV=function(){
   const headers=["Student","HR Name","Company","Category","Status","Note","Date"];
   const csv=[headers.join(",")];
@@ -1109,15 +1176,29 @@ window.exportCSV=function(){
   showToast("success","CSV exported!");
 };
 
-// ═══ DELETE CONTACT ═══
-window.openDeleteConfirm=function(id){const d=data.find(x=>x.id===id);if(!d)return;deleteTargetId=id;document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}? Their interactions will also be removed.`;document.getElementById("confirmOverlay").classList.add("open");document.getElementById("confirmDeleteBtn").onclick=()=>confirmDelete();};
+// DELETE CONTACT
+window.openDeleteConfirm=function(id){
+  const d=data.find(x=>x.id===id);if(!d)return;
+  deleteTargetId=id;
+  document.getElementById("confirmMsg").textContent=`Delete "${d.name}" from ${d.co}? Their interactions will also be removed.`;
+  document.getElementById("confirmOverlay").classList.add("open");
+  document.getElementById("confirmDeleteBtn").onclick=()=>confirmDelete();
+};
 window.closeConfirm=function(){document.getElementById("confirmOverlay").classList.remove("open");deleteTargetId=null;};
 async function confirmDelete(){await fbDeleteContact(deleteTargetId);showToast("info","Contact deleted");closeConfirm();}
 
-// ═══ TOAST ═══
-window.showToast=function(type,msg){const icon=type==="success"?"ti-circle-check":type==="error"?"ti-circle-x":"ti-info-circle";const t=document.createElement("div");t.className=`toast ${type}`;t.innerHTML=`<i class="ti ${icon}"></i>${msg}`;document.getElementById("toastContainer").appendChild(t);setTimeout(()=>t.style.opacity="0",2500);setTimeout(()=>t.remove(),2900);};
+// TOAST
+window.showToast=function(type,msg){
+  const icon=type==="success"?"ti-circle-check":type==="error"?"ti-circle-x":"ti-info-circle";
+  const t=document.createElement("div");
+  t.className=`toast ${type}`;
+  t.innerHTML=`<i class="ti ${icon}"></i>${msg}`;
+  document.getElementById("toastContainer").appendChild(t);
+  setTimeout(()=>t.style.opacity="0",2500);
+  setTimeout(()=>t.remove(),2900);
+};
 
-// ═══ CARD ═══
+// CARD
 function cardHTML(d,idx){
   const av=avCol(d.co);
   const banners=["#590016","#3d0010","#260009"];
@@ -1158,22 +1239,43 @@ function cardHTML(d,idx){
   </div>`;
 }
 
-// ═══ RENDER ═══
+// RENDER — FIXED SEARCH
 function render(){
-  const q=(document.getElementById("searchInput")?.value||"").toLowerCase();
+  const searchEl=document.getElementById("searchInput");
+  const q=searchEl?searchEl.value.toLowerCase().trim():"";
   const filtered=data.filter(d=>{
     const mc=activeCat==="All"||d.cat===activeCat;
     const mco=activeCo==="All"||d.co===activeCo;
-    const ms=!q||d.name.toLowerCase().includes(q)||d.co.toLowerCase().includes(q)||d.desig.toLowerCase().includes(q);
+    const ms=!q||
+      d.name.toLowerCase().includes(q)||
+      d.co.toLowerCase().includes(q)||
+      d.desig.toLowerCase().includes(q)||
+      d.ph.includes(q)||
+      d.email.toLowerCase().includes(q);
     return mc&&mco&&ms;
   });
-  const ct=document.getElementById("countTxt");if(ct)ct.innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
-  const tc=document.getElementById("topbarCount");if(tc)tc.textContent=`${filtered.length} contacts`;
-  const bc=document.getElementById("bottomChipCount");if(bc)bc.textContent=`${filtered.length} contacts`;
-  const container=document.getElementById("sectionsContainer");if(!container)return;
-  if(!filtered.length){container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found.</p></div></div>`;return;}
+
+  const ct=document.getElementById("countTxt");
+  if(ct)ct.innerHTML=`Showing <b>${filtered.length}</b> of <b>${data.length}</b> contacts`;
+  const tc=document.getElementById("topbarCount");
+  if(tc)tc.textContent=`${filtered.length} contacts`;
+  const bc=document.getElementById("bottomChipCount");
+  if(bc)bc.textContent=`${filtered.length} contacts`;
+
+  const container=document.getElementById("sectionsContainer");
+  if(!container)return;
+
+  if(!filtered.length){
+    container.innerHTML=`<div class="grid"><div class="empty"><i class="ti ti-user-search"></i><p>No contacts found${q?` for "${q}"`:""}.</p></div></div>`;
+    return;
+  }
+
   const isFiltered=q||activeCo!=="All";
-  if(isFiltered||activeCat!=="All"){container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;return;}
+  if(isFiltered||activeCat!=="All"){
+    container.innerHTML=`<div class="grid">${filtered.map((d,i)=>cardHTML(d,i)).join("")}</div>`;
+    return;
+  }
+
   const groupedCats=[...new Set(filtered.map(d=>d.cat))];
   let html="";
   groupedCats.forEach(cat=>{
